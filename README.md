@@ -8,3 +8,6 @@ Length to be visualised in trend graph.
 Stages - Pie graph.
 Speed - Trend.
 
+http://bikeraceinfo.com/tdf/tdfstats.html
+
+http://www.letour.fr/HISTO/us/TDF/index.html
