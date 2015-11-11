@@ -22,7 +22,7 @@ void setup()
   
   for(int i = 0; i < years.size(); i++)
   {
-     speedList.add(years.get(i).speed); 
+     speedList.add(years.get(years.size() - (i + 1)).speed); 
   }
   
   for(int i = 0; i < 14; i++)
@@ -78,7 +78,6 @@ void draw()
     }
 }
 
-
 void drawAxis(ArrayList<Float> data, ArrayList<Integer> horizLabels, int verticalIntervals, float vertDataRange, float border)
 {
   stroke(200, 200, 200);
@@ -116,7 +115,6 @@ void drawAxis(ArrayList<Float> data, ArrayList<Integer> horizLabels, int vertica
     text(nf(hAxisLabel, 2, 2), border - (tickSize * 2.0f), y);
   }
 }
-
 
 void keyPressed()
 {
