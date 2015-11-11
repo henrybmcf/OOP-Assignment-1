@@ -27,6 +27,9 @@ void setup()
    {
      colour[i] = color(random(255), random(255), random(255));
    }
+   
+   mode = false;
+  
 }
 
 float sum = 0.0f;
@@ -37,27 +40,25 @@ float radius;
 int segments;
 float theta;
 float thetaPrev;
+float thetaNext;
 int position;
 color[] colour = new color[8];
 
 float direction;
 
+boolean mode;
+
 void draw()
 {
    background(0);
    stroke(255);
-  
-   thetaPrev = (position * QUARTER_PI) + QUARTER_PI/2;
    
-   for(int i = 0; i < segments; i++)
+   drawWheel();
+   if(mode)
    {
-     float thetaNext = thetaPrev + theta;
-     stroke(colour[i]);
-     arc(x, y, diameter, diameter, thetaPrev, thetaNext, PIE);
-     
-     thetaPrev = thetaNext;
+       thetaPrev = thetaPrev + HALF_PI/16;
    }
-   
+    
    // Grid lines - To be removed
    stroke(0, 0, 255);
    line(0, height - radius, width, height - radius);
@@ -66,8 +67,29 @@ void draw()
      line(radius * i, 0, radius * i, height);
    }
    // End of grid lines
+   
+   if(mode)
+   {
+     if(x < radius * direction)
+     {
+      x+=2;
+     }
+   }
 }
 
+void drawWheel()
+{
+   //thetaPrev1 = (position * QUARTER_PI) - (PI * 1/8);
+
+   for(int i = 0; i < segments; i++)
+   {
+     thetaNext = thetaPrev + theta;
+     stroke(colour[i]);
+     arc(x, y, diameter, diameter, thetaPrev, thetaNext, PIE);
+     
+     thetaPrev = thetaNext;
+   }
+}
 
 void keyPressed()
 {
@@ -80,9 +102,9 @@ void keyPressed()
          direction++;
          position++;
        }
+       mode = true;
        
        println("right");
-       x = radius * direction;
      }
      
      if(keyCode == LEFT)
@@ -96,5 +118,4 @@ void keyPressed()
         x = radius * direction;
      }
    }
-  
 }
