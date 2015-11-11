@@ -3,11 +3,11 @@ void setup()
   size(600, 600);
 
   table = loadTable("TDF.csv", "header");
-
-  for (TableRow row : table.rows ())
+/*
+  for (TableRow row : table.rows())
   {
     Year year = new Year();
-
+    
     year.tour_year = row.getInt("Year"); 
     year.tour_length = row.getInt("Length");
     year.stages = row.getInt("Stages");
@@ -17,6 +17,13 @@ void setup()
     println(year.tour_year + " " + year.tour_length + " " + year.stages + " " + year.winner + " " + year.speed);
     
     years.add(year);
+  }*/
+  
+  for(int i = 1; i < table.rows(); i++)
+  {
+     Year year = new Year(table.rows(i));
+     
+     
   }
   
   
