@@ -19,7 +19,7 @@ void setup()
    
    theta = TWO_PI / segments;
    position = 0;
-   thetaPrev = QUARTER_PI/2;
+   //thetaPrev = QUARTER_PI/2;
    
    direction = 1;
    
@@ -53,11 +53,22 @@ void draw()
    background(0);
    stroke(255);
    
-   drawWheel();
+   if(position == 0)
+   {
+     thetaPrev = (position * QUARTER_PI) - (PI * 0.125f);     
+   }
+   
+   if(! mode)
+   {
+     drawWheel();
+   }
+   
    if(mode)
    {
-       thetaPrev = thetaPrev + HALF_PI/16;
+       thetaPrev = thetaPrev + HALF_PI * 1/16;
+       drawWheel();
    }
+   
     
    // Grid lines - To be removed
    stroke(0, 0, 255);
@@ -74,7 +85,13 @@ void draw()
      {
       x+=2;
      }
+     else
+     {
+       mode = false;
+     }
    }
+   
+   
 }
 
 void drawWheel()
