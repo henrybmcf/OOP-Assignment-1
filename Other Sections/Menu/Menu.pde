@@ -1,6 +1,6 @@
 void setup()
 {
-   size(700, 300);
+   size(900, 300);
    background(0);
    stroke(255);
    strokeWeight(2);
@@ -28,7 +28,7 @@ void setup()
      colour[i] = color(random(255), random(255), random(255));
    }
    
-   mode = false;
+   mode = "none";
   
 }
 
@@ -46,65 +46,98 @@ color[] colour = new color[8];
 
 float direction;
 
-boolean mode;
+String mode;
 
 void draw()
 {
-   background(0);
+   background(255);
    stroke(255);
-   
-   if(position == 0)
+
+   if(x == ((width/(segments+1)) * position) + 100)
    {
-     thetaPrev = (position * QUARTER_PI) - (PI * 0.125f);     
+     thetaPrev = (position * QUARTER_PI) - (PI * (0.125f * 3.0f));     
    }
-   
-   if(! mode)
+  
+  //Possibly use switch * case here instead
+   if(mode == "none")
    {
      drawWheel();
    }
    
-   if(mode)
+   if(mode == "right")
    {
-       thetaPrev = thetaPrev + HALF_PI * 1/16;
+       thetaPrev = thetaPrev + HALF_PI * 1/42;
        drawWheel();
    }
    
-    
+   if(mode == "left")
+   {
+       thetaPrev = thetaPrev - HALF_PI * 1/42;
+       
+       drawWheel();
+   }
+   
+    /*
    // Grid lines - To be removed
    stroke(0, 0, 255);
    line(0, height - radius, width, height - radius);
-   for(int i = 1; i < 7; i++)
+   for(int i = 1; i < 9; i++)
    {
      line(radius * i, 0, radius * i, height);
    }
    // End of grid lines
+   */
    
-   if(mode)
+   if(mode == "right")
    {
      if(x < radius * direction)
      {
-      x+=2;
+      x += 5;
      }
      else
      {
-       mode = false;
+       mode = "none";
+     }
+   }
+   if(mode == "left")
+   {
+     if(x > radius * direction)
+     {
+      x -= 5;
+     }
+     else
+     {
+       mode = "none";
      }
    }
    
-   
+   fill(0);
+   text("Please use left & right arrows to select item.", 25, 25);
 }
 
 void drawWheel()
-{
-   //thetaPrev1 = (position * QUARTER_PI) - (PI * 1/8);
-
+{ 
    for(int i = 0; i < segments; i++)
    {
-     thetaNext = thetaPrev + theta;
-     stroke(colour[i]);
-     arc(x, y, diameter, diameter, thetaPrev, thetaNext, PIE);
+     thetaNext = thetaPrev - theta;
+     //fill(colour[i]);
+     fill(255);
+     stroke(0);
+     strokeWeight(3);
+     
+     if(x == ((width/(segments+1)) * position) + 100)
+     {
+       if(i == position)
+       {
+         diameter = 245;
+         fill(100, 100, 200);
+       }
+     }
+       
+     arc(x, y, diameter, diameter, thetaNext, thetaPrev, PIE);
      
      thetaPrev = thetaNext;
+     diameter = 200;
    }
 }
 
@@ -114,13 +147,12 @@ void keyPressed()
    {
      if (keyCode == RIGHT)
      {
-       if(direction < 6)
+       if(direction < 8)
        {
          direction++;
          position++;
+         mode = "right";
        }
-       mode = true;
-       
        println("right");
      }
      
@@ -130,9 +162,9 @@ void keyPressed()
         {
           direction--;
           position--;
+          mode = "left";
         }
         println("left");
-        x = radius * direction;
      }
    }
 }
