@@ -3,7 +3,7 @@ void setup()
   size(600, 600);
 
   table = loadTable("TDF.csv", "header");
-/*
+
   for (TableRow row : table.rows())
   {
     Year year = new Year();
@@ -17,15 +17,13 @@ void setup()
     println(year.tour_year + " " + year.tour_length + " " + year.stages + " " + year.winner + " " + year.speed);
     
     years.add(year);
-  }*/
-  
+  }
+  /*
   for(int i = 1; i < table.rows(); i++)
   {
-     Year year = new Year(table.rows(i));
-     
-     
+     Year year = new Year(table.rows(i));  
   }
-  
+  */
   
   for(int i = 0; i < years.size(); i++)
   {
@@ -36,6 +34,12 @@ void setup()
   {
     yearList.add(years.get(i * 5).tour_year);
   }
+  
+  /* Menu Code */
+  
+  
+  
+  /* End of Menu Code */
 }
 
 Table table;
@@ -45,6 +49,13 @@ int mode = 0;
 
 ArrayList<Float> speedList = new ArrayList<Float>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
+
+
+/* Menu Code */
+  
+  
+  
+/* End of Menu Code */
 
 void draw()
 {
