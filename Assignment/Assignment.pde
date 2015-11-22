@@ -4,6 +4,7 @@ void setup()
   background(0);
   
   axis = new Axis();
+  pie = new Pie();
   
   wheel = new Wheel();
   menu = 1;
@@ -36,6 +37,11 @@ void setup()
     yearList.add(years.get(i * 5).tour_year);
   }
   
+  for(int i = 0; i < years.size(); i++)
+  {
+    stages.add(years.get(i * 5).stages);
+  }
+  
 }
 
 Table table;
@@ -45,6 +51,7 @@ int mode = 1;
 
 ArrayList<Float> speedList = new ArrayList<Float>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
+ArrayList<Integer> stages = new ArrayList<Integer>();
 
 Wheel wheel;
 int menu;
@@ -53,6 +60,7 @@ float theta;
 float thetaBase;
 
 Axis axis;
+Pie pie;
 
 void draw()
 {
@@ -86,11 +94,7 @@ void draw()
             wheel.update();
             println(menu);
             
-            /*  
-            while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
-            {
-               thetaBase += 0.1f; 
-            }*/
+            mode = 3;
             break;
           }
     
@@ -99,6 +103,12 @@ void draw()
             wheel.render();
             wheel.update();
             println(menu);
+            
+             /*  
+            while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
+            {
+               thetaBase += 0.1f; 
+            }*/
           break;
           }
           case 5:
@@ -167,6 +177,51 @@ void draw()
           float y2 = (height - border) - (speedList.get(i)) * scale;
           line(x1, y1, x2, y2);
         }
+        break; 
+      }
+      
+      case 3:
+      {
+        int[] counter = new int[6];
+        
+        for(int i = 0; i < stages.size(); i++)
+        {
+          switch(stages.get(i)
+          {
+            case 20:
+            {
+              counter[0]++;
+              break;
+            }
+            case 21:
+            {
+              counter[1]++;
+              break;
+            }
+            case 22:
+            {
+              counter[2]++;
+              break;
+            }
+            case 23:
+            {
+              counter[3]++;
+              break;
+            }
+            case 24:
+            {
+              counter[4]++;
+              break;
+            }
+            case 25:
+            {
+              counter[5]++;
+              break;
+            }
+           
+        }
+        pie.update();
+         
         break; 
       }
       
