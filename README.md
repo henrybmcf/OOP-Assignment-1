@@ -44,9 +44,3 @@ Websites used:
 Possibility for advanced features:
 - Visualise geotagged data on a map -> Show race routes for each year
 - Use a Kinect or Leap Motion to interact with the visualisation using gestures -> Use motion to select menu option from wheel.
-
-
-
-UPDATES:
-11/11/15, 17:10.
-- Began basic implementation of turning wheel menu.
