@@ -239,14 +239,16 @@ void keyPressed()
 {
   if (key >= '0' && key <= '9')
   {
-    mode = key - '0';
+    menu = key - '0';
   }
-  println(mode);
-  
+  /*
   if(keyCode > 48  && keyCode < 57)
   {
-    println(keyCode);
     menu = keyCode - 48;
-    println(menu);
-  }  
+  }*/
+  
+  if(key == BACKSPACE)
+  {
+    menu = 0;
+  }
 }

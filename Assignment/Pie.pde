@@ -1,11 +1,13 @@
 class Pie
 {
-  float radius = width * 0.5f;
+  float radius;
   
   color[] colours = new color[6];
   
   Pie()
   {
+    radius = width * 0.5f;
+    
     for(int i = 0; i < 6; i ++)
     {
       colours[i] = color(random(100, 255), random(100, 255), 0);
