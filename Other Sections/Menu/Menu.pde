@@ -1,170 +1,115 @@
 void setup()
 {
-   size(900, 300);
-   background(0);
-   stroke(255);
-   strokeWeight(2);
-   fill(0);
-   
-   //centX = width * 0.5f;
-   //centY = height * 0.5f;
-   
-   diameter = 200;
-   radius = diameter * 0.5f;
-   
-   x = radius;
-   y = height - radius;
-   
-   segments = 8;
-   
-   theta = TWO_PI / segments;
-   position = 0;
-   //thetaPrev = QUARTER_PI/2;
-   
-   direction = 1;
-   
-   for(int i = 0; i < segments; i++)
-   {
-     colour[i] = color(random(255), random(255), random(255));
-   }
-   
-   mode = "none";
+  size(600, 600);
+  background(0);
   
+  wheel = new Wheel();
+  
+  mode = 1;
+  option = 0.0f;
 }
 
-float sum = 0.0f;
-float x;
-float y;
-float diameter;
-float radius;
-int segments;
+Wheel wheel;
+
+int mode;
+float option;
 float theta;
-float thetaPrev;
-float thetaNext;
-int position;
-color[] colour = new color[8];
+float thetaBase;
 
-float direction;
-
-String mode;
+void keyPressed()
+{ 
+  if(keyCode > 48  && keyCode < 57)
+  {
+    println(keyCode);
+    mode = keyCode - 48;
+    println(mode);
+  }    
+}
 
 void draw()
 {
-   background(255);
-   stroke(255);
+  background(0);
 
-   if(x == ((width/(segments+1)) * position) + 100)
-   {
-     thetaPrev = (position * QUARTER_PI) - (PI * (0.125f * 3.0f));     
-   }
-  
-  //Possibly use switch * case here instead
-   if(mode == "none")
-   {
-     drawWheel();
-   }
-   
-   if(mode == "right")
-   {
-       thetaPrev = thetaPrev + HALF_PI * 1/42;
-       drawWheel();
-   }
-   
-   if(mode == "left")
-   {
-       thetaPrev = thetaPrev - HALF_PI * 1/42;
-       
-       drawWheel();
-   }
-   
-    /*
-   // Grid lines - To be removed
-   stroke(0, 0, 255);
-   line(0, height - radius, width, height - radius);
-   for(int i = 1; i < 9; i++)
-   {
-     line(radius * i, 0, radius * i, height);
-   }
-   // End of grid lines
-   */
-   
-   if(mode == "right")
-   {
-     if(x < radius * direction)
-     {
-      x += 5;
-     }
-     else
-     {
-       mode = "none";
-     }
-   }
-   if(mode == "left")
-   {
-     if(x > radius * direction)
-     {
-      x -= 5;
-     }
-     else
-     {
-       mode = "none";
-     }
-   }
-   
-   fill(0);
-   text("Please use left & right arrows to select item.", 25, 25);
-}
+  switch(mode)
+  {
+    case 1:
+    {
+      wheel.render();
+      wheel.update();
+      break;
+    }
+    case 2:
+    {
+      wheel.render();
+      wheel.update();
+      println(mode);
+    break;
+    }
+    
+    case 3:
+    {
+      wheel.render();
+      wheel.update();
+      println(mode);
+      
+      while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
+      {
+         thetaBase += 0.1f; 
+      }
+      break;
+    }
+    
+    case 4:
+    {
+      wheel.render();
+      wheel.update();
+      println(mode);
+    break;
+    }
+    case 5:
+    {
+      wheel.render();
+      wheel.update();
+      println(mode);
+    break;
+    }
+    case 6:
+    {
+      wheel.render();
+      wheel.update();
+      println(mode);
+    break;
+    }
+    case 7:
+    {
+      wheel.render();
+      wheel.update();
+      println(mode);
+    break;
+    }
+    case 8:
+    {
+      wheel.render();
+      wheel.update();
+      println(mode);
+    break;
+    }
+    default:
+    {
+      text("Error, please select valid option", 100, 50);
+      wheel.render();
+      wheel.update();
+      
+      break;
+    }
+  }
 
-void drawWheel()
-{ 
-   for(int i = 0; i < segments; i++)
-   {
-     thetaNext = thetaPrev - theta;
-     //fill(colour[i]);
-     fill(255);
-     stroke(0);
-     strokeWeight(3);
-     
-     if(x == ((width/(segments+1)) * position) + 100)
-     {
-       if(i == position)
-       {
-         diameter = 245;
-         fill(100, 100, 200);
-       }
-     }
-       
-     arc(x, y, diameter, diameter, thetaNext, thetaPrev, PIE);
-     
-     thetaPrev = thetaNext;
-     diameter = 200;
-   }
-}
-
-void keyPressed()
-{
-   if (key == CODED)
-   {
-     if (keyCode == RIGHT)
-     {
-       if(direction < 8)
-       {
-         direction++;
-         position++;
-         mode = "right";
-       }
-       println("right");
-     }
-     
-     if(keyCode == LEFT)
-     {
-        if(direction > 1)
-        {
-          direction--;
-          position--;
-          mode = "left";
-        }
-        println("left");
-     }
-   }
+ // stroke(100, 255, 100);s
+ stroke(100);
+  fill(255);
+  strokeWeight(3);
+  line(300, 100, 300, 300);
+  textAlign(CENTER, CENTER);
+  int y = (int) option + 1;
+  text("Option Select: " + y, 300, 85);
 }
