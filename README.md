@@ -18,18 +18,23 @@ More data to be added (pending discovery of sources), such as:
 - Record holders - Most wins, most jerseys, most tours, etc.
 
 Graphs/Visualisation to be used:
-Length - Line trend graph.
-Stages - Pie graph.
-Speed - Trend graph.
-Record Holders - Bubble graph.
-Ascent - Mountain graph.
+- Length - Line trend graph.
+- Stages - Pie graph.
+- Speed - Trend graph.
+- Record Holders - Bubble graph.
+- Ascent - Mountain graph.
 
 Menu to be visualised as bicycle wheel, with each section between spokes as a menu option.
+
 Menu option to select each data individually. 1 - Length, 2 - Stages, etc.
+
 Other menu options to show two or more sets of data, i.e. 9 - Select option
-	Sub-menu to select data. 1 - Length, etc.
-	Both data options selected will show on the same graph for comparison
+
+- Sub-menu to select data. 1 - Length, etc.
+- Both data options selected will show on the same graph for comparison
+
 Sub-menus within all to show mean, mode, etc.
+
 Possible induction of correlation graphs, Length & speed, etc.
 
 Websites used:
