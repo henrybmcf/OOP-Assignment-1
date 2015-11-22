@@ -20,6 +20,7 @@ More data to be added (pending discovery of sources), such as:
 Graphs/Visualisation to be used:
 - Length - Line trend graph.
 - Stages - Pie graph.
+  - Frequency of number of stages.   
 - Speed - Trend graph.
 - Record Holders - Bubble graph.
 - Ascent - Mountain graph.
