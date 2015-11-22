@@ -18,13 +18,7 @@ void setup()
     
     years.add(year);
   }
-  /*
-  for(int i = 1; i < table.rows(); i++)
-  {
-     Year year = new Year(table.rows(i));  
-  }
-  */
-  
+ 
   for(int i = 0; i < years.size(); i++)
   {
      speedList.add(years.get(years.size() - (i + 1)).speed); 
@@ -35,11 +29,6 @@ void setup()
     yearList.add(years.get(i * 5).tour_year);
   }
   
-  /* Menu Code */
-  
-  
-  
-  /* End of Menu Code */
 }
 
 Table table;
@@ -50,12 +39,6 @@ int mode = 0;
 ArrayList<Float> speedList = new ArrayList<Float>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
 
-
-/* Menu Code */
-  
-  
-  
-/* End of Menu Code */
 
 void draw()
 {

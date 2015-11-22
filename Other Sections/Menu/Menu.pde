@@ -5,13 +5,13 @@ void setup()
   
   wheel = new Wheel();
   
-  mode = 1;
+  menu = 1;
   option = 0.0f;
 }
 
 Wheel wheel;
 
-int mode;
+int menu;
 float option;
 float theta;
 float thetaBase;
@@ -21,8 +21,8 @@ void keyPressed()
   if(keyCode > 48  && keyCode < 57)
   {
     println(keyCode);
-    mode = keyCode - 48;
-    println(mode);
+    menu = keyCode - 48;
+    println(menu);
   }    
 }
 
@@ -30,7 +30,7 @@ void draw()
 {
   background(0);
 
-  switch(mode)
+  switch(menu)
   {
     case 1:
     {
@@ -42,7 +42,7 @@ void draw()
     {
       wheel.render();
       wheel.update();
-      println(mode);
+      println(menu);
     break;
     }
     
@@ -50,7 +50,7 @@ void draw()
     {
       wheel.render();
       wheel.update();
-      println(mode);
+      println(menu);
       
       while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
       {
@@ -63,35 +63,35 @@ void draw()
     {
       wheel.render();
       wheel.update();
-      println(mode);
+      println(menu);
     break;
     }
     case 5:
     {
       wheel.render();
       wheel.update();
-      println(mode);
+      println(menu);
     break;
     }
     case 6:
     {
       wheel.render();
       wheel.update();
-      println(mode);
+      println(menu);
     break;
     }
     case 7:
     {
       wheel.render();
       wheel.update();
-      println(mode);
+      println(menu);
     break;
     }
     case 8:
     {
       wheel.render();
       wheel.update();
-      println(mode);
+      println(menu);
     break;
     }
     default:

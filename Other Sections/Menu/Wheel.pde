@@ -89,7 +89,7 @@ class Wheel
 
       if (key == RETURN || key == ENTER)
       {
-        mode = (int) option + 1;
+        menu = (int) option + 1;
       }
     }
   }
