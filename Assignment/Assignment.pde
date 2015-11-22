@@ -39,7 +39,7 @@ void setup()
   
   for(int i = 0; i < years.size(); i++)
   {
-    stages.add(years.get(i * 5).stages);
+    stages.add(years.get(i).stages);
   }
   
 }
@@ -186,7 +186,7 @@ void draw()
         
         for(int i = 0; i < stages.size(); i++)
         {
-          switch(stages.get(i)
+          switch(stages.get(i))
           {
             case 20:
             {
@@ -218,9 +218,9 @@ void draw()
               counter[5]++;
               break;
             }
-           
+          }
         }
-        pie.update();
+        pie.update(counter);
          
         break; 
       }

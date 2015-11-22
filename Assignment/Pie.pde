@@ -2,73 +2,58 @@ class Pie
 {
   float radius = width * 0.5f;
   
+  color[] colours = new color[6];
   
-}
-
-
-
-void drawPie(float[] dataset)
-{
-  // Calculate the sum
-  float sum = 0.0f;
-  for(float f:dataset)
+  Pie()
   {
-    sum += f;
-  }
-  
-  
-  // Calculate the angle to the mouse
-  float toMouseX = mouseX - radius;
-  float toMouseY = mouseY - radius;  
-  float angle = atan2(toMouseY, toMouseX);  
-  // We have to do this because 
-  // atan2 returns negative angles if y > 0 
-  // See https://processing.org/reference/atan2_.html
-  if (angle < 0)
-  {
-    angle = PI - angle;
-  }
-  
-  
-  // The last angle
-  float last = 0;
-  // The cumulative sum of the dataset 
-  float cumulative = 0;
-  for(int i = 0 ; i < dataset.length ; i ++)
-  {
-    cumulative += dataset[i];
-    // Calculate the surrent angle
-    float current = map(cumulative, 0, sum, 0, TWO_PI);
-    // Draw the pie segment
-    stroke(colors[i]);
-    fill(colors[i]);
-    
-    float r = radius;
-    // If the mouse angle is inside the pie segment
-    // Mmmm pie. Im hungry
-    if (angle > last && angle < current)
+    for(int i = 0; i < 6; i ++)
     {
-      r = radius * 1.5f;
+      colours[i] = color(random(100, 255), random(100, 255), 0);
+    }
+  }
+  
+  void update(int[] counter)
+  {
+    float sum = 0.0f;
+    
+    for(int c:counter)
+    {
+      sum += c;
+    }
+
+    float toMouseX = mouseX - radius;
+    float toMouseY = mouseY - radius;  
+    float angle = atan2(toMouseY, toMouseX);  
+  
+    if (angle < 0)
+    {
+      angle = TWO_PI + angle;
+    }
+  
+    float last = 0.0f;
+    float cumulative = 0.0f;
+    
+    for(int i = 0 ; i < counter.length ; i ++)
+    {
+      cumulative += counter[i];
+  
+      float current = map(cumulative, 0, sum, 0, TWO_PI);
+  
+      stroke(colours[i]);
+      fill(colours[i]);
+      
+      float r = radius;
+  
+      if (angle > last && angle < current)
+      {
+        r = radius * 1.5f;
+      }
+      
+      arc(radius, radius, r, r, last, current);
+      last = current;       
     }
     
-    // Draw the arc
-    arc(
-       radius
-       ,radius
-       ,r
-       ,r
-       , last
-       , current
-       );
-    last = current;       
+    stroke(255);
+    line(radius, radius, mouseX, mouseY);
   }
-  
-  stroke(255);
-  line(radius, radius, mouseX, mouseY);
-}
-
-void draw()
-{
-  background(0);
-  drawPie(dataset); 
 }
