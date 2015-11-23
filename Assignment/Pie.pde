@@ -40,22 +40,73 @@ class Pie
       cumulative += counter[i];
   
       float current = map(cumulative, 0, sum, 0, TWO_PI);
-  
-      stroke(colours[i]);
-      fill(colours[i]);
-      
+
       float r = radius;
   
-      if (angle > last && angle < current)
+      if(angle > last && angle < current)
       {
         r = radius * 1.5f;
+        
+        fill(255);
+        
+        float centx = width * 0.5f;
+        float centy = height * 0.5f;
+        
+        float x;
+        float y;
+        float theta;
+        
+        if(mouseY < centy)
+        {
+          theta = angle - PI;
+        }
+        else
+        {
+          theta = angle;
+        }
+        
+        float sin = sin(theta);
+        float cos = cos(theta);
+        
+        if(sin < 0)
+        {
+          sin = -sin;
+        }
+        if(cos < 0)
+        {
+          cos = -cos;
+        }
+        
+        if(mouseX > centx)
+        {
+          x = centx + (radius * cos);
+        }
+        else
+        {
+          x = centx - (radius * cos);
+        }
+        
+        if(mouseY < centy)
+        {
+          y = centy - (radius * sin);
+        }
+        else
+        {
+          y = centy + (radius * sin);
+        }
+        text(counter[i], x, y);
       }
       
+      strokeWeight(1);
+      stroke(colours[i]);
+      fill(colours[i]);
+    
       arc(radius, radius, r, r, last, current);
-      last = current;       
+      last = current;
     }
     
     stroke(255);
+    strokeWeight(2);
     line(radius, radius, mouseX, mouseY);
   }
 }
