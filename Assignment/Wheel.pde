@@ -38,9 +38,12 @@ class Wheel
     {
       fill(colours[i]);
       stroke(colours[i]);
-      strokeWeight(1);
+    //  strokeWeight(1);
 
       arc(pos.x, pos.y, diameter, diameter, thetaBase + (theta * i), (thetaBase + (theta * i)) + theta, PIE);
+      fill(0);
+      stroke(0);
+      ellipse(pos.x, pos.y, 20, 20);
     }
   }
 
@@ -50,10 +53,6 @@ class Wheel
     {
       if (keyCode == LEFT || keyCode == RIGHT)
       {
-        println("tBase = " + thetaBase);
-        println(PI+HALF_PI);
-        println("theta = " + theta);
-
         option = ((PI + HALF_PI - thetaBase) / theta);
 
         if (option < 1)

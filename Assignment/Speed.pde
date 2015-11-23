@@ -19,6 +19,7 @@ class Speed
   void render()
   {
     stroke(0, 255, 255);
+    strokeWeight(4);
     float windowRange = (width - (border * 2.0f));
     float dataRange = 50;      
     float lineWidth = windowRange / (float)(speedList.size() - 1);
@@ -33,23 +34,26 @@ class Speed
       line(x1, y1, x2, y2);
     }
     
-    stroke(200, 200, 200);
-    fill(200, 200, 200);  
-     
+    strokeWeight(2);
+    stroke(255);
+    fill(255);
+    
+    // x axis (year axis)
     line(border, height - border, width - border, height - border);
     
     float horizInterval =  windowRange / (yearList.size() - 1);
     float tickSize = border * 0.1f;
     
     for(int i = 0; i < yearList.size(); i++)
-    {   
+    {
      float x = border + (i * horizInterval);
      line(x, height - (border - tickSize), x, (height - border));
      float textY = height - (border * 0.5f);
      textAlign(CENTER, CENTER);
-     text(yearList.get(i), x, textY);  
+     text(yearList.get(i), x, textY);
     }
-  
+    
+    // y axis (speed axis) 
     line(border, border, border, height - border);
     
     float verticalDataGap = vertDataRange / verticalIntervals;
@@ -65,6 +69,33 @@ class Speed
           
       textAlign(RIGHT, CENTER);  
       text(nf(hAxisLabel, 2, 2), border - (tickSize * 2.0f), y);
-    } 
+    }
+    
+    if(mouseX > border && mouseX < (width - border))
+    {
+      stroke(255, 0, 0);
+      line(mouseX, border, mouseX, height - border);
+    }
+    
+    // Determine which year the mouse is in
+    int x = (int) ((mouseX - border) / lineWidth);
+    
+    if(x >= 0 && x < years.size())
+    {
+      int year = years.get(x).tour_year;
+      float speed = years.get(x).speed;
+      
+      // Determine y coordinate of ellipse in relation to line graph
+      float y = map(years.get(x).speed, 0, dataRange, height - border, (height - border) - (height - (border * 2.0f)));
+      
+      stroke(255, 0, 0);
+      fill(255, 0, 0);
+      ellipse(mouseX, y, 10, 10);
+      
+      fill(255);
+      textAlign(RIGHT, CENTER);
+      text("Year: " + year, mouseX, height - 200);
+      text("Speed: " + speed + " Km/h", mouseX, height - 200);
+    }
   }  
 }

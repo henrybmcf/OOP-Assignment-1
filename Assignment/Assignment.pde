@@ -29,19 +29,16 @@ void setup()
  
   for(int i = 0; i < years.size(); i++)
   {
-     speedList.add(years.get(years.size() - (i + 1)).speed); 
+    speedList.add(years.get(i).speed);
+    stages.add(years.get(i).stages);
   }
   
   for(int i = 0; i < 14; i++)
   {
-    yearList.add(years.get(i * 5).tour_year);
+    yearList.add(years.get((i * 5) + 3).tour_year);
   }
   
-  for(int i = 0; i < years.size(); i++)
-  {
-    stages.add(years.get(i).stages);
-  }
-  
+  // Stage counter
   for(int i = 0; i < stages.size(); i++)
   {
     switch(stages.get(i))
@@ -157,8 +154,6 @@ void draw()
     }
   }
 }
-
-
 
 void keyPressed()
 {
