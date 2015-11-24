@@ -7,8 +7,10 @@ void setup()
   pie = new Pie();
   
   wheel = new Wheel();
-  menu = 1;
+  menu = 0;
   option = 0.0f;
+  sum = 0.0f;
+  average = 0.0f;
 
   table = loadTable("TDF.csv", "header");
 
@@ -31,16 +33,11 @@ void setup()
   {
     speedList.add(years.get(i).speed);
     stages.add(years.get(i).stages);
-  }
-  
-  float sum = 0.0f;
-  for(float s:speedList)
-  {
-    sum = sum + s;
+    
+    sum = sum + speedList.get(i);
   }
   
   average = sum / speedList.size();
-  println(average);
   
   for(int i = 0; i < 14; i++)
   {
@@ -97,13 +94,12 @@ ArrayList<Integer> yearList = new ArrayList<Integer>();
 ArrayList<Integer> stages = new ArrayList<Integer>();
 
 int[] counter = new int[6];
-
 int menu;
 float option;
 float theta;
 float thetaBase;
-
-float average = 0.0f;
+float average;
+float sum;
 
 void draw()
 {
@@ -111,7 +107,7 @@ void draw()
 
   switch(menu)
   {
-    case 1:
+    case 0:
     {
       wheel.render();
       wheel.update();
@@ -127,15 +123,21 @@ void draw()
       break;
     }
     
-    case 2:
+    case 1:
     {
       speed.render();
+      break;
+    }
+    
+    case 2:
+    {
+      pie.update(counter);
       break;
     }
 
     case 3:
     {
-      pie.update(counter);
+      
       break;
     }
 
@@ -175,6 +177,6 @@ void keyPressed()
   
   if(key == BACKSPACE)
   {
-    menu = 1;
+    menu = 0;
   }
 }

@@ -2,9 +2,7 @@ class Wheel
 {
   PVector pos;
   int segments = 8;
-  
   float diameter;
-  
   color[] colours = new color[segments];
 
   Wheel()
@@ -38,8 +36,6 @@ class Wheel
     {
       fill(colours[i]);
       stroke(colours[i]);
-    //  strokeWeight(1);
-
       arc(pos.x, pos.y, diameter, diameter, thetaBase + (theta * i), (thetaBase + (theta * i)) + theta, PIE);
       fill(0);
       stroke(0);
@@ -49,6 +45,7 @@ class Wheel
 
   void update()
   {
+    
     if (keyPressed)
     {
       if (keyCode == LEFT || keyCode == RIGHT)
@@ -66,6 +63,7 @@ class Wheel
         }
       }
 
+      // Turn wheel depending on arrow key pressed
       if (keyCode == LEFT)
       {
         thetaBase -= 0.05f;
@@ -86,6 +84,7 @@ class Wheel
         }
       }
 
+      // Go to menu option when return key pressed
       if (key == RETURN || key == ENTER)
       {
         menu = (int) option + 1;
