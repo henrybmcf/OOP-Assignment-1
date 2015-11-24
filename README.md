@@ -1,6 +1,8 @@
 # OOP_Assignment_2015
 Object Orientated Programming Assignment. Nov-Dec 2015.
 
+*** Note to self: Add more years for speed ***
+
 Project visualising data from the Tour de France (TdF).
 TdF data taken from 1947 - 2015. Various data found across multiple sites used to create a single csv file.
 
@@ -24,6 +26,14 @@ Graphs/Visualisation to be used:
 - Speed - Trend graph.
 - Record Holders - Bubble graph.
 - Ascent - Mountain graph.
+
+Record holders:
+- Most appearances & finishes in a tour
+	- Main bubble for appearances
+	- Sub bubble for finishes
+- Smallest winning margin
+- Stage wins per rider
+- Stage wins per country
 
 Menu to be visualised as bicycle wheel, with each section between spokes as a menu option.
 
