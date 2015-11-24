@@ -33,6 +33,15 @@ void setup()
     stages.add(years.get(i).stages);
   }
   
+  float sum = 0.0f;
+  for(float s:speedList)
+  {
+    sum = sum + s;
+  }
+  
+  average = sum / speedList.size();
+  println(average);
+  
   for(int i = 0; i < 14; i++)
   {
     yearList.add(years.get((i * 5) + 3).tour_year);
@@ -93,6 +102,8 @@ int menu;
 float option;
 float theta;
 float thetaBase;
+
+float average = 0.0f;
 
 void draw()
 {

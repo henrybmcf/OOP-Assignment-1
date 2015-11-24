@@ -18,6 +18,15 @@ class Speed
   
   void render()
   {
+    textAlign(LEFT);
+    text("Average speed of winner of TDF.\nPlease move mouse over graph to show individual year's speeds.", 25, 25);
+    stroke(0, 255, 0);
+    float avg_y = map(average, 0, 50, height - border, (height - border) - (height - (border * 2.0f)));
+    line(border, avg_y, width - border, avg_y);
+    fill(0, 255, 0);
+    textAlign(RIGHT, CENTER);
+    text(nf(average, 2, 2), border - 10, avg_y);
+    
     stroke(0, 255, 255);
     strokeWeight(4);
     float windowRange = (width - (border * 2.0f));
