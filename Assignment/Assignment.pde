@@ -5,6 +5,7 @@ void setup()
   
   speed = new Speed();
   pie = new Pie();
+  bubble = new Bubble();
   
   wheel = new Wheel();
   menu = 0;
@@ -87,6 +88,7 @@ Table table;
 Wheel wheel;
 Speed speed;
 Pie pie;
+Bubble bubble;
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Float> speedList = new ArrayList<Float>();
@@ -137,7 +139,7 @@ void draw()
 
     case 3:
     {
-      
+      bubble.render();
       break;
     }
 

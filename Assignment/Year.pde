@@ -8,10 +8,10 @@ class Year
   
   Year()
   {
-      tour_year = 0;
-      tour_length = 0;
-      stages = 0;
-      winner = "";
-      speed = 0.0f;
+     tour_year = 0;
+     tour_length = 0;
+     stages = 0;
+     winner = "";
+     speed = 0.0f;
   }
 }
