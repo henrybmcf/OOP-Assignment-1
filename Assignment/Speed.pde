@@ -93,9 +93,25 @@ class Speed
       ellipse(mouseX, y, 10, 10);
       
       fill(255);
-      textAlign(RIGHT, CENTER);
-      text("Year: " + year, mouseX, height - 200);
-      text("Speed: " + speed + " Km/h", mouseX, height - 200);
+      if(mouseX < 150)
+      {
+        textAlign(LEFT, CENTER);
+        text("Year: " + year, mouseX + 10, height - 200);
+        text("Speed: " + speed + " Km/h", mouseX + 10, height - 180);
+      }
+      if(mouseX > width - 200)
+      {
+        textAlign(RIGHT, CENTER);
+        text("Year: " + year, mouseX - 10, height - 200);
+        text("Speed: " + speed + " Km/h", mouseX - 10, height - 180);
+      }
+      if(mouseX > 150 && mouseX < width - 200)
+      {
+        textAlign(RIGHT, CENTER);
+        text("Year: " + year, mouseX - 10, height - 200);
+        textAlign(LEFT, CENTER);
+        text("Speed: " + speed + " Km/h", mouseX + 10, height - 200);
+      }
     }
   }  
 }
