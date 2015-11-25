@@ -3,6 +3,9 @@ void setup()
   size(600, 600);
   background(0);
   
+  correl = new Correlation();
+  
+  
   speed = new Speed();
   pie = new Pie();
   bubble = new Bubble();
@@ -29,7 +32,7 @@ void setup()
     rider.add(stage_records.get(i).rider);
     wins.add(stage_records.get(i).number);
     float x1 = random(50, width - 50);
-      
+
     x.add(x1);
   }
 
@@ -110,6 +113,7 @@ Speed speed;
 Pie pie;
 Bubble bubble;
 Table stages_table;
+Correlation correl;
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Float> speedList = new ArrayList<Float>();
@@ -171,19 +175,21 @@ void draw()
 
     case 4:
     {
-      wheel.render();
-      wheel.update();
-      println(menu);
-      
+      correl.render();
+      break;
+    }
+    
+    case 5:
+    {
       /*  
       while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
       {
          thetaBase += 0.1f; 
       }
       */
-    break;
-    
+      break;
     }
+      
 
     default:
     {

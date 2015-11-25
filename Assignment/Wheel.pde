@@ -13,7 +13,7 @@ class Wheel
   Wheel(float x, float y, float diameter)
   {
     pos = new PVector(x, y);
-    this.diameter = diameter;    
+    this.diameter = diameter;
     theta = TWO_PI / segments;
     thetaBase = PI + HALF_PI;
 
