@@ -6,12 +6,32 @@ void setup()
   speed = new Speed();
   pie = new Pie();
   bubble = new Bubble();
-  
   wheel = new Wheel();
   menu = 0;
   option = 0.0f;
   sum = 0.0f;
   average = 0.0f;
+  
+  stages_table = loadTable("stage_wins.csv", "header");
+  
+  for(TableRow row : stages_table.rows())
+  {
+    Stages stage = new Stages();
+    
+    stage.rider = row.getString("Rider");
+    stage.number = row.getInt("Wins");
+    
+    stage_records.add(stage);
+  }
+  
+  for(int i = 0; i < stage_records.size(); i++)
+  {
+    rider.add(stage_records.get(i).rider);
+    wins.add(stage_records.get(i).number);
+    float x1 = random(50, width - 50);
+      
+    x.add(x1);
+  }
 
   table = loadTable("TDF.csv", "header");
 
@@ -89,11 +109,17 @@ Wheel wheel;
 Speed speed;
 Pie pie;
 Bubble bubble;
+Table stages_table;
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Float> speedList = new ArrayList<Float>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
 ArrayList<Integer> stages = new ArrayList<Integer>();
+ArrayList<Stages> stage_records = new ArrayList<Stages>();
+ArrayList<String> rider = new ArrayList<String>();
+ArrayList<Integer> wins = new ArrayList<Integer>();
+
+ArrayList <Float> x = new ArrayList<Float>();
 
 int[] counter = new int[6];
 int menu;
