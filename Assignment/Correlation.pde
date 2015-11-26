@@ -21,7 +21,7 @@ class Correlation
   Correlation()
   {
     verticalIntervals = 10;
-    dataRange = 50.0f;
+    dataRange = 42.0f;
     border = width * 0.1f;
     graph_height = height - border;
     graph_width = width - border;
@@ -36,31 +36,39 @@ class Correlation
   
   void render()
   {
+    float highest = speedList.get(0);
     
-    // Graph Title
-    textAlign(LEFT);
-    text("Average speed of winner of TDF.\nPlease move mouse over graph to show individual year's speeds.", 25, 25);
-    /*
-    // Show overall average line across graph 
-    stroke(0, 255, 0);
-    avg_y = map(average, 0, 50, graph_height, (graph_height) - (height - (border * 2.0f)));
-    line(border, avg_y, graph_width, avg_y);
-    fill(0, 255, 0);
-    textAlign(RIGHT, CENTER);
-    text(nf(average, 2, 2), border - 10, avg_y);
-    */
+    float lowest = speedList.get(0);
+    
+    for(int i = 0; i < speedList.size(); i++)
+    {
+       if(speedList.get(i) > highest)
+       {
+         highest = speedList.get(i);
+       }
+       if(speedList.get(i) < lowest)
+       {
+         lowest = speedList.get(i);
+       }  
+    }
+
     stroke(0, 255, 255);
     strokeWeight(4);
       
     lineWidth = windowRange / (float)(speedList.size() - 1);
     scale = windowRange / dataRange;
+
     
     for(int i = 1; i < speedList.size(); i++)
     {
       float x1 = border + ((i - 1) * lineWidth);
       float x2 = border + (i * lineWidth);
-      float y1 = (graph_height) - (speedList.get(i - 1)) * scale;
-      float y2 = (graph_height) - (speedList.get(i)) * scale;
+      
+      float y1 = map(speedList.get(i - 1), lowest, highest, graph_height - border, ((graph_height) - (height - (border * 2.0f))) + border);
+      float y2 = map(speedList.get(i), lowest, highest, graph_height - border, ((graph_height) - (height - (border * 2.0f))) + border);
+
+     // float y1 = (graph_height) - (speedList.get(i - 1)) * scale;
+      //float y2 = (graph_height) - (speedList.get(i)) * scale;
       line(x1, y1, x2, y2);
     }
     
@@ -70,10 +78,8 @@ class Correlation
     scale = windowRange / 26;
     for(int i = 0; i < stages.size(); i++)
     {
-       //println("Hello");
        float x1 = border + (i * lineWidth);
        float y1 = (graph_height) - (stages.get(i)) * scale;
-       println(x1, y1);
        rect(x1, y1, 4, 4);
     }
     
@@ -98,6 +104,7 @@ class Correlation
     
     stroke(0, 255, 255);
     strokeWeight(3);
+    
     // y axis (speed axis) 
     line(border, border, border, graph_height);
  
@@ -106,7 +113,7 @@ class Correlation
       float y = (graph_height) - (i * verticalWindowGap);
       line(border - tickSize, y, border, y);
       
-      float hAxisLabel = verticalDataGap * i;
+      float hAxisLabel = (verticalDataGap * i);
           
       textAlign(RIGHT, CENTER);  
       text(nf(hAxisLabel, 2, 2), border - (tickSize * 2.0f), y);
@@ -143,7 +150,9 @@ class Correlation
       int stage = years.get(x).stages;
       
       // Determine y coordinate of ellipse in relation to line graph
-      float y = map(years.get(x).speed, 0, dataRange, graph_height, (graph_height) - (height - (border * 2.0f)));
+      float y = map(speedList.get(x), lowest, highest, graph_height - border, ((graph_height) - (height - (border * 2.0f))) + border);
+     // float y1 = map(speedList.get(i - 1), lowest, highest, graph_height, height - graph_height);
+
       
       stroke(255, 0, 0);
       fill(255, 0, 0);
