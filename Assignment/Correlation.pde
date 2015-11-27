@@ -7,7 +7,6 @@ class Correlation
   float graph_width;
   float windowRange;
   float lineWidth;
-  float scale;
   float avg_y;
   float horizInterval;
   float tickSize;
@@ -21,16 +20,13 @@ class Correlation
   Correlation()
   {
     verticalIntervals = 10;
-    dataRange = 42.0f;
     border = width * 0.1f;
     graph_height = height - border;
     graph_width = width - border;
     windowRange = width - (border * 2.0f);
     verticalWindowRange = height - (border * 2.0f);
-    verticalDataGap = dataRange / verticalIntervals;
     verticalWindowGap = verticalWindowRange / verticalIntervals;
-    verticalStageGap = 2;
-    verticalStageIntervals = 13;
+    verticalStageIntervals = 6;
     verticalStageWindowGap = verticalWindowRange / verticalStageIntervals;
   }
   
@@ -51,35 +47,30 @@ class Correlation
          lowest = speedList.get(i);
        }  
     }
-
+    println(highest, lowest, highest - lowest);
     stroke(0, 255, 255);
     strokeWeight(4);
       
     lineWidth = windowRange / (float)(speedList.size() - 1);
-    scale = windowRange / dataRange;
 
-    
     for(int i = 1; i < speedList.size(); i++)
     {
       float x1 = border + ((i - 1) * lineWidth);
-      float x2 = border + (i * lineWidth);
-      
-      float y1 = map(speedList.get(i - 1), lowest, highest, graph_height - border, ((graph_height) - (height - (border * 2.0f))) + border);
-      float y2 = map(speedList.get(i), lowest, highest, graph_height - border, ((graph_height) - (height - (border * 2.0f))) + border);
+      float x2 = border + (i * lineWidth);      
+      float y1 = map(speedList.get(i - 1), lowest, highest, graph_height, (graph_height) - (height - (border * 2.0f)));
+      float y2 = map(speedList.get(i), lowest, highest, graph_height, (graph_height) - (height - (border * 2.0f)));
 
-     // float y1 = (graph_height) - (speedList.get(i - 1)) * scale;
-      //float y2 = (graph_height) - (speedList.get(i)) * scale;
       line(x1, y1, x2, y2);
     }
     
+    // Stages scatter graph
     fill(255, 0, 255);
     stroke(255, 0, 255);
     strokeWeight(0);
-    scale = windowRange / 26;
     for(int i = 0; i < stages.size(); i++)
     {
        float x1 = border + (i * lineWidth);
-       float y1 = (graph_height) - (stages.get(i)) * scale;
+       float y1 = map(stages.get(i), 19, 25, graph_height, (graph_height) - (height - (border * 2.0f)));
        rect(x1, y1, 4, 4);
     }
     
@@ -87,7 +78,7 @@ class Correlation
     stroke(255);
     fill(255);
     
-    // x axis (year axis)
+    // x axis (Year axis)
     line(border, graph_height, graph_width, graph_height);
     
     horizInterval = windowRange / (yearList.size() - 1);
@@ -105,29 +96,32 @@ class Correlation
     stroke(0, 255, 255);
     strokeWeight(3);
     
-    // y axis (speed axis) 
+    // Speed axis 
     line(border, border, border, graph_height);
  
     for (int i = 0; i <= verticalIntervals; i++)
     {
       float y = (graph_height) - (i * verticalWindowGap);
       line(border - tickSize, y, border, y);
+
+      int range = (int) (highest - lowest);
+      verticalDataGap = range / verticalIntervals;
       
-      float hAxisLabel = (verticalDataGap * i);
-          
+      float hAxisLabel = (verticalDataGap * i) + (int) lowest;
+  
       textAlign(RIGHT, CENTER);  
       text(nf(hAxisLabel, 2, 2), border - (tickSize * 2.0f), y);
     }
     
+    // Stages axis
     stroke(255, 0, 255);
     line(width - border, border, width - border, graph_height);
- 
     for (int i = 0; i <= verticalStageIntervals; i++)
     {
       float y = (graph_height) - (i * verticalStageWindowGap);
       line(graph_width + tickSize, y, graph_width, y);
       
-      int hAxisLabel = verticalStageGap * i;
+      int hAxisLabel = i + 19;
           
       textAlign(LEFT, CENTER);  
       text(hAxisLabel, graph_width + (tickSize * 3.0f), y);
@@ -150,9 +144,7 @@ class Correlation
       int stage = years.get(x).stages;
       
       // Determine y coordinate of ellipse in relation to line graph
-      float y = map(speedList.get(x), lowest, highest, graph_height - border, ((graph_height) - (height - (border * 2.0f))) + border);
-     // float y1 = map(speedList.get(i - 1), lowest, highest, graph_height, height - graph_height);
-
+      float y = map(speedList.get(x), lowest, highest, graph_height, (graph_height) - (height - (border * 2.0f)));
       
       stroke(255, 0, 0);
       fill(255, 0, 0);
@@ -167,7 +159,6 @@ class Correlation
         text("Speed: " + speed + " Km/h", mouseX + 10, height - 180);
         text("Stages: " + stage, mouseX + 10, height - 160);
       }
-      //if(mouseX > width - 200)
       else
       {
         textAlign(RIGHT, CENTER);
@@ -175,15 +166,6 @@ class Correlation
         text("Speed: " + speed + " Km/h", mouseX - 10, height - 180);
         text("Stages: " + stage, mouseX - 10, height - 160);
       }
-      /*
-      if(mouseX > 150 && mouseX < width - 200)
-      {
-        textAlign(RIGHT, CENTER);
-        text("Year: " + year, mouseX - 10, height - 200);
-        textAlign(LEFT, CENTER);
-        text("Speed: " + speed + " Km/h", mouseX + 10, height - 200);
-        text("Stages: " + stage, mouseX + 50, height - 160);
-      }*/
     }
   }
 }
