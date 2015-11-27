@@ -73,12 +73,11 @@ class Spd_Stg_Len_Correl
     }
     println(longLength, shortLength, longLength - shortLength);
     
-    /*
+    
     stroke(0, 255, 255);
     strokeWeight(4);
       
     lineWidth = windowRange / (float)(speedList.size() - 1);
-
     for(int i = 1; i < speedList.size(); i++)
     {
       float x1 = border + ((i - 1) * lineWidth);
@@ -98,7 +97,22 @@ class Spd_Stg_Len_Correl
        float x1 = border + (i * lineWidth);
        float y1 = map(stages.get(i), 19, 25, graph_height, (graph_height) - (height - (border * 2.0f)));
        rect(x1, y1, 4, 4);
-    }*/
+    }
+    
+    stroke(255, 255, 0);
+    strokeWeight(4);
+    lineWidth = windowRange / (float)(lengths.size() - 1);
+    for(int i = 1; i < lengths.size(); i++)
+    {
+      float x1 = border + ((i - 1) * lineWidth);
+      float x2 = border + (i * lineWidth);      
+      float y1 = map(lengths.get(i - 1), shortLength, longLength, graph_height, (graph_height) - (height - (border * 2.0f)));
+      float y2 = map(lengths.get(i), shortLength, longLength, graph_height, (graph_height) - (height - (border * 2.0f)));
+      
+      println(lengths.get(i));
+      println(x1);
+      line(x1, y1, x2, y2);
+    }
     
     strokeWeight(2);
     stroke(255);
@@ -176,7 +190,7 @@ class Spd_Stg_Len_Correl
       text(hAxisLabel, graph_width + (tickSize * 3.0f), y);
     }
     
-    /*
+    
     // Draw line to show exact year and speed depending on x coordinates of mouse
     if(mouseX > border && mouseX < (graph_width))
     {
@@ -192,13 +206,19 @@ class Spd_Stg_Len_Correl
       int year = years.get(x).tour_year;
       float speed = years.get(x).speed;
       int stage = years.get(x).stages;
+      int tour_length = years.get(x).tour_length;
       
       // Determine y coordinate of ellipse in relation to line graph
-      float y = map(speedList.get(x), lowestSpeed, highestSpeed, graph_height, (graph_height) - (height - (border * 2.0f)));
+      float speed_y = map(speedList.get(x), lowestSpeed, highestSpeed, graph_height, (graph_height) - (height - (border * 2.0f)));
+      
+      float length_y = map(lengths.get(x), shortLength, longLength, graph_height, (graph_height) - (height - (border * 2.0f)));
       
       stroke(255, 0, 0);
       fill(255, 0, 0);
-      ellipse(mouseX, y, 10, 10);
+      ellipse(mouseX, speed_y, 10, 10);
+      stroke(0, 255, 255);
+      fill(0, 255, 255);
+      ellipse(mouseX, length_y, 10, 10);
       
       fill(255);
       // Display speed and year on relevant side of line, depending on location across graph
@@ -208,6 +228,7 @@ class Spd_Stg_Len_Correl
         text("Year: " + year, mouseX + 10, height - 200);
         text("Speed: " + speed + " Km/h", mouseX + 10, height - 180);
         text("Stages: " + stage, mouseX + 10, height - 160);
+        text("Length: " + tour_length, mouseX + 10, height - 140);
       }
       else
       {
@@ -215,7 +236,8 @@ class Spd_Stg_Len_Correl
         text("Year: " + year, mouseX - 10, height - 200);
         text("Speed: " + speed + " Km/h", mouseX - 10, height - 180);
         text("Stages: " + stage, mouseX - 10, height - 160);
+        text("Length: " + tour_length, mouseX - 10, height - 140);
       }
-    }*/
+    }
   }
 }
