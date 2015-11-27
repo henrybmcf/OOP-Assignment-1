@@ -41,11 +41,17 @@ class Wheel
       stroke(0);
       ellipse(pos.x, pos.y, 20, 20);
     }
+
+    stroke(100);
+    fill(255);
+    strokeWeight(3);
+    line(pos.x, pos.y - diameter * 0.7f, pos.x, pos.y);
+    textAlign(CENTER, CENTER);
+    text("Option Select: " + ((int)option + 1), pos.x, pos.y - (diameter * 0.8f));
   }
 
   void update()
-  {
-    
+  {  
     if (keyPressed)
     {
       if (keyCode == LEFT || keyCode == RIGHT)

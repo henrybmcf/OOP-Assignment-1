@@ -1,10 +1,11 @@
 void setup()
 {
-  size(600, 600);
+  //size(900, 700);
+  fullScreen();
   background(0);
   
   correl = new Correlation();
-  
+  ssl_correl = new Spd_Stg_Len_Correl();
   
   speed = new Speed();
   pie = new Pie();
@@ -57,6 +58,7 @@ void setup()
   {
     speedList.add(years.get(i).speed);
     stages.add(years.get(i).stages);
+    lengths.add(years.get(i).tour_length);
     
     sum = sum + speedList.get(i);
   }
@@ -114,6 +116,7 @@ Pie pie;
 Bubble bubble;
 Table stages_table;
 Correlation correl;
+Spd_Stg_Len_Correl ssl_correl;
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Float> speedList = new ArrayList<Float>();
@@ -122,6 +125,7 @@ ArrayList<Integer> stages = new ArrayList<Integer>();
 ArrayList<Stages> stage_records = new ArrayList<Stages>();
 ArrayList<String> rider = new ArrayList<String>();
 ArrayList<Integer> wins = new ArrayList<Integer>();
+ArrayList<Integer> lengths = new ArrayList<Integer>();
 
 ArrayList <Float> x = new ArrayList<Float>();
 
@@ -143,15 +147,7 @@ void draw()
     {
       wheel.render();
       wheel.update();
-      
-      stroke(100);
-      fill(255);
-      strokeWeight(3);
-      line(300, 100, 300, 300);
-      textAlign(CENTER, CENTER);
-      int y = (int) option + 1;
-      text("Option Select: " + y, 300, 85);
-      
+     
       break;
     }
     
@@ -181,12 +177,18 @@ void draw()
     
     case 5:
     {
+      ssl_correl.render();
+      break;
+    }
+    
+    case 6:
+    {
       /*  
       while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
       {
          thetaBase += 0.1f; 
       }
-      */
+      */     
       break;
     }
       
