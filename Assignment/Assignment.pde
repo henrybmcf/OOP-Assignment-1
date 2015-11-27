@@ -70,6 +70,11 @@ void setup()
     yearList.add(years.get((i * 5) + 3).tour_year);
   }
   
+  for(int i = 0; i < correlation.length; i++)
+  {
+    correlation[i] = false;
+  }
+  
   // Stage counter
   for(int i = 0; i < stages.size(); i++)
   {
@@ -136,6 +141,8 @@ float theta;
 float thetaBase;
 float average;
 float sum;
+
+boolean[] correlation = new boolean[3];
 
 void draw()
 {
@@ -214,5 +221,24 @@ void keyPressed()
   if(key == BACKSPACE)
   {
     menu = 0;
+  }
+  
+  if(menu == 5)
+  {
+    if(key == 's')
+    {
+      correlation[0] =! correlation[0];
+      println("speed");
+    }
+    if(key == 't')
+    {
+      correlation[1] =! correlation[1];
+      println("stages");
+    }
+    if(key == 'l')
+    {
+      correlation[2] =! correlation[2];
+      println("length");
+    }
   }
 }

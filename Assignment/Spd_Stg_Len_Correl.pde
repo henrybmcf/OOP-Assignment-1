@@ -18,8 +18,8 @@ class Spd_Stg_Len_Correl
   float verticalStageWindowGap;
  
   float lengthDataGap;
-  float lengthIntervals;
   float lengthWindowGap;
+  
   
   Spd_Stg_Len_Correl()
   {
@@ -32,9 +32,7 @@ class Spd_Stg_Len_Correl
     verticalWindowGap = verticalWindowRange / verticalIntervals;
     verticalStageIntervals = 6;
     verticalStageWindowGap = verticalWindowRange / verticalStageIntervals;
-    
-    lengthIntervals = 10;
-    lengthWindowGap = verticalWindowRange / lengthIntervals;
+    lengthWindowGap = verticalWindowRange / verticalIntervals;
   }
   
   void render()
@@ -54,7 +52,6 @@ class Spd_Stg_Len_Correl
          lowestSpeed = speedList.get(i);
        }  
     }
-   // println(highestSpeed, lowestSpeed, highestSpeed - lowestSpeed);
     
     // Find longest and shortest lengths for mapping
     int shortLength = lengths.get(0);
@@ -71,48 +68,116 @@ class Spd_Stg_Len_Correl
         shortLength = i;
       }
     }
-    println(longLength, shortLength, longLength - shortLength);
     
+    // Speed Graph
+    if(correlation[0] == true)
+    {
+      // Speed axis 
+      stroke(0, 255, 255);
+      strokeWeight(3);
+
+      for(int i = 0; i <= verticalIntervals; i++)
+      {
+        float y = (graph_height) - (i * verticalWindowGap);
+       
+        int range = (int) (highestSpeed - lowestSpeed);
+        verticalDataGap = range / verticalIntervals;
+        
+        float hAxisLabel = (verticalDataGap * i) + (int) lowestSpeed;
+    
+        textAlign(RIGHT, CENTER);  
+        text(nf(hAxisLabel, 2, 2), border - (tickSize * 2.0f), y);
+      }
+      
+      strokeWeight(4);
+      lineWidth = windowRange / (float)(speedList.size() - 1);
+      for(int i = 1; i < speedList.size(); i++)
+      {
+        float x1 = border + ((i - 1) * lineWidth);
+        float x2 = border + (i * lineWidth);      
+        float y1 = map(speedList.get(i - 1), lowestSpeed, highestSpeed, graph_height, (graph_height) - (height - (border * 2.0f)));
+        float y2 = map(speedList.get(i), lowestSpeed, highestSpeed, graph_height, (graph_height) - (height - (border * 2.0f)));
+  
+        line(x1, y1, x2, y2);
+      }
+    }
+  
+    // Stages Scatter Graph
+    if(correlation[1] == true)
+    {
+       /*
+      
+      Find lowest stages
+      Replace 19 with lowest!!
+      
+      */
+      
+      // Stages axis
+      stroke(255, 0, 255);
+      strokeWeight(3);
+      fill(255, 0, 255);
+      
+      line(width - border, border, width - border, graph_height);
+      for(int i = 0; i <= verticalStageIntervals; i++)
+      {
+        float y = (graph_height) - (i * verticalStageWindowGap);
+        line(graph_width + tickSize, y, graph_width, y);
+        
+        int hAxisLabel = i + 19;
+            
+        textAlign(LEFT, CENTER);  
+        text(hAxisLabel, graph_width + (tickSize * 3.0f), y);
+      }
+      
+      strokeWeight(0);
+      for(int i = 0; i < stages.size(); i++)
+      {
+         float x1 = border + (i * lineWidth);
+         float y1 = map(stages.get(i), 19, 25, graph_height, (graph_height) - (height - (border * 2.0f)));
+         rect(x1, y1, 4, 4);
+      }
+    }
+    
+    // Length Graph
+    if(correlation[2] == true)
+    {
+      stroke(255, 255, 0);
+      fill(255, 255, 0);
+      strokeWeight(4);
+      // Length axis 
+      for(int i = 0; i <= verticalIntervals; i++)
+      {
+        float y = (graph_height) - (i * verticalWindowGap);
+        int range = (int) (longLength - shortLength);
+        lengthDataGap = range / verticalIntervals;
+        float hAxisLabel = (lengthDataGap * i) + (int) shortLength;
+        if(correlation[0] == true)
+        {
+          y += 15;
+        }
+        textAlign(RIGHT, CENTER);  
+        text(nf(hAxisLabel, 2, 2), border - (tickSize * 2.0f), y);
+      }
+      
+      lineWidth = windowRange / (float)(lengths.size() - 1);
+      for(int i = 1; i < lengths.size(); i++)
+      {
+        float x1 = border + ((i - 1) * lineWidth);
+        float x2 = border + (i * lineWidth);      
+        float y1 = map(lengths.get(i - 1), shortLength, longLength, graph_height, (graph_height) - (height - (border * 2.0f)));
+        float y2 = map(lengths.get(i), shortLength, longLength, graph_height, (graph_height) - (height - (border * 2.0f)));
+        line(x1, y1, x2, y2);
+      }
+    }
     
     stroke(0, 255, 255);
-    strokeWeight(4);
-      
-    lineWidth = windowRange / (float)(speedList.size() - 1);
-    for(int i = 1; i < speedList.size(); i++)
+    strokeWeight(3);
+    for(int i = 0; i <= verticalIntervals; i++)
     {
-      float x1 = border + ((i - 1) * lineWidth);
-      float x2 = border + (i * lineWidth);      
-      float y1 = map(speedList.get(i - 1), lowestSpeed, highestSpeed, graph_height, (graph_height) - (height - (border * 2.0f)));
-      float y2 = map(speedList.get(i), lowestSpeed, highestSpeed, graph_height, (graph_height) - (height - (border * 2.0f)));
-
-      line(x1, y1, x2, y2);
+      float y = (graph_height) - (i * verticalWindowGap);
+      line(border - tickSize, y, border, y);   
     }
-    
-    // Stages scatter graph
-    fill(255, 0, 255);
-    stroke(255, 0, 255);
-    strokeWeight(0);
-    for(int i = 0; i < stages.size(); i++)
-    {
-       float x1 = border + (i * lineWidth);
-       float y1 = map(stages.get(i), 19, 25, graph_height, (graph_height) - (height - (border * 2.0f)));
-       rect(x1, y1, 4, 4);
-    }
-    
-    stroke(255, 255, 0);
-    strokeWeight(4);
-    lineWidth = windowRange / (float)(lengths.size() - 1);
-    for(int i = 1; i < lengths.size(); i++)
-    {
-      float x1 = border + ((i - 1) * lineWidth);
-      float x2 = border + (i * lineWidth);      
-      float y1 = map(lengths.get(i - 1), shortLength, longLength, graph_height, (graph_height) - (height - (border * 2.0f)));
-      float y2 = map(lengths.get(i), shortLength, longLength, graph_height, (graph_height) - (height - (border * 2.0f)));
-      
-      println(lengths.get(i));
-      println(x1);
-      line(x1, y1, x2, y2);
-    }
+    line(border, border, border, graph_height);
     
     strokeWeight(2);
     stroke(255);
@@ -133,73 +198,18 @@ class Spd_Stg_Len_Correl
      text(yearList.get(i), x, textY);
     }
     
-    stroke(0, 255, 255);
-    strokeWeight(3);
-    
-    // Speed axis 
-    line(border, border, border, graph_height);
-    for(int i = 0; i <= verticalIntervals; i++)
-    {
-      float y = (graph_height) - (i * verticalWindowGap);
-      line(border - tickSize, y, border, y);
-
-      int range = (int) (highestSpeed - lowestSpeed);
-      verticalDataGap = range / verticalIntervals;
-      
-      float hAxisLabel = (verticalDataGap * i) + (int) lowestSpeed;
-  
-      textAlign(RIGHT, CENTER);  
-      text(nf(hAxisLabel, 2, 2), border - (tickSize * 2.0f), y);
-    }
-    
-    // Length axis
-    line(width * 0.5f, border, width * 0.5f, graph_height);
-    for(int i = 0; i <= lengthIntervals; i++)
-    {
-      float y = (graph_height) - (i * verticalWindowGap);
-      line(width * 0.5f - tickSize, y, width * 0.5f, y);
-
-      int range = (int) (longLength - shortLength);
-      lengthDataGap = range / lengthIntervals;
-      
-      float hAxisLabel = (lengthDataGap * i) + (int) shortLength;
-  
-      textAlign(RIGHT, CENTER);  
-      text(nf(hAxisLabel, 2, 2), width* 0.5f - (tickSize * 2.0f), y);
-    }
     
     
-    /*
-    
-    Find lowest stages
-    Replace 19 with lowest!!
-    
-    */
-    
-    // Stages axis
-    stroke(255, 0, 255);
-    line(width - border, border, width - border, graph_height);
-    for(int i = 0; i <= verticalStageIntervals; i++)
-    {
-      float y = (graph_height) - (i * verticalStageWindowGap);
-      line(graph_width + tickSize, y, graph_width, y);
-      
-      int hAxisLabel = i + 19;
-          
-      textAlign(LEFT, CENTER);  
-      text(hAxisLabel, graph_width + (tickSize * 3.0f), y);
-    }
-    
+    // Determine which year the mouse is in
+    int x = (int) ((mouseX - border) / lineWidth);
+    float x_coord = map(x, 0, years.size(), border, width - border);
     
     // Draw line to show exact year and speed depending on x coordinates of mouse
     if(mouseX > border && mouseX < (graph_width))
     {
       stroke(255, 0, 0);
-      line(mouseX, border, mouseX, graph_height);
+      line(x_coord, border, x_coord, graph_height);
     }
-    
-    // Determine which year the mouse is in
-    int x = (int) ((mouseX - border) / lineWidth);
     
     if(x >= 0 && x < years.size())
     {
@@ -210,33 +220,32 @@ class Spd_Stg_Len_Correl
       
       // Determine y coordinate of ellipse in relation to line graph
       float speed_y = map(speedList.get(x), lowestSpeed, highestSpeed, graph_height, (graph_height) - (height - (border * 2.0f)));
-      
       float length_y = map(lengths.get(x), shortLength, longLength, graph_height, (graph_height) - (height - (border * 2.0f)));
       
       stroke(255, 0, 0);
       fill(255, 0, 0);
-      ellipse(mouseX, speed_y, 10, 10);
+      ellipse(x_coord, speed_y, 10, 10);
       stroke(0, 255, 255);
       fill(0, 255, 255);
-      ellipse(mouseX, length_y, 10, 10);
+      ellipse(x_coord, length_y, 10, 10);
       
       fill(255);
       // Display speed and year on relevant side of line, depending on location across graph
       if(mouseX < 200)
       {
         textAlign(LEFT, CENTER);
-        text("Year: " + year, mouseX + 10, height - 200);
-        text("Speed: " + speed + " Km/h", mouseX + 10, height - 180);
-        text("Stages: " + stage, mouseX + 10, height - 160);
-        text("Length: " + tour_length, mouseX + 10, height - 140);
+        text("Year: " + year, x_coord + 10, height - 200);
+        text("Speed: " + speed + " Km/h", x_coord + 10, height - 180);
+        text("Stages: " + stage, x_coord + 10, height - 160);
+        text("Length: " + tour_length, x_coord + 10, height - 140);
       }
       else
       {
         textAlign(RIGHT, CENTER);
-        text("Year: " + year, mouseX - 10, height - 200);
-        text("Speed: " + speed + " Km/h", mouseX - 10, height - 180);
-        text("Stages: " + stage, mouseX - 10, height - 160);
-        text("Length: " + tour_length, mouseX - 10, height - 140);
+        text("Year: " + year, x_coord - 10, height - 200);
+        text("Speed: " + speed + " Km/h", x_coord - 10, height - 180);
+        text("Stages: " + stage, x_coord - 10, height - 160);
+        text("Length: " + tour_length, x_coord - 10, height - 140);
       }
     }
   }
