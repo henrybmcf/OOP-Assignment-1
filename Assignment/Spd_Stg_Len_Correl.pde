@@ -22,6 +22,9 @@ class Spd_Stg_Len_Correl
   float lowestSpeed;
   int shortLength;
   int longLength;
+  color lengthColour;
+  color speedColour;
+  color stagesColour;
   
   Spd_Stg_Len_Correl()
   {
@@ -36,6 +39,12 @@ class Spd_Stg_Len_Correl
     verticalStageIntervals = 6;
     verticalStageWindowGap = verticalWindowRange / verticalStageIntervals;
     lengthWindowGap = verticalWindowRange / verticalIntervals;
+    
+    speedColour = color(0, 255, 255);
+    lengthColour = color(255, 255, 0);
+    stagesColour = color(255, 0, 255);
+    
+    rectMode(CENTER);
   }
 
   void render()
@@ -45,20 +54,16 @@ class Spd_Stg_Len_Correl
     // Speed Graph
     if(correlation[0] == true)
     {
-      // Speed axis 
-      stroke(0, 255, 255);
+      stroke(speedColour);
       strokeWeight(3);
       drawAxis(verticalIntervals, verticalWindowGap, 1);
-      
-      strokeWeight(4);
       lineWidth = windowRange / (float)(speedList.size() - 1);
       for(int i = 1; i < speedList.size(); i++)
-      {
-        float x1 = x_border + ((i - 1) * lineWidth);
-        float x2 = x_border + (i * lineWidth);      
+      {     
         float y1 = map(speedList.get(i - 1), lowestSpeed, highestSpeed, graph_height, (graph_height) - verticalWindowRange);
         float y2 = map(speedList.get(i), lowestSpeed, highestSpeed, graph_height, (graph_height) - verticalWindowRange);
-        line(x1, y1, x2, y2);
+        
+        drawGraph(i, y1, y2, 0);
       }
     }
   
@@ -72,44 +77,39 @@ class Spd_Stg_Len_Correl
       
       */
       
-      // Stages axis
-      stroke(255, 0, 255);
+      stroke(stagesColour);
+      fill(stagesColour);
       strokeWeight(3);
-      fill(255, 0, 255);
       line(graph_width, y_border, graph_width, graph_height);
       drawAxis(verticalStageIntervals, verticalStageWindowGap, 2);
-      
       lineWidth = windowRange / (float)(stages.size() - 1);
-      strokeWeight(0);
-      for(int i = 0; i < stages.size(); i++)
+      for(int i = 1; i < stages.size(); i++)
       {
-         float x1 = x_border + (i * lineWidth);
-         float y1 = map(stages.get(i), 19, 25, graph_height, (graph_height) - verticalWindowRange);
-         rect(x1, y1, 4, 4);
+         float y1 = map(stages.get(i - 1), 19, 25, graph_height, (graph_height) - verticalWindowRange);
+         float y2 = map(stages.get(i), 19, 25, graph_height, (graph_height) - verticalWindowRange);
+         
+         drawGraph(i, y1, y2, 1);
       }
     }
     
     // Length Graph
     if(correlation[2] == true)
     {
-      stroke(255, 255, 0);
-      fill(255, 255, 0);
+      stroke(lengthColour);
+      fill(lengthColour);
       strokeWeight(4);
-      // Length axis
       drawAxis(verticalIntervals, verticalWindowGap, 3);
-      
       lineWidth = windowRange / (float)(lengths.size() - 1);
       for(int i = 1; i < lengths.size(); i++)
-      {
-        float x1 = x_border + ((i - 1) * lineWidth);
-        float x2 = x_border + (i * lineWidth);      
+      {     
         float y1 = map(lengths.get(i - 1), shortLength, longLength, graph_height, (graph_height) - verticalWindowRange);
         float y2 = map(lengths.get(i), shortLength, longLength, graph_height, (graph_height) - verticalWindowRange);
-        line(x1, y1, x2, y2);
+        
+        drawGraph(i, y1, y2, 2);
       }
     }
-    
-    stroke(0, 255, 255);
+
+    stroke(speedColour);
     strokeWeight(3);
     for(int i = 0; i <= verticalIntervals; i++)
     {
@@ -118,9 +118,9 @@ class Spd_Stg_Len_Correl
     }
     line(x_border, y_border, x_border, graph_height);
     
-    strokeWeight(2);
     stroke(255);
     fill(255);
+    strokeWeight(2);
     
     // x axis (Year axis)
     line(x_border, graph_height, graph_width, graph_height);
@@ -263,5 +263,34 @@ class Spd_Stg_Len_Correl
         text(nf(axisLabel, 2, 2), x_border - (tickSize * 2.0f), y);
       }
     }
+  }
+  
+  void drawGraph(int i, float y1, float y2, int ID)
+  {
+    float x1 = x_border + ((i - 1) * lineWidth);
+    float x2 = x_border + (i * lineWidth);
+    
+    switch(correlationID[ID])
+    {
+      case 1:
+      {
+        strokeWeight(4);
+        line(x1, y1, x2, y2);
+        break;
+      }
+      case 2:
+      {
+        strokeWeight(1);
+        rect(x1, y1, 4, 4);
+        break;
+      }
+      case 3:
+      {
+        strokeWeight(1);
+        rect(x1, y1, 4, 4);
+        line(x1, y1, x2, y2);
+        break;
+      }
+    }   
   }
 }

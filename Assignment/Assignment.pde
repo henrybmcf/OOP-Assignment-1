@@ -143,6 +143,7 @@ float average;
 float sum;
 
 boolean[] correlation = new boolean[3];
+int[] correlationID = new int[3];
 
 void draw()
 {
@@ -225,20 +226,73 @@ void keyPressed()
   
   if(menu == 5)
   {
-    if(key == 's')
+    switch(key)
     {
-      correlation[0] =! correlation[0];
-      println("speed");
-    }
-    if(key == 't')
-    {
-      correlation[1] =! correlation[1];
-      println("stages");
-    }
-    if(key == 'l')
-    {
-      correlation[2] =! correlation[2];
-      println("length");
-    }
+      case 's':
+      {
+        correlation[0] =! correlation[0];
+        correlationID[0] = 1;
+        break;
+      }
+      case 'w':
+      {
+        correlationID[0] = 1;
+        break;
+      }
+      case 'a':
+      {
+        correlationID[0] = 2;
+        break;
+      }
+      case 'd':
+      {
+        correlationID[0] = 3;
+        break;
+      }
+      
+      case 't':
+      {
+        correlation[1] =! correlation[1];
+        correlationID[1] = 2;
+        break;
+      }
+      case 'g':
+      {
+        correlationID[1] = 2;
+        break;
+      }
+      case 'r':
+      {
+        correlationID[1] = 1;
+        break;
+      }
+      case 'y':
+      {
+        correlationID[1] = 3;
+        break;
+      }
+      
+      case 'l':
+      {
+        correlation[2] =! correlation[2];
+        correlationID[2] = 3;
+        break;
+      }
+      case 'i':
+      {
+        correlationID[2] = 3;
+        break;
+      }
+      case 'j':
+      {
+        correlationID[2] = 1;
+        break;
+      }
+      case 'k':
+      {
+        correlationID[2] = 2;
+        break;
+      }
+    } 
   }
 }
