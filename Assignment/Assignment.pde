@@ -1,6 +1,6 @@
 void setup()
 {
- // size(900, 700);
+  //size(900, 700);
   fullScreen();
   background(0);
   
@@ -34,7 +34,7 @@ void setup()
     wins.add(stage_records.get(i).number);
     float x1 = random(50, width - 50);
 
-    x.add(x1);
+    stage_x.add(x1);
   }
 
   table = loadTable("TDF.csv", "header");
@@ -132,7 +132,7 @@ ArrayList<String> rider = new ArrayList<String>();
 ArrayList<Integer> wins = new ArrayList<Integer>();
 ArrayList<Integer> lengths = new ArrayList<Integer>();
 
-ArrayList <Float> x = new ArrayList<Float>();
+ArrayList <Float> stage_x = new ArrayList<Float>();
 
 int[] counter = new int[6];
 int menu;

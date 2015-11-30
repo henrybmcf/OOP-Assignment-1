@@ -3,6 +3,13 @@ class Pie
   float radius;
   float centx;
   float centy;
+  float sin;
+  float cos;
+  float x;
+  float y;
+  float line_x;
+  float line_y;
+  float theta;
   
   color[] colours = new color[6];
   
@@ -19,7 +26,7 @@ class Pie
     
     for(int i = 0; i < 6; i ++)
     {
-      colours[i] = color(random(100, 255), random(100, 255), 0);
+      colours[i] = color(random(100, 255), random(100), random(100, 255));
     }
   }
   
@@ -58,10 +65,6 @@ class Pie
         
         fill(255);
         
-        float x;
-        float y;
-        float theta;
-        
         if(mouseY < centy)
         {
           theta = angle - PI;
@@ -71,8 +74,8 @@ class Pie
           theta = angle;
         }
         
-        float sin = sin(theta);
-        float cos = cos(theta);
+        sin = sin(theta);
+        cos = cos(theta);
         
         if(sin < 0)
         {
@@ -86,33 +89,38 @@ class Pie
         if(mouseX > centx)
         {
           x = centx + (radius * cos);
+          line_x = centx + ((radius * 0.95f) * cos);
         }
         else
         {
           x = centx - (radius * cos);
+          line_x = centx - ((radius * 0.95f) * cos);
         }
         
         if(mouseY < centy)
         {
           y = centy - (radius * sin);
+          line_y = centy - ((radius * 0.95f) * sin);
         }
         else
         {
           y = centy + (radius * sin);
+          line_y = centy + ((radius * 0.95f) * sin);
         }
+        textSize(20);
         text(counter[i], x, y);
       }
       
       strokeWeight(1);
-      stroke(colours[i]);
+     // stroke(colours[i]);
       fill(colours[i]);
     
-      arc(centx, centy, r, r, last, current);
+      arc(centx, centy, r, r, last, current, PIE);
       last = current;
     }
     
     stroke(255);
     strokeWeight(2);
-    line(centx, centy, mouseX, mouseY);
+    line(centx, centy, line_x, line_y);
   }
 }

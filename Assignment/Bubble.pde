@@ -33,7 +33,7 @@ class Bubble
       float radius = map(wins.get(i), low, high, 30, 100);
       fill(colour[i]);
       stroke(colour[i]);
-      ellipse(x.get(i), y, radius, radius);
+      ellipse(stage_x.get(i), y, radius, radius);
     } 
   } 
 }
