@@ -2,8 +2,8 @@ import java.util.*;
 
 void setup()
 {
-  //size(900, 700);
-  fullScreen();
+  size(900, 700);
+  //fullScreen();
   background(0);
   
   correl = new Correlation();
