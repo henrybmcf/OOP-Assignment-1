@@ -1,6 +1,6 @@
 void setup()
 {
-  //size(900, 700);
+ // size(900, 700);
   fullScreen();
   background(0);
   
@@ -49,7 +49,7 @@ void setup()
     year.winner = row.getString("Winner");
     year.speed = row.getFloat("Speed");
 
-    println(year.tour_year + " " + year.tour_length + " " + year.stages + " " + year.winner + " " + year.speed);
+    //println(year.tour_year + " " + year.tour_length + " " + year.stages + " " + year.winner + " " + year.speed);
     
     years.add(year);
   }
@@ -165,7 +165,7 @@ void draw()
     }
     
     case 2:
-    {
+    { 
       pie.update(counter);
       break;
     }

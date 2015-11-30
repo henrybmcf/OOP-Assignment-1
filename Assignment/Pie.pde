@@ -1,12 +1,21 @@
 class Pie
 {
   float radius;
+  float centx;
+  float centy;
   
   color[] colours = new color[6];
   
   Pie()
   {
-    radius = width * 0.5f;
+    this(width * 0.3f, width * 0.5f, height * 0.5f);
+  }
+  
+  Pie(float radius, float centx, float centy)
+  {
+    this.radius = radius;
+    this.centx = centx;
+    this.centy = centy;
     
     for(int i = 0; i < 6; i ++)
     {
@@ -15,7 +24,7 @@ class Pie
   }
   
   void update(int[] counter)
-  {
+  { 
     float sum = 0.0f;
     
     for(int c:counter)
@@ -23,11 +32,11 @@ class Pie
       sum += c;
     }
 
-    float toMouseX = mouseX - radius;
-    float toMouseY = mouseY - radius;  
+    float toMouseX = mouseX - centx;
+    float toMouseY = mouseY - centy;  
     float angle = atan2(toMouseY, toMouseX);  
   
-    if (angle < 0)
+    if(angle < 0)
     {
       angle = TWO_PI + angle;
     }
@@ -42,15 +51,12 @@ class Pie
       float current = map(cumulative, 0, sum, 0, TWO_PI);
 
       float r = radius;
-  
+
       if(angle > last && angle < current)
       {
         r = radius * 1.5f;
         
         fill(255);
-        
-        float centx = width * 0.5f;
-        float centy = height * 0.5f;
         
         float x;
         float y;
@@ -101,12 +107,12 @@ class Pie
       stroke(colours[i]);
       fill(colours[i]);
     
-      arc(radius, radius, r, r, last, current);
+      arc(centx, centy, r, r, last, current);
       last = current;
     }
     
     stroke(255);
     strokeWeight(2);
-    line(radius, radius, mouseX, mouseY);
+    line(centx, centy, mouseX, mouseY);
   }
 }
