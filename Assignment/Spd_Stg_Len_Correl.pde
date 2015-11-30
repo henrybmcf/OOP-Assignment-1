@@ -70,7 +70,6 @@ class Spd_Stg_Len_Correl
         drawGraph(i, 0, speedList, lowestSpeed, highestSpeed);
       }
     }
-  
     
     // Stages Scatter Graph
     if(correlation[1] == true)
@@ -83,6 +82,7 @@ class Spd_Stg_Len_Correl
       */
       
       strokeWeight(3);
+      stroke(stagesColour);
       line(graph_width, y_border, graph_width, graph_height);
       drawAxis(verticalStageIntervals, verticalStageWindowGap, 2, stagesColour, 0, 0);
       
