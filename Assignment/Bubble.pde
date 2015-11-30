@@ -12,20 +12,8 @@ class Bubble
        colour[i] = color(255, c2, c3);
      }
     
-    int low = wins.get(0);
-    int high = wins.get(0);
-    
-    for(int i:wins)
-    {
-      if(i < low)
-      {
-        low = i;
-      }
-      if(i > high)
-      {
-        high = i;
-      }
-    }
+    int low = Collections.min(wins);
+    int high = Collections.max(wins);
     
     for(int i = 0; i < wins.size(); i++)
     {

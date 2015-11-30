@@ -49,24 +49,29 @@ class Spd_Stg_Len_Correl
 
   void render()
   { 
-    findMaxMin();
+     // Find lowest and highest speed to use map function in order to use full height of graph
+    highestSpeed = Collections.max(speedList);
+    lowestSpeed = Collections.min(speedList);
+    
+    // Find longest and shortest lengths for mapping
+    longLength = Collections.max(lengths);
+    shortLength = Collections.min(lengths);
+    
+    lineWidth = windowRange / (speedList.size() - 1);
     
     // Speed Graph
     if(correlation[0] == true)
     {
-      stroke(speedColour);
       strokeWeight(3);
-      drawAxis(verticalIntervals, verticalWindowGap, 1);
-      lineWidth = windowRange / (float)(speedList.size() - 1);
+      drawAxis(verticalIntervals, verticalWindowGap, 1, speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
+      
       for(int i = 1; i < speedList.size(); i++)
-      {     
-        float y1 = map(speedList.get(i - 1), lowestSpeed, highestSpeed, graph_height, (graph_height) - verticalWindowRange);
-        float y2 = map(speedList.get(i), lowestSpeed, highestSpeed, graph_height, (graph_height) - verticalWindowRange);
-        
-        drawGraph(i, y1, y2, 0);
+      {
+        drawGraph(i, 0, speedList, lowestSpeed, highestSpeed);
       }
     }
   
+    
     // Stages Scatter Graph
     if(correlation[1] == true)
     {
@@ -77,35 +82,38 @@ class Spd_Stg_Len_Correl
       
       */
       
-      stroke(stagesColour);
-      fill(stagesColour);
       strokeWeight(3);
       line(graph_width, y_border, graph_width, graph_height);
-      drawAxis(verticalStageIntervals, verticalStageWindowGap, 2);
-      lineWidth = windowRange / (float)(stages.size() - 1);
+      drawAxis(verticalStageIntervals, verticalStageWindowGap, 2, stagesColour, 0, 0);
+      
+      ArrayList<Float> List = new ArrayList<Float>();
+      
+      for(int i:stages)
+      {
+        List.add(float(i));
+      }
+      
       for(int i = 1; i < stages.size(); i++)
       {
-         float y1 = map(stages.get(i - 1), 19, 25, graph_height, (graph_height) - verticalWindowRange);
-         float y2 = map(stages.get(i), 19, 25, graph_height, (graph_height) - verticalWindowRange);
-         
-         drawGraph(i, y1, y2, 1);
+         drawGraph(i, 1, List, 19, 25);
       }
     }
     
     // Length Graph
     if(correlation[2] == true)
-    {
-      stroke(lengthColour);
-      fill(lengthColour);
+    {  
       strokeWeight(4);
-      drawAxis(verticalIntervals, verticalWindowGap, 3);
+      drawAxis(verticalIntervals, verticalWindowGap, 3, lengthColour, longLength - shortLength, shortLength);
       lineWidth = windowRange / (float)(lengths.size() - 1);
+      
+      ArrayList<Float> List = new ArrayList<Float>(); 
+      for(int i:lengths)
+      {
+        List.add(float(i));
+      }
       for(int i = 1; i < lengths.size(); i++)
       {     
-        float y1 = map(lengths.get(i - 1), shortLength, longLength, graph_height, (graph_height) - verticalWindowRange);
-        float y2 = map(lengths.get(i), shortLength, longLength, graph_height, (graph_height) - verticalWindowRange);
-        
-        drawGraph(i, y1, y2, 2);
+        drawGraph(i, 2, List, shortLength, longLength);
       }
     }
 
@@ -171,87 +179,44 @@ class Spd_Stg_Len_Correl
       int stage = stages.get(x);
       int tour_length = lengths.get(x);
       
+      float text_coord;
       // Display speed and year on relevant side of line, depending on location across graph
-      if(mouseX < 200)
+      if(mouseX < 300)
       {
         textAlign(LEFT, CENTER);
-        text("Year: " + year, x_coord + 10, height - 200);
-        text("Speed: " + speed + " Km/h", x_coord + 10, height - 180);
-        text("Stages: " + stage, x_coord + 10, height - 160);
-        text("Length: " + tour_length, x_coord + 10, height - 140);
+        text_coord = x_coord + 10;
       }
       else
       {
         textAlign(RIGHT, CENTER);
-        text("Year: " + year, x_coord - 10, height - 200);
-        text("Speed: " + speed + " Km/h", x_coord - 10, height - 180);
-        text("Stages: " + stage, x_coord - 10, height - 160);
-        text("Length: " + tour_length, x_coord - 10, height - 140);
+        text_coord = x_coord - 10;
       }
-    }
-  }
-  
-  void findMaxMin()
-  {
-    // Find lowest and highest speed to use map function in order to use full height of graph
-    highestSpeed = speedList.get(0);    
-    lowestSpeed = speedList.get(0);
-    
-    for(float speed:speedList)
-    {
-       if(speed > highestSpeed)
-       {
-         highestSpeed = speed;
-       }
-       if(speed < lowestSpeed)
-       {
-         lowestSpeed = speed;
-       }  
-    }
-    
-    // Find longest and shortest lengths for mapping
-    shortLength = lengths.get(0);
-    longLength = lengths.get(0);
-    
-    for(int i:lengths)
-    {
-      if(i > longLength)
-      {
-        longLength = i;
-      }
-      if(i < shortLength)
-      {
-        shortLength = i;
-      }
+      text("Year: " + year, text_coord, height - 200);
+      text("Speed: " + speed + " Km/h", text_coord, height - 180);
+      text("Stages: " + stage, text_coord, height - 160);
+      text("Length: " + tour_length, text_coord, height - 140);
     }
   }
   
   // Draw vertical Axis'
-  void drawAxis(int intervals, float windowGap, int ID)
+  void drawAxis(int intervals, float windowGap, int ID, color axisColour, int range, int low)
   {
+    stroke(axisColour);
+    fill(axisColour);
     float axisLabel = 0.0f;
-    println(intervals);
+    int dataGap;
     for(int i = 0; i <= intervals; i++)
     {
       float y = (graph_height) - (i * windowGap);
-      if(ID == 1)
-      {
-        int range = (int) (highestSpeed - lowestSpeed);
-        verticalDataGap = range / verticalIntervals;
-        axisLabel = (verticalDataGap * i) + (int) lowestSpeed;  
-      }
       if(ID == 2)
       {
         line(graph_width + tickSize, y, graph_width, y);
         axisLabel = i + 19;       
         textAlign(LEFT, CENTER);  
-        text((int) axisLabel, graph_width + (tickSize * 2.0f), y);
+        text(int(axisLabel), graph_width + (tickSize * 2.0f), y);
       }
       if(ID == 3)
       {
-        int range = (int) (longLength - shortLength);
-        lengthDataGap = range / verticalIntervals;
-        axisLabel = (lengthDataGap * i) + (int) shortLength;
         if(correlation[0] == true)
         {
            y += 15;
@@ -259,16 +224,24 @@ class Spd_Stg_Len_Correl
       }
       if(ID == 1 || ID == 3)
       {
+        dataGap = range / verticalIntervals;
+        axisLabel = (dataGap * i) + low;
         textAlign(RIGHT, CENTER);  
         text(nf(axisLabel, 2, 2), x_border - (tickSize * 2.0f), y);
       }
     }
   }
   
-  void drawGraph(int i, float y1, float y2, int ID)
+  void drawGraph(int i, int ID, ArrayList<Float> list, float low, float high)
   {
     float x1 = x_border + ((i - 1) * lineWidth);
     float x2 = x_border + (i * lineWidth);
+    
+    float y1 = map(list.get(i - 1), low, high, graph_height, (graph_height) - verticalWindowRange);
+    float y2 = map(list.get(i), low, high, graph_height, (graph_height) - verticalWindowRange);
+    
+    println(lineWidth);
+    //println(x1, x2, y1, y2);
     
     switch(correlationID[ID])
     {
