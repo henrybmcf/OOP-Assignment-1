@@ -51,8 +51,7 @@ void setup()
     year.winner = row.getString("Winner");
     year.speed = row.getFloat("Speed");
 
-    //println(year.tour_year + " " + year.tour_length + " " + year.stages + " " + year.winner + " " + year.speed);
-    
+    //println(year.tour_year + " " + year.tour_length + " " + year.stages + " " + year.winner + " " + year.speed); 
     years.add(year);
   }
  
@@ -78,9 +77,9 @@ void setup()
   }
   
   // Stage counter
-  for(int i = 0; i < stages.size(); i++)
+  for(int i:stages)
   {
-    switch(stages.get(i))
+    switch(i)
     {
       case 20:
       {
@@ -126,8 +125,8 @@ Correlation correl;
 Spd_Stg_Len_Correl ssl_correl;
 
 ArrayList<Year> years = new ArrayList<Year>();
-ArrayList<Float> speedList = new ArrayList<Float>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
+ArrayList<Float> speedList = new ArrayList<Float>();
 ArrayList<Integer> stages = new ArrayList<Integer>();
 ArrayList<Stages> stage_records = new ArrayList<Stages>();
 ArrayList<String> rider = new ArrayList<String>();
