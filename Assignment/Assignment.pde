@@ -17,24 +17,34 @@ void setup()
   sum = 0.0f;
   average = 0.0f;
   
-  stages_table = loadTable("stage_wins.csv", "header");
+  graph = 1;
   
+  countryWins = loadTable("CountryWins.csv", "header");
+  for(TableRow row : countryWins.rows())
+  {
+    countryWins countryWin = new countryWins();
+    countryWin.country = row.getString("Country");
+    countryWin.number = row.getInt("Wins"); 
+    countryRecords.add(countryWin);
+  }
+  for(int i = 0; i < countryRecords.size(); i++)
+  {
+    cWins.add(countryRecords.get(i).number);
+  }
+  
+  stages_table = loadTable("stage_wins.csv", "header");
   for(TableRow row : stages_table.rows())
   {
     Stages stage = new Stages();
-    
     stage.rider = row.getString("Rider");
     stage.number = row.getInt("Wins");
-    
     stage_records.add(stage);
-  }
-  
+  } 
   for(int i = 0; i < stage_records.size(); i++)
   {
     rider.add(stage_records.get(i).rider);
     wins.add(stage_records.get(i).number);
     float x1 = random(50, width - 50);
-
     stage_x.add(x1);
   }
 
@@ -122,6 +132,10 @@ Bubble bubble;
 Table stages_table;
 Spd_Stg_Len_Correl ssl_correl;
 
+Table countryWins;
+ArrayList<countryWins> countryRecords = new ArrayList<countryWins>();
+ArrayList<Integer> cWins = new ArrayList<Integer>(); 
+
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
 ArrayList<Float> speedList = new ArrayList<Float>();
@@ -143,6 +157,8 @@ float sum;
 
 boolean[] correlation = new boolean[3];
 int[] correlationID = new int[3];
+
+int graph;
 
 void draw()
 {
@@ -177,7 +193,6 @@ void draw()
 
     case 4:
     {
-      correl.render();
       break;
     }
     
@@ -224,6 +239,14 @@ void keyPressed()
   
   if(menu == 1)
     correlationID[0] = 1;
+    
+  if(menu == 3)
+  {
+    if(key == 'c')
+        graph = 1;
+    if(key == 'r')
+        graph = 2;
+  }   
   
   if(menu == 5)
   {
