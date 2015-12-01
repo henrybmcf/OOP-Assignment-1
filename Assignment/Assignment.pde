@@ -2,11 +2,10 @@ import java.util.*;
 
 void setup()
 {
-  size(900, 700);
-  //fullScreen();
+  //size(900, 700);
+  fullScreen();
   background(0);
   
-  correl = new Correlation();
   ssl_correl = new Spd_Stg_Len_Correl();
   
   speed = new Speed();
@@ -61,7 +60,7 @@ void setup()
     stages.add(years.get(i).stages);
     lengths.add(years.get(i).tour_length);
     
-    sum = sum + speedList.get(i);
+    sum += speedList.get(i);
   }
   
   average = sum / speedList.size();
@@ -121,7 +120,6 @@ Speed speed;
 Pie pie;
 Bubble bubble;
 Table stages_table;
-Correlation correl;
 Spd_Stg_Len_Correl ssl_correl;
 
 ArrayList<Year> years = new ArrayList<Year>();
