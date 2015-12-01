@@ -156,7 +156,6 @@ void draw()
     {
       wheel.render();
       wheel.update();
-     
       break;
     }
     
@@ -224,6 +223,9 @@ void keyPressed()
   {
     menu = 0;
   }
+  
+  if(menu == 1)
+    correlationID[0] = 1;
   
   if(menu == 5)
   {

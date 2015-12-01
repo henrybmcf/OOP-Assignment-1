@@ -97,56 +97,15 @@ class Spd_Stg_Len_Correl
     for(int i = 0; i < yearList.size(); i++)
     {
       float x = x_border + (i * horizInterval);
-      line(x, height - (y_border - tickSize), x, (vertGraphWindowRange));
+      line(x, vertGraphWindowRange + tickSize, x, vertGraphWindowRange);
       float textY = height - (y_border * 0.5f);
       textAlign(CENTER, CENTER);
       text(yearList.get(i), x, textY);
     }
     
-    // Determine which year the mouse is in
-    int x = (int) ((mouseX - x_border) / lineWidth);
-    float x_coord = x_border + (x * lineWidth);
-    if(x >= 0 && x < years.size())
-    {
-      // Draw line to show exact year and speed depending on x coordinates of mouse
-      if(mouseX > x_border && mouseX < (graphWindowRange))
-          stroke(255, 0, 0);
-          line(x_coord, y_border, x_coord, vertGraphWindowRange);
-
-      // Determine y coordinate of ellipse in relation to line graph
-      float speed_y = map(speedList.get(x), lowestSpeed, highestSpeed, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
-      float length_y = map(lengths.get(x), shortLength, longLength, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
-      
-      // Draw ellipse showing point on speed graph
-      stroke(255, 0, 0);
-      fill(255, 0, 0);
-      ellipse(x_coord, speed_y, 10, 10);
-      
-      // Draw ellipse showing point on length graph
-      stroke(0, 0, 255);
-      fill(0, 0, 255);
-      ellipse(x_coord, length_y, 10, 10);
-      fill(255);
-      
-      float text_coordinates;
-      // Display speed and year on relevant side of line, depending on location across graph
-      if(mouseX < 300)
-      {
-        textAlign(LEFT, CENTER);
-        text_coordinates = x_coord + 10;
-      }
-      else
-      {
-        textAlign(RIGHT, CENTER);
-        text_coordinates = x_coord - 10;
-      }
-      text("Year: " + years.get(x).tour_year, text_coordinates, height - 200);
-      text("Speed: " + speedList.get(x) + " Km/h", text_coordinates, height - 180);
-      text("Stages: " + stages.get(x), text_coordinates, height - 160);
-      text("Length: " + lengths.get(x) + "Km", text_coordinates, height - 140);
-    }
+    displayYearInfo(1);
   }
-  
+
   // Draw vertical Axis'
   void drawAxis(int intervals, float windowGap, int ID, color axisColour, int range, int low)
   {
@@ -199,5 +158,59 @@ class Spd_Stg_Len_Correl
         line(x1, y1, x2, y2);
         break;
     }
+  }
+  
+  void displayYearInfo(int sketchID)
+  {
+    // Determine which year the mouse is in
+    int x = (int) ((mouseX - x_border) / lineWidth);
+    float x_coord = x_border + (x * lineWidth);
+    if(x >= 0 && x < years.size())
+    {
+      stroke(255, 0, 0);
+      fill(255, 0, 0);
+      // Draw line to show exact year and speed depending on x coordinates of mouse
+      line(x_coord, y_border, x_coord, vertGraphWindowRange);
+      // Determine y coordinate of ellipse in relation to line graph
+      float speed_y = map(speedList.get(x), lowestSpeed, highestSpeed, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
+      // Draw ellipse showing point on speed graph
+      ellipse(x_coord, speed_y, 10, 10);
+      
+      if(sketchID == 1)
+      {
+        float length_y = map(lengths.get(x), shortLength, longLength, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
+        // Draw ellipse showing point on length graph
+        stroke(0, 0, 255);
+        fill(0, 0, 255);
+        ellipse(x_coord, length_y, 10, 10);
+      }
+      
+      // Display speed and year on relevant side of line, depending on location across graph
+      fill(255);
+      float text_coordinates;
+      if(mouseX < 300)
+      {
+        textAlign(LEFT, CENTER);
+        text_coordinates = x_coord + 10;
+      }
+      else
+      {
+        textAlign(RIGHT, CENTER);
+        text_coordinates = x_coord - 10;
+      }
+      float textHeight;
+      if(sketchID == 2)
+      {
+        textHeight = vertGraphWindowRange - 50;
+      }
+      else
+      {
+        textHeight = height - 200;
+        text("Stages: " + stages.get(x), text_coordinates, textHeight + 40);
+        text("Length: " + lengths.get(x) + "Km", text_coordinates, textHeight + 60);
+      }
+      text("Year: " + years.get(x).tour_year, text_coordinates, textHeight);
+      text("Speed: " + speedList.get(x) + " Km/h", text_coordinates, textHeight + 20);
+    }  
   }
 }
