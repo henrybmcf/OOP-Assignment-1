@@ -14,12 +14,22 @@ class Bubble
     highCountry = Collections.max(cWins);
     lowCountry = Collections.min(cWins);
     
+    color[] colour2 = new color[cWins.size()];
+    
     for(int i = 0; i < colour.length; i++)
     {
       float c2 = map(wins.get(i), lowWins, highWins, 255, 0);
       float c3 = map(wins.get(i), lowWins, highWins, 0, 255);
-       
+      
       colour[i] = color(255, c2, c3);
+    }
+    
+    for(int i = 0; i < colour2.length; i++)
+    {
+      float c2 = map(cWins.get(i), lowWins, highWins, 255, 0);
+      float c3 = map(cWins.get(i), lowWins, highWins, 0, 255);
+      
+      colour2[i] = color(255, c2, c3);
     }
     
     if(graph == 1)
@@ -29,9 +39,10 @@ class Bubble
       {
         float y = map(cWins.get(i), lowCountry, highCountry, height - 50, 50);
         float radius = map(cWins.get(i), lowCountry, highCountry, 30, 100);
-        ellipse(stage_x.get(1), y, radius, radius);
-      }
-      
+        fill(colour2[i]);
+        stroke(colour2[i]);
+        ellipse(country_x.get(i), y, radius, radius);
+      } 
     }
     
     if(graph == 2)

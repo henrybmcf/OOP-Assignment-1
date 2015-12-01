@@ -30,6 +30,8 @@ void setup()
   for(int i = 0; i < countryRecords.size(); i++)
   {
     cWins.add(countryRecords.get(i).number);
+    float x1 = random(50, width - 50);
+    country_x.add(x1);
   }
   
   stages_table = loadTable("stage_wins.csv", "header");
@@ -145,7 +147,8 @@ ArrayList<String> rider = new ArrayList<String>();
 ArrayList<Integer> wins = new ArrayList<Integer>();
 ArrayList<Integer> lengths = new ArrayList<Integer>();
 
-ArrayList <Float> stage_x = new ArrayList<Float>();
+ArrayList<Float> stage_x = new ArrayList<Float>();
+ArrayList<Float> country_x = new ArrayList<Float>();
 
 int[] counter = new int[6];
 int menu;
