@@ -89,6 +89,13 @@ class Spd_Stg_Len_Correl
         line(x_border - tickSize, vertGraphWindowRange - (i * dataGaps), x_border, vertGraphWindowRange - (i * dataGaps));   
   
     // X Axis (Year Axis)
+    drawXAxis();
+    
+    displayYearInfo(1);
+  }
+  
+  void drawXAxis()
+  {
     stroke(255);
     fill(255);
     strokeWeight(2);
@@ -102,10 +109,8 @@ class Spd_Stg_Len_Correl
       textAlign(CENTER, CENTER);
       text(yearList.get(i), x, textY);
     }
-    
-    displayYearInfo(1);
   }
-
+  
   // Draw vertical Axis'
   void drawAxis(int intervals, float windowGap, int ID, color axisColour, int range, int low)
   {

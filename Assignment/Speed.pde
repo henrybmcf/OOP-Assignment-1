@@ -21,20 +21,7 @@ class Speed extends Spd_Stg_Len_Correl
           drawGraph(i, 0, speedList, lowestSpeed, highestSpeed);
 
     // X Axis (Year Axis)
-    strokeWeight(2);
-    stroke(255);
-    fill(255);
-    line(x_border, vertGraphWindowRange, graphWindowRange, vertGraphWindowRange);
-    horizInterval = graphWidth / (yearList.size() - 1);
-    tickSize = x_border * 0.1f;
-    for(int i = 0; i < yearList.size(); i++)
-    {
-      float x = x_border + (i * horizInterval);
-      line(x, vertGraphWindowRange + tickSize, x, vertGraphWindowRange);
-      float textY = height - (y_border * 0.5f);
-      textAlign(CENTER, CENTER);
-      text(yearList.get(i), x, textY);
-    }
+    drawXAxis();
     
     displayYearInfo(2);
   }
