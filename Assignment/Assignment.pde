@@ -36,7 +36,7 @@ void setup()
   {
     cWins.add(countryRecords.get(i).number);
     country.add(countryRecords.get(i).country);
-    float x1 = random(50, width - 50);
+    float x1 = random(width - (i + 1) * 50, width - (i + 1) * 130);
     country_x.add(x1);
   }
   

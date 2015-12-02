@@ -48,10 +48,11 @@ class Bubble
         translate(country_x.get(i) - (radius * 0.5f), y - (radius * 0.5f));
         PImage flag;
         // PImage flag = loadImage(country.get(i) + ".jpg");
-        if (i < 4)
+        if (i < 9)
         {
           flag = loadImage(country.get(i) + ".png");
-        } else
+        }
+        else
         {
           flag = loadImage(country.get(1) + ".png");
         }
