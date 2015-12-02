@@ -12,6 +12,8 @@ class Spd_Stg_Len_Correl
   int longLength, shortLength;
   int highStage, lowStage;
   color lengthColour, speedColour, stagesColour;
+  int speedTime, stageTime, lengthTime;
+  int speedIndex, stageIndex, lengthIndex;
  
   Spd_Stg_Len_Correl()
   {
@@ -24,12 +26,18 @@ class Spd_Stg_Len_Correl
     tickSize = x_border * 0.1f;
     verticalIntervals = 10;
     dataGaps = graphHeight / verticalIntervals;
-    verticalStageIntervals = 6;
+    verticalStageIntervals = 5;
     stageDataGaps = graphHeight / verticalStageIntervals; 
     speedColour = color(0, 255, 255);
     lengthColour = color(255, 255, 0);
     stagesColour = color(255, 0, 255);
     rectMode(CENTER);
+    speedTime = 3;
+    stageTime = 3;
+    lengthTime = 3;
+    speedIndex = 1;
+    stageIndex = 1;
+    lengthIndex = 1;
   }
 
   void render()
@@ -49,8 +57,17 @@ class Spd_Stg_Len_Correl
     {
       strokeWeight(3);
       drawAxis(verticalIntervals, dataGaps, 1, speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
-      for(int i = 1; i < speedList.size(); i++)
-          drawGraph(i, 0, speedList, lowestSpeed, highestSpeed);
+      
+      // Timing drawing graph animation
+      if(speedTime > 3)
+      {
+        if(speedIndex < speedList.size())
+            speedIndex++;
+        speedTime = 0;
+      }
+      for(int j = 1; j < speedIndex; j++)
+            drawGraph(j, 0, speedList, lowestSpeed, highestSpeed);
+      speedTime++;
     }
     
     // Stages Graph
@@ -64,8 +81,17 @@ class Spd_Stg_Len_Correl
       ArrayList<Float> List = new ArrayList<Float>();
       for(int i:stages)
           List.add(float(i));
-      for(int i = 1; i < stages.size(); i++)
-          drawGraph(i, 1, List, lowStage, highStage);
+          
+      // Timing drawing graph animation
+      if(stageTime > 3)
+      {
+        if(stageIndex < stages.size())
+            stageIndex++;
+        stageTime = 0;
+      }
+      for(int j = 1; j < stageIndex; j++)
+            drawGraph(j, 1, List, lowStage, highStage);
+      stageTime++;
     }
     
     // Length Graph
@@ -77,8 +103,17 @@ class Spd_Stg_Len_Correl
       ArrayList<Float> List = new ArrayList<Float>(); 
       for(int i:lengths)
           List.add(float(i));
-      for(int i = 1; i < lengths.size(); i++)
-          drawGraph(i, 2, List, shortLength, longLength);
+      
+      // Timing drawing graph animation
+      if(lengthTime > 3)
+      {
+        if(lengthIndex < lengths.size())
+            lengthIndex++;
+        lengthTime = 0;
+      }
+      for(int j = 1; j < lengthIndex; j++)
+            drawGraph(j, 2, List, shortLength, longLength);
+      lengthTime++;
     }
 
     // Speed & Length Axis
@@ -90,7 +125,6 @@ class Spd_Stg_Len_Correl
   
     // X Axis (Year Axis)
     drawXAxis();
-    
     displayYearInfo(1);
   }
   

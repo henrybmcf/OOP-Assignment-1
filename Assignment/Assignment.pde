@@ -8,6 +8,7 @@ void setup()
   fullScreen();
   background(0);
   smooth(9);
+  textSize(20);
   
   ssl_correl = new Spd_Stg_Len_Correl();
   

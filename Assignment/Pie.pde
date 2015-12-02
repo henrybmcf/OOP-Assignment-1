@@ -107,7 +107,7 @@ class Pie
           y = centy + (radius * sin);
           line_y = centy + ((radius * 0.95f) * sin);
         }
-        textSize(20);
+        //textSize(20);
         text(counter[i], x, y);
       }
       
