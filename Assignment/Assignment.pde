@@ -177,40 +177,26 @@ void draw()
   switch(menu)
   {
     case 0:
-    {
       wheel.render();
       wheel.update();
       break;
-    }
-    
     case 1:
-    {
       speed.render();
       break;
-    }
-    
     case 2:
-    { 
       pie.update(counter);
       break;
-    }
-
     case 3:
-    {
       bubble.render();
       break;
-    }
-
     case 4:
     {
       break;
     }
     
     case 5:
-    {
       ssl_correl.render();
       break;
-    }
     
     case 6:
     {
@@ -222,16 +208,12 @@ void draw()
       */     
       break;
     }
-      
-
+     
     default:
-    {
       text("Error, please select valid option", 100, 50);
       wheel.render();
       wheel.update();
-      
       break;
-    }
   }
 }
 

@@ -147,6 +147,7 @@ class Spd_Stg_Len_Correl
     float x2 = x_border + (i * lineWidth);
     float y1 = map(list.get(i - 1), low, high, vertGraphWindowRange, vertGraphWindowRange - graphHeight);
     float y2 = map(list.get(i), low, high, vertGraphWindowRange, vertGraphWindowRange - graphHeight);
+
     switch(correlationID[ID])
     {
       case 1:
