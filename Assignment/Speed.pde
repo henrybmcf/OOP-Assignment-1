@@ -2,8 +2,11 @@ class Speed extends Spd_Stg_Len_Correl
 {
   float average;
   
-  int time= 4;
-  int s = 1;
+  Speed()
+  {
+    speedTime = 4;
+    speedIndex = 1;
+  }
   
   void render()
   {
@@ -22,15 +25,15 @@ class Speed extends Spd_Stg_Len_Correl
     drawAxis(verticalIntervals, dataGaps, 1, speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
     
     // Timing drawing graph animation
-    if(time > 4)
+    if(speedTime > 4)
     {
-      if(s < speedList.size())
-          s++;
-      time = 0;
+      if(speedIndex < speedList.size())
+          speedIndex++;
+      speedTime = 0;
     }
-    for(int j = 1; j < s; j++)
+    for(int j = 1; j < speedIndex; j++)
           drawGraph(j, 0, speedList, lowestSpeed, highestSpeed);
-    time++;
+    speedTime++;
 
     // X Axis (Year Axis)
     drawXAxis();

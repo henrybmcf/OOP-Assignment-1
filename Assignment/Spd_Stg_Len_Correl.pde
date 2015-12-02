@@ -166,7 +166,7 @@ class Spd_Stg_Len_Correl
       {
         if(ID == 3)
            if(correlation[0])
-              y += 15; 
+              y += 20; 
         dataGap = range / verticalIntervals;
         axisLabel = (dataGap * i) + low;
         textAlign(RIGHT, CENTER);  
