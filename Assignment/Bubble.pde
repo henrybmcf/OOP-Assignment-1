@@ -32,7 +32,7 @@ class Bubble
       colour2[i] = color(255, c2, c3);
     }
 
-    if (bubbleGraph == 1)
+    if (bubbleGraph == "Country")
     {
       fill(255);
       for (int i = 0; i < cWins.size(); i++)
@@ -61,7 +61,7 @@ class Bubble
       }
     }
 
-    if (bubbleGraph == 2)
+    if (bubbleGraph == "Rider")
     {
       for (int i = 0; i < wins.size(); i++)
       {

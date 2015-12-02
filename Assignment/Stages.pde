@@ -1,4 +1,4 @@
-class Stages
+/*class Stages
 {
   String rider;
   int number;
@@ -9,3 +9,15 @@ class Stages
      number = 0;
   }
 }
+
+class countryWins
+{
+  String country;
+  int number;
+  
+  countryWins()
+  {
+     country = "";
+     number = 0;
+  }
+}*/

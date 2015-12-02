@@ -16,7 +16,6 @@ class Wheel
     this.diameter = diameter;
     theta = TWO_PI / segments;
     thetaBase = PI + HALF_PI;
-
     colours[0] = color(170, 0, 0);
     colours[1] = color(0, 170, 0);
     colours[2] = color(0, 0, 170);
@@ -29,9 +28,6 @@ class Wheel
 
   void render()
   {
-    stroke(255);
-    fill(0);
-
     for (int i = 0; i < segments; i++)
     {
       fill(colours[i]);
@@ -41,7 +37,6 @@ class Wheel
       stroke(0);
       ellipse(pos.x, pos.y, 20, 20);
     }
-
     stroke(100);
     fill(255);
     strokeWeight(3);
@@ -57,44 +52,29 @@ class Wheel
       if (keyCode == LEFT || keyCode == RIGHT)
       {
         option = ((PI + HALF_PI - thetaBase) / theta);
-
         if (option < 1)
-        {
-          option += 8;
-        }
-
+            option += 8;
         if (option > 8)
-        {
-          option = option - 8;
-        }
+            option = option - 8;
       }
 
       // Turn wheel depending on arrow key pressed
       if (keyCode == LEFT)
       {
         thetaBase -= 0.05f;
-
-        if (thetaBase <= 0.0f)
-        {
-          thetaBase = TWO_PI;
-        }
+        if(thetaBase <= 0.0f)
+            thetaBase = TWO_PI;
       }
-
       if (keyCode == RIGHT)
       {
         thetaBase += 0.05f;
-
         if (thetaBase >= TWO_PI)
-        {
-          thetaBase = 0.0f;
-        }
+            thetaBase = 0.0f;
       }
 
       // Go to menu option when return key pressed
       if (key == RETURN || key == ENTER)
-      {
-        menu = (int) option + 1;
-      }
+            menu = (int) option + 1;
     }
   }
 }

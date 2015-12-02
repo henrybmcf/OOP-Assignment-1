@@ -21,7 +21,7 @@ void setup()
   sum = 0.0f;
   average = 0.0f;
   
-  bubbleGraph = 1;
+  bubbleGraph = "Rider";
   
   countryWins = loadTable("CountryWins.csv", "header");
 
@@ -167,7 +167,7 @@ float sum;
 boolean[] correlation = new boolean[3];
 String[] correlationID = new String[3];
 
-int bubbleGraph;
+String bubbleGraph;
 
 Minim minim;
 
@@ -185,7 +185,7 @@ void draw()
       speed.render();
       break;
     case 2:
-      pie.update(counter);
+      pie.update();
       break;
     case 3:
       bubble.render();
@@ -236,9 +236,9 @@ void keyPressed()
   if(menu == 3)
   {
     if(key == 'c')
-        bubbleGraph = 1;
+        bubbleGraph = "Country";
     if(key == 'r')
-        bubbleGraph = 2;
+        bubbleGraph = "Rider";
   }   
   
   if(menu == 5)
