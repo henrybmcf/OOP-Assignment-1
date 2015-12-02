@@ -1,10 +1,13 @@
 import java.util.*;
+import ddf.minim.*;
 
 void setup()
 {
+  minim = new Minim(this);
   //size(900, 700);
   fullScreen();
   background(0);
+  smooth(9);
   
   ssl_correl = new Spd_Stg_Len_Correl();
   
@@ -20,16 +23,19 @@ void setup()
   graph = 1;
   
   countryWins = loadTable("CountryWins.csv", "header");
+
   for(TableRow row : countryWins.rows())
   {
     countryWins countryWin = new countryWins();
     countryWin.country = row.getString("Country");
-    countryWin.number = row.getInt("Wins"); 
+    countryWin.number = row.getInt("Wins");
     countryRecords.add(countryWin);
   }
+ 
   for(int i = 0; i < countryRecords.size(); i++)
   {
     cWins.add(countryRecords.get(i).number);
+    country.add(countryRecords.get(i).country);
     float x1 = random(50, width - 50);
     country_x.add(x1);
   }
@@ -133,10 +139,7 @@ Pie pie;
 Bubble bubble;
 Table stages_table;
 Spd_Stg_Len_Correl ssl_correl;
-
 Table countryWins;
-ArrayList<countryWins> countryRecords = new ArrayList<countryWins>();
-ArrayList<Integer> cWins = new ArrayList<Integer>(); 
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
@@ -145,10 +148,12 @@ ArrayList<Integer> stages = new ArrayList<Integer>();
 ArrayList<Stages> stage_records = new ArrayList<Stages>();
 ArrayList<String> rider = new ArrayList<String>();
 ArrayList<Integer> wins = new ArrayList<Integer>();
-ArrayList<Integer> lengths = new ArrayList<Integer>();
-
 ArrayList<Float> stage_x = new ArrayList<Float>();
+ArrayList<Integer> lengths = new ArrayList<Integer>();
 ArrayList<Float> country_x = new ArrayList<Float>();
+ArrayList<countryWins> countryRecords = new ArrayList<countryWins>();
+ArrayList<Integer> cWins = new ArrayList<Integer>();
+ArrayList<String> country = new ArrayList<String>();
 
 int[] counter = new int[6];
 int menu;
@@ -162,6 +167,8 @@ boolean[] correlation = new boolean[3];
 int[] correlationID = new int[3];
 
 int graph;
+
+Minim minim;
 
 void draw()
 {
