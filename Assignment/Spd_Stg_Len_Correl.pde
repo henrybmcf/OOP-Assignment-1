@@ -56,7 +56,7 @@ class Spd_Stg_Len_Correl
     if(correlation[0])
     {
       strokeWeight(3);
-      drawAxis(verticalIntervals, dataGaps, 1, speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
+      drawAxis(verticalIntervals, dataGaps, "Speed", speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
       
       // Timing drawing graph animation
       if(speedTime > 3)
@@ -76,7 +76,7 @@ class Spd_Stg_Len_Correl
       strokeWeight(3);
       stroke(stagesColour);
       line(graphWindowRange, y_border, graphWindowRange, vertGraphWindowRange);
-      drawAxis(verticalStageIntervals, stageDataGaps, 2, stagesColour, 0, lowStage);
+      drawAxis(verticalStageIntervals, stageDataGaps, "Stages", stagesColour, 0, lowStage);
       // Convert stage arraylist to float in order to pass to drawGraph method
       ArrayList<Float> List = new ArrayList<Float>();
       for(int i:stages)
@@ -98,7 +98,7 @@ class Spd_Stg_Len_Correl
     if(correlation[2])
     {  
       strokeWeight(4);
-      drawAxis(verticalIntervals, dataGaps, 3, lengthColour, longLength - shortLength, shortLength);
+      drawAxis(verticalIntervals, dataGaps, "Length", lengthColour, longLength - shortLength, shortLength);
       // Convert stage arraylist to float in order to pass to drawGraph method
       ArrayList<Float> List = new ArrayList<Float>(); 
       for(int i:lengths)
@@ -146,7 +146,7 @@ class Spd_Stg_Len_Correl
   }
   
   // Draw vertical Axis'
-  void drawAxis(int intervals, float windowGap, int ID, color axisColour, int range, int low)
+  void drawAxis(int intervals, float windowGap, String graph, color axisColour, int range, int low)
   {
     stroke(axisColour);
     fill(axisColour);
@@ -155,16 +155,16 @@ class Spd_Stg_Len_Correl
     for(int i = 0; i <= intervals; i++)
     {
       float y = (vertGraphWindowRange) - (i * windowGap);
-      if(ID == 2)
+      if(graph == "Stages")
       {
         line(graphWindowRange + tickSize, y, graphWindowRange, y);
         axisLabel = i + low;
         textAlign(LEFT, CENTER);  
         text(int(axisLabel), graphWindowRange + (tickSize * 2.0f), y);
       }   
-      if(ID == 1 || ID == 3)
+      if(graph == "Speed" || graph == "Length")
       {
-        if(ID == 3)
+        if(graph == "Length")
            if(correlation[0])
               y += 20; 
         dataGap = range / verticalIntervals;
@@ -184,15 +184,15 @@ class Spd_Stg_Len_Correl
 
     switch(correlationID[ID])
     {
-      case 1:
+      case "Trend":
         strokeWeight(4);
         line(x1, y1, x2, y2);
         break;
-      case 2:
+      case "Scatter":
         strokeWeight(1);
         rect(x1, y1, 4, 4);
         break;
-      case 3:
+      case "scatterTrend":
         strokeWeight(1);
         rect(x1, y1, 4, 4);
         line(x1, y1, x2, y2);

@@ -21,7 +21,7 @@ void setup()
   sum = 0.0f;
   average = 0.0f;
   
-  graph = 1;
+  bubbleGraph = 1;
   
   countryWins = loadTable("CountryWins.csv", "header");
 
@@ -165,9 +165,9 @@ float average;
 float sum;
 
 boolean[] correlation = new boolean[3];
-int[] correlationID = new int[3];
+String[] correlationID = new String[3];
 
-int graph;
+int bubbleGraph;
 
 Minim minim;
 
@@ -231,14 +231,14 @@ void keyPressed()
   }
   
   if(menu == 1)
-    correlationID[0] = 1;
+    correlationID[0] = "Trend";
     
   if(menu == 3)
   {
     if(key == 'c')
-        graph = 1;
+        bubbleGraph = 1;
     if(key == 'r')
-        graph = 2;
+        bubbleGraph = 2;
   }   
   
   if(menu == 5)
@@ -248,66 +248,66 @@ void keyPressed()
       case 's':
       {
         correlation[0] =! correlation[0];
-        correlationID[0] = 1;
+        correlationID[0] = "Trend";
         break;
       }
       case 'w':
       {
-        correlationID[0] = 1;
+        correlationID[0] = "Trend";
         break;
       }
       case 'a':
       {
-        correlationID[0] = 2;
+        correlationID[0] = "Scatter";
         break;
       }
       case 'd':
       {
-        correlationID[0] = 3;
+        correlationID[0] = "scatterTrend";
         break;
       }
       
       case 't':
       {
         correlation[1] =! correlation[1];
-        correlationID[1] = 2;
+        correlationID[1] = "Scatter";
         break;
       }
       case 'g':
       {
-        correlationID[1] = 2;
+        correlationID[1] = "Scatter";
         break;
       }
       case 'r':
       {
-        correlationID[1] = 1;
+        correlationID[1] = "Trend";
         break;
       }
       case 'y':
       {
-        correlationID[1] = 3;
+        correlationID[1] = "scatterTrend";
         break;
       }
       
       case 'l':
       {
         correlation[2] =! correlation[2];
-        correlationID[2] = 3;
+        correlationID[2] = "scatterTrend";
         break;
       }
       case 'i':
       {
-        correlationID[2] = 3;
+        correlationID[2] = "scatterTrend";
         break;
       }
       case 'j':
       {
-        correlationID[2] = 1;
+        correlationID[2] = "Trend";
         break;
       }
       case 'k':
       {
-        correlationID[2] = 2;
+        correlationID[2] = "Scatter";
         break;
       }
     } 

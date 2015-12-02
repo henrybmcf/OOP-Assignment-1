@@ -22,7 +22,7 @@ class Speed extends Spd_Stg_Len_Correl
     line(x_border, y_border, x_border, vertGraphWindowRange);
     for(int i = 0; i <= verticalIntervals; i++)
         line(x_border - tickSize, vertGraphWindowRange - (i * dataGaps), x_border, vertGraphWindowRange - (i * dataGaps));  
-    drawAxis(verticalIntervals, dataGaps, 1, speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
+    drawAxis(verticalIntervals, dataGaps, "Speed", speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
     
     // Timing drawing graph animation
     if(speedTime > 4)
