@@ -62,31 +62,20 @@ void setup()
   for (TableRow row : table.rows())
   {
     Year year = new Year();
-    
     year.tour_year = row.getInt("Year"); 
     year.tour_length = row.getInt("Length");
     year.stages = row.getInt("Stages");
     year.winner = row.getString("Winner");
     year.speed = row.getFloat("Speed");
-
-    //println(year.tour_year + " " + year.tour_length + " " + year.stages + " " + year.winner + " " + year.speed); 
     years.add(year);
   }
  
   for(int i = 0; i < years.size(); i++)
   {
-    speedList.add(years.get(i).speed);
+    yearList.add(years.get(i).tour_year);
+    speedList.append(years.get(i).speed);
     stages.add(years.get(i).stages);
     lengths.add(years.get(i).tour_length);
-    
-    sum += speedList.get(i);
-  }
-  
-  average = sum / speedList.size();
-  
-  for(int i = 0; i < 14; i++)
-  {
-    yearList.add(years.get((i * 5) + 3).tour_year);
   }
   
   for(int i = 0; i < correlation.length; i++)
@@ -144,7 +133,10 @@ Table countryWins;
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
-ArrayList<Float> speedList = new ArrayList<Float>();
+
+//ArrayList<Float> speedList = new ArrayList<Float>();
+FloatList speedList = new FloatList();
+
 ArrayList<Integer> stages = new ArrayList<Integer>();
 ArrayList<Stages> stage_records = new ArrayList<Stages>();
 ArrayList<String> rider = new ArrayList<String>();

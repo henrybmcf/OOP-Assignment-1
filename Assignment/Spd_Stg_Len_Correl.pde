@@ -1,6 +1,6 @@
 class Spd_Stg_Len_Correl
 {
-  float x_border, y_border;
+  float xBorder, yBorder;
   float graphWindowRange, vertGraphWindowRange;
   float graphWidth, graphHeight;
   int verticalIntervals, verticalStageIntervals;
@@ -14,16 +14,18 @@ class Spd_Stg_Len_Correl
   color lengthColour, speedColour, stagesColour;
   int speedTime, stageTime, lengthTime;
   int speedIndex, stageIndex, lengthIndex;
+  
+  float average;
  
   Spd_Stg_Len_Correl()
   {
-    x_border = width * 0.1f;
-    y_border = height * 0.1f;
-    graphWindowRange = width - x_border;
-    vertGraphWindowRange = height - y_border;
-    graphWidth = width - (x_border * 2.0f);
-    graphHeight = height - (y_border * 2.0f);
-    tickSize = x_border * 0.1f;
+    xBorder = width * 0.1f;
+    yBorder = height * 0.1f;
+    graphWindowRange = width - xBorder;
+    vertGraphWindowRange = height - yBorder;
+    graphWidth = width - (xBorder * 2.0f);
+    graphHeight = height - (yBorder * 2.0f);
+    tickSize = xBorder * 0.1f;
     verticalIntervals = 10;
     dataGaps = graphHeight / verticalIntervals;
     verticalStageIntervals = 5;
@@ -43,8 +45,8 @@ class Spd_Stg_Len_Correl
   void render()
   { 
     // Find lowest & highest for mapping
-    highestSpeed = Collections.max(speedList);
-    lowestSpeed = Collections.min(speedList);
+    highestSpeed = speedList.max();//Collections.max(speedList);
+    lowestSpeed = speedList.min();//Collections.min(speedList);
     highStage = Collections.max(stages);
     lowStage = Collections.min(stages);
     longLength = Collections.max(lengths);
@@ -56,7 +58,7 @@ class Spd_Stg_Len_Correl
     if(correlation[0])
     {
       strokeWeight(3);
-      drawAxis(verticalIntervals, dataGaps, "Speed", speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
+      drawAxis(verticalIntervals, dataGaps, "Speed", speedColour, (highestSpeed - lowestSpeed), lowestSpeed);
       
       // Timing drawing graph animation
       if(speedTime > 3)
@@ -75,12 +77,12 @@ class Spd_Stg_Len_Correl
     {      
       strokeWeight(3);
       stroke(stagesColour);
-      line(graphWindowRange, y_border, graphWindowRange, vertGraphWindowRange);
+      line(graphWindowRange, yBorder, graphWindowRange, vertGraphWindowRange);
       drawAxis(verticalStageIntervals, stageDataGaps, "Stages", stagesColour, 0, lowStage);
       // Convert stage arraylist to float in order to pass to drawGraph method
-      ArrayList<Float> List = new ArrayList<Float>();
+      FloatList List = new FloatList();
       for(int i:stages)
-          List.add(float(i));
+          List.append(float(i));
           
       // Timing drawing graph animation
       if(stageTime > 3)
@@ -100,9 +102,9 @@ class Spd_Stg_Len_Correl
       strokeWeight(4);
       drawAxis(verticalIntervals, dataGaps, "Length", lengthColour, longLength - shortLength, shortLength);
       // Convert stage arraylist to float in order to pass to drawGraph method
-      ArrayList<Float> List = new ArrayList<Float>(); 
+      FloatList List = new FloatList(); 
       for(int i:lengths)
-          List.add(float(i));
+          List.append(float(i));
       
       // Timing drawing graph animation
       if(lengthTime > 3)
@@ -119,42 +121,42 @@ class Spd_Stg_Len_Correl
     // Speed & Length Axis
     stroke(speedColour);
     strokeWeight(3);
-    line(x_border, y_border, x_border, vertGraphWindowRange);
+    line(xBorder, yBorder, xBorder, vertGraphWindowRange);
     for(int i = 0; i <= verticalIntervals; i++)
-        line(x_border - tickSize, vertGraphWindowRange - (i * dataGaps), x_border, vertGraphWindowRange - (i * dataGaps));   
+        line(xBorder - tickSize, vertGraphWindowRange - (i * dataGaps), xBorder, vertGraphWindowRange - (i * dataGaps));   
   
     // X Axis (Year Axis)
-    drawXAxis();
+    drawYearAxis();
     displayYearInfo(1);
   }
   
-  void drawXAxis()
+  void drawYearAxis()
   {
     stroke(255);
     fill(255);
     strokeWeight(2);
-    line(x_border, vertGraphWindowRange, graphWindowRange, vertGraphWindowRange);    
+    line(xBorder, vertGraphWindowRange, graphWindowRange, vertGraphWindowRange);    
     horizInterval = graphWidth / (yearList.size() - 1);
-    for(int i = 0; i < yearList.size(); i++)
-    {
-      float x = x_border + (i * horizInterval);
-      line(x, vertGraphWindowRange + tickSize, x, vertGraphWindowRange);
-      float textY = height - (y_border * 0.5f);
+    for(int i = 0; i < yearList.size(); i += 5)
+    {     
+      float x = xBorder + (i * horizInterval);
+      line(x, vertGraphWindowRange, x, vertGraphWindowRange + tickSize);
+      float textY = height - (yBorder * 0.5f);
       textAlign(CENTER, CENTER);
       text(yearList.get(i), x, textY);
     }
   }
   
   // Draw vertical Axis'
-  void drawAxis(int intervals, float windowGap, String graph, color axisColour, int range, int low)
+  void drawAxis(int intervals, float windowGap, String graph, color axisColour, float range, float low)
   {
     stroke(axisColour);
     fill(axisColour);
     float axisLabel = 0.0f;
-    int dataGap;
+    float dataGap;
     for(int i = 0; i <= intervals; i++)
     {
-      float y = (vertGraphWindowRange) - (i * windowGap);
+      float y = vertGraphWindowRange - (i * windowGap);
       if(graph == "Stages")
       {
         line(graphWindowRange + tickSize, y, graphWindowRange, y);
@@ -170,15 +172,15 @@ class Spd_Stg_Len_Correl
         dataGap = range / verticalIntervals;
         axisLabel = (dataGap * i) + low;
         textAlign(RIGHT, CENTER);  
-        text(nf(axisLabel, 2, 2), x_border - (tickSize * 2.0f), y);
+        text(nf(axisLabel, 2, 2), xBorder - (tickSize * 2.0f), y);
       }
     }
   }
   
-  void drawGraph(int i, int ID, ArrayList<Float> list, float low, float high)
+  void drawGraph(int i, int ID, FloatList list/*ArrayList<Float> list*/, float low, float high)
   {
-    float x1 = x_border + ((i - 1) * lineWidth);
-    float x2 = x_border + (i * lineWidth);
+    float x1 = xBorder + ((i - 1) * lineWidth);
+    float x2 = xBorder + (i * lineWidth);
     float y1 = map(list.get(i - 1), low, high, vertGraphWindowRange, vertGraphWindowRange - graphHeight);
     float y2 = map(list.get(i), low, high, vertGraphWindowRange, vertGraphWindowRange - graphHeight);
 
@@ -203,18 +205,12 @@ class Spd_Stg_Len_Correl
   void displayYearInfo(int sketchID)
   {
     // Determine which year the mouse is in
-    int x = (int) ((mouseX - x_border) / lineWidth);
-    float x_coord = x_border + (x * lineWidth);
+    int x = (int) ((mouseX - xBorder) / lineWidth);
+    float x_coord = xBorder + (x * lineWidth);
     if(x >= 0 && x < years.size())
     {
-      stroke(255, 0, 0);
-      fill(255, 0, 0);
-      // Draw line to show exact year and speed depending on x coordinates of mouse
-      line(x_coord, y_border, x_coord, vertGraphWindowRange);
       // Determine y coordinate of ellipse in relation to line graph
       float speed_y = map(speedList.get(x), lowestSpeed, highestSpeed, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
-      // Draw ellipse showing point on speed graph
-      ellipse(x_coord, speed_y, 10, 10);
       
       if(sketchID == 1)
       {
@@ -224,6 +220,45 @@ class Spd_Stg_Len_Correl
         fill(0, 0, 255);
         ellipse(x_coord, length_y, 10, 10);
       }
+      
+      if(sketchID == 2)
+      {
+        float avgY = map(average, lowestSpeed, highestSpeed, vertGraphWindowRange, yBorder);
+        stroke(255, 0, 0);
+        fill(255, 0, 0);
+        if(speed_y > avgY)
+        {   
+          line(x_coord, speed_y, x_coord, vertGraphWindowRange);
+          line(x_coord, avgY, x_coord, yBorder);
+          stroke(255);
+          strokeWeight(4);
+          for(int i = 1; i < (speed_y - avgY)/10; i++)
+          {
+            line(x_coord, avgY + (i * 10), x_coord, avgY + (i * 10) - 5);
+          }
+        }
+        else
+        {   
+          line(x_coord, speed_y, x_coord, yBorder);    
+          line(x_coord, avgY, x_coord, vertGraphWindowRange);
+          stroke(255);
+          strokeWeight(4);
+          for(int i = 1; i < (avgY - speed_y)/10; i++)
+              line(x_coord, avgY - (i * 10), x_coord, avgY - (i * 10) + 5);
+        }
+      }
+      
+      stroke(255, 0, 0);
+      // Draw line to show exact year and speed depending on x coordinates of mouse
+      if(sketchID != 2)
+      {
+          line(x_coord, yBorder, x_coord, vertGraphWindowRange);
+          println("Not 2");
+      }   
+      // Draw ellipse showing point on speed graph
+      ellipse(x_coord, speed_y, 10, 10);
+      
+      
       
       // Display speed and year on relevant side of line, depending on location across graph
       fill(255);
@@ -251,6 +286,8 @@ class Spd_Stg_Len_Correl
       }
       text("Year: " + years.get(x).tour_year, text_coordinates, textHeight);
       text("Speed: " + speedList.get(x) + " Km/h", text_coordinates, textHeight + 20);
+      
+      
     }  
   }
 }

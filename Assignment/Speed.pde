@@ -1,6 +1,6 @@
 class Speed extends Spd_Stg_Len_Correl 
 {
-  float average;
+  
   
   Speed()
   {
@@ -10,19 +10,17 @@ class Speed extends Spd_Stg_Len_Correl
   
   void render()
   {
-    average();
-    
     // Find lowest & highest for mapping
-    highestSpeed = Collections.max(speedList);
-    lowestSpeed = Collections.min(speedList);
+    highestSpeed = speedList.max();
+    lowestSpeed = speedList.min();
     lineWidth = graphWidth / (speedList.size() - 1);
    
     stroke(0, 255, 255);
     strokeWeight(3);
-    line(x_border, y_border, x_border, vertGraphWindowRange);
+    line(xBorder, yBorder, xBorder, vertGraphWindowRange);
     for(int i = 0; i <= verticalIntervals; i++)
-        line(x_border - tickSize, vertGraphWindowRange - (i * dataGaps), x_border, vertGraphWindowRange - (i * dataGaps));  
-    drawAxis(verticalIntervals, dataGaps, "Speed", speedColour, int(highestSpeed - lowestSpeed), int(lowestSpeed));
+        line(xBorder - tickSize, vertGraphWindowRange - (i * dataGaps), xBorder, vertGraphWindowRange - (i * dataGaps));
+    drawAxis(verticalIntervals, dataGaps, "Speed", speedColour, highestSpeed - lowestSpeed, lowestSpeed);
     
     // Timing drawing graph animation
     if(speedTime > 4)
@@ -36,8 +34,10 @@ class Speed extends Spd_Stg_Len_Correl
     speedTime++;
 
     // X Axis (Year Axis)
-    drawXAxis();
+    drawYearAxis();
     displayYearInfo(2);
+    
+    average();
   }
   
   void average()
@@ -46,5 +46,14 @@ class Speed extends Spd_Stg_Len_Correl
     for(float s:speedList)
          sum += s;
     average = sum / speedList.size();
-  } 
+    float y = map(average, lowestSpeed, highestSpeed, vertGraphWindowRange, yBorder);
+    
+    fill(50, 255, 50);
+    stroke(50, 255, 50);
+    textAlign(RIGHT, CENTER);
+    text(nf(average, 2, 2), xBorder - tickSize, y);
+    line(xBorder, y, graphWindowRange, y);
+    
+    
+  }
 }
