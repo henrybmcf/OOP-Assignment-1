@@ -13,7 +13,6 @@ class Speed extends Spd_Stg_Len_Correl
     textAlign(CENTER);
     text("Trend graph of speed of the winner of the Tour de France from 1950 - 2015.\nGreen line represents overall average", (width * 0.5f), 30);
 
-
     // Find lowest & highest for mapping
     highestSpeed = speedList.max();
     lowestSpeed = speedList.min();
