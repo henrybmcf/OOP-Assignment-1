@@ -2,43 +2,42 @@ import java.util.*;
 import ddf.minim.*;
 
 void setup()
-{
-  minim = new Minim(this);
+{  
   //size(900, 700);
   fullScreen();
   background(0);
-  smooth(9);
+  smooth(8);
   textSize(20);
   
   ssl_correl = new Spd_Stg_Len_Correl();
-  
   speed = new Speed();
   pie = new Pie();
   bubble = new Bubble();
   wheel = new Wheel();
+  minim = new Minim(this);
   menu = 0;
   option = 0.0f;
   sum = 0.0f;
   average = 0.0f;
-  
   bubbleGraph = "Rider";
   
-  countryWins = loadTable("CountryWins.csv", "header");
-
-  for(TableRow row : countryWins.rows())
+  table = loadTable("TDF.csv", "header");
+  for (TableRow row : table.rows())
   {
-    countryWins countryWin = new countryWins();
-    countryWin.country = row.getString("Country");
-    countryWin.number = row.getInt("Wins");
-    countryRecords.add(countryWin);
+    Year year = new Year();
+    year.tour_year = row.getInt("Year"); 
+    year.tour_length = row.getInt("Length");
+    year.stages = row.getInt("Stages");
+    year.winner = row.getString("Winner");
+    year.speed = row.getFloat("Speed");
+    years.add(year);
   }
- 
-  for(int i = 0; i < countryRecords.size(); i++)
+  for(int i = 0; i < years.size(); i++)
   {
-    cWins.add(countryRecords.get(i).number);
-    country.add(countryRecords.get(i).country);
-    float x1 = random(width - (i + 1) * 50, width - (i + 1) * 130);
-    country_x.add(x1);
+    yearList.add(years.get(i).tour_year);
+    speedList.append(years.get(i).speed);
+    stages.add(years.get(i).stages);
+    lengths.add(years.get(i).tour_length);
   }
   
   stages_table = loadTable("stage_wins.csv", "header");
@@ -57,31 +56,24 @@ void setup()
     stage_x.add(x1);
   }
 
-  table = loadTable("TDF.csv", "header");
-
-  for (TableRow row : table.rows())
+  countryWins = loadTable("CountryWins.csv", "header");
+  for(TableRow row : countryWins.rows())
   {
-    Year year = new Year();
-    year.tour_year = row.getInt("Year"); 
-    year.tour_length = row.getInt("Length");
-    year.stages = row.getInt("Stages");
-    year.winner = row.getString("Winner");
-    year.speed = row.getFloat("Speed");
-    years.add(year);
+    countryWins countryWin = new countryWins();
+    countryWin.country = row.getString("Country");
+    countryWin.number = row.getInt("Wins");
+    countryRecords.add(countryWin);
   }
- 
-  for(int i = 0; i < years.size(); i++)
+  for(int i = 0; i < countryRecords.size(); i++)
   {
-    yearList.add(years.get(i).tour_year);
-    speedList.append(years.get(i).speed);
-    stages.add(years.get(i).stages);
-    lengths.add(years.get(i).tour_length);
+    cWins.add(countryRecords.get(i).number);
+    country.add(countryRecords.get(i).country);
+    float x1 = random(width - (i + 1) * 50, width - (i + 1) * 130);
+    country_x.add(x1);
   }
   
   for(int i = 0; i < correlation.length; i++)
-  {
-    correlation[i] = false;
-  }
+      correlation[i] = false;
   
   // Stage counter
   for(int i:stages)
@@ -123,20 +115,18 @@ void setup()
 }
 
 Table table;
+Table stages_table;
+Table countryWins;
 Wheel wheel;
 Speed speed;
 Pie pie;
 Bubble bubble;
-Table stages_table;
 Spd_Stg_Len_Correl ssl_correl;
-Table countryWins;
+Minim minim;
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
-
-//ArrayList<Float> speedList = new ArrayList<Float>();
 FloatList speedList = new FloatList();
-
 ArrayList<Integer> stages = new ArrayList<Integer>();
 ArrayList<Stages> stage_records = new ArrayList<Stages>();
 ArrayList<String> rider = new ArrayList<String>();
@@ -155,13 +145,9 @@ float theta;
 float thetaBase;
 float average;
 float sum;
-
 boolean[] correlation = new boolean[3];
 String[] correlationID = new String[3];
-
 String bubbleGraph;
-
-Minim minim;
 
 void draw()
 {
@@ -183,9 +169,7 @@ void draw()
       bubble.render();
       break;
     case 4:
-    {
       break;
-    }
     
     case 5:
       ssl_correl.render();
@@ -213,95 +197,67 @@ void draw()
 void keyPressed()
 {
   if (key >= '0' && key <= '9')
-  {
-    menu = key - '0';
-  }
+     menu = key - '0';
   
   if(key == BACKSPACE)
-  {
-    menu = 0;
-  }
+     menu = 0;
   
-  if(menu == 1)
-    correlationID[0] = "Trend";
-    
-  if(menu == 3)
+  switch(menu)
   {
-    if(key == 'c')
-        bubbleGraph = "Country";
-    if(key == 'r')
-        bubbleGraph = "Rider";
-  }   
-  
-  if(menu == 5)
-  {
-    switch(key)
-    {
-      case 's':
+    case 1:
+      correlationID[0] = "Trend";
+      break;
+    case 3:
+      if(key == 'c')
+          bubbleGraph = "Country";
+      if(key == 'r')
+          bubbleGraph = "Rider";
+      break;
+    case 5:
+      switch(key)
       {
-        correlation[0] =! correlation[0];
-        correlationID[0] = "Trend";
-        break;
-      }
-      case 'w':
-      {
-        correlationID[0] = "Trend";
-        break;
-      }
-      case 'a':
-      {
-        correlationID[0] = "Scatter";
-        break;
-      }
-      case 'd':
-      {
-        correlationID[0] = "scatterTrend";
-        break;
-      }
-      
-      case 't':
-      {
-        correlation[1] =! correlation[1];
-        correlationID[1] = "Scatter";
-        break;
-      }
-      case 'g':
-      {
-        correlationID[1] = "Scatter";
-        break;
-      }
-      case 'r':
-      {
-        correlationID[1] = "Trend";
-        break;
-      }
-      case 'y':
-      {
-        correlationID[1] = "scatterTrend";
-        break;
-      }
-      
-      case 'l':
-      {
-        correlation[2] =! correlation[2];
-        correlationID[2] = "scatterTrend";
-        break;
-      }
-      case 'i':
-      {
-        correlationID[2] = "scatterTrend";
-        break;
-      }
-      case 'j':
-      {
-        correlationID[2] = "Trend";
-        break;
-      }
-      case 'k':
-      {
-        correlationID[2] = "Scatter";
-        break;
-      }
-    } 
+        case 's':
+          correlation[0] =! correlation[0];
+          correlationID[0] = "Trend";
+          break;
+        case 'w':
+          correlationID[0] = "Trend";
+          break;
+        case 'a':
+          correlationID[0] = "Scatter";
+          break;
+        case 'd':
+          correlationID[0] = "scatterTrend";
+          break;
+        
+        case 't':
+          correlation[1] =! correlation[1];
+          correlationID[1] = "Scatter";
+          break;
+        case 'g':
+          correlationID[1] = "Scatter";
+          break;
+        case 'r':
+          correlationID[1] = "Trend";
+          break;
+        case 'y':
+          correlationID[1] = "scatterTrend";
+          break;
+        
+        case 'l':
+          correlation[2] =! correlation[2];
+          correlationID[2] = "scatterTrend";
+          break;
+        case 'i':
+          correlationID[2] = "scatterTrend";
+          break;
+        case 'j':
+          correlationID[2] = "Trend";
+          break;
+        case 'k':
+          correlationID[2] = "Scatter";
+          break;
+      } 
+    break;
   }
 }

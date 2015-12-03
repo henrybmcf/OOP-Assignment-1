@@ -206,19 +206,19 @@ class Spd_Stg_Len_Correl
   {
     // Determine which year the mouse is in
     int x = (int) ((mouseX - xBorder) / lineWidth);
-    float x_coord = xBorder + (x * lineWidth);
+    float xCoord = xBorder + (x * lineWidth);
     if(x >= 0 && x < years.size())
     {
       // Determine y coordinate of ellipse in relation to line graph
-      float speed_y = map(speedList.get(x), lowestSpeed, highestSpeed, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
+      float speedY = map(speedList.get(x), lowestSpeed, highestSpeed, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
       
       if(sketchID == 1)
       {
-        float length_y = map(lengths.get(x), shortLength, longLength, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
+        float lengthY = map(lengths.get(x), shortLength, longLength, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
         // Draw ellipse showing point on length graph
         stroke(0, 0, 255);
         fill(0, 0, 255);
-        ellipse(x_coord, length_y, 10, 10);
+        ellipse(xCoord, lengthY, 10, 10);
       }
       
       if(sketchID == 2)
@@ -226,52 +226,45 @@ class Spd_Stg_Len_Correl
         float avgY = map(average, lowestSpeed, highestSpeed, vertGraphWindowRange, yBorder);
         stroke(255, 0, 0);
         fill(255, 0, 0);
-        if(speed_y > avgY)
+        if(speedY > avgY)
         {   
-          line(x_coord, speed_y, x_coord, vertGraphWindowRange);
-          line(x_coord, avgY, x_coord, yBorder);
+          line(xCoord, speedY, xCoord, vertGraphWindowRange);
+          line(xCoord, avgY, xCoord, yBorder);
           stroke(255);
           strokeWeight(4);
-          for(int i = 1; i < (speed_y - avgY)/10; i++)
-          {
-            line(x_coord, avgY + (i * 10), x_coord, avgY + (i * 10) - 5);
-          }
+          for(int i = 1; i < (speedY - avgY)/10; i++)
+              line(xCoord, avgY + (i * 10), xCoord, avgY + (i * 10) - 5);
         }
         else
         {   
-          line(x_coord, speed_y, x_coord, yBorder);    
-          line(x_coord, avgY, x_coord, vertGraphWindowRange);
+          line(xCoord, speedY, xCoord, yBorder);    
+          line(xCoord, avgY, xCoord, vertGraphWindowRange);
           stroke(255);
           strokeWeight(4);
-          for(int i = 1; i < (avgY - speed_y)/10; i++)
-              line(x_coord, avgY - (i * 10), x_coord, avgY - (i * 10) + 5);
+          for(int i = 1; i < (avgY - speedY)/10; i++)
+              line(xCoord, avgY - (i * 10), xCoord, avgY - (i * 10) + 5);
         }
       }
       
       stroke(255, 0, 0);
       // Draw line to show exact year and speed depending on x coordinates of mouse
       if(sketchID != 2)
-      {
-          line(x_coord, yBorder, x_coord, vertGraphWindowRange);
-          println("Not 2");
-      }   
+          line(xCoord, yBorder, xCoord, vertGraphWindowRange);
       // Draw ellipse showing point on speed graph
-      ellipse(x_coord, speed_y, 10, 10);
-      
-      
+      ellipse(xCoord, speedY, 10, 10);   
       
       // Display speed and year on relevant side of line, depending on location across graph
       fill(255);
       float text_coordinates;
-      if(mouseX < 300)
+      if(mouseX < 350)
       {
         textAlign(LEFT, CENTER);
-        text_coordinates = x_coord + 10;
+        text_coordinates = xCoord + 10;
       }
       else
       {
         textAlign(RIGHT, CENTER);
-        text_coordinates = x_coord - 10;
+        text_coordinates = xCoord - 10;
       }
       float textHeight;
       if(sketchID == 2)
@@ -285,9 +278,7 @@ class Spd_Stg_Len_Correl
         text("Length: " + lengths.get(x) + "Km", text_coordinates, textHeight + 60);
       }
       text("Year: " + years.get(x).tour_year, text_coordinates, textHeight);
-      text("Speed: " + speedList.get(x) + " Km/h", text_coordinates, textHeight + 20);
-      
-      
+      text("Speed: " + speedList.get(x) + " Km/h", text_coordinates, textHeight + 20);  
     }  
   }
 }
