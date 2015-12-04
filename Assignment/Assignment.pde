@@ -1,13 +1,21 @@
 import java.util.*;
 import ddf.minim.*;
 
+import org.openkinect.freenect.*;
+import org.openkinect.processing.*;
+KinectTracker tracker;
+Kinect kinect;
+
 void setup()
 {  
-  //size(900, 700);
+  //size(640, 520);
   fullScreen();
-  background(0);
+  //background(0);
   smooth(8);
   textSize(20);
+  
+  kinect = new Kinect(this);
+  tracker = new KinectTracker();
   
   ssl_correl = new Spd_Stg_Len_Correl();
   speed = new Speed();
@@ -15,7 +23,7 @@ void setup()
   bubble = new Bubble();
   wheel = new Wheel();
   minim = new Minim(this);
-  menu = 0;
+  menu = 6;
   option = 0.0f;
   sum = 0.0f;
   average = 0.0f;
@@ -177,14 +185,40 @@ void draw()
     
     case 6:
     {
-      /*  
+      background(255);
+      tracker.track();
+      tracker.display();
+    
+      PVector v1 = tracker.getPos();
+      fill(50, 100, 250, 200);
+      noStroke();
+      ellipse(v1.x, v1.y, 20, 20);
+      PVector v2 = tracker.getLerpedPos();
+      fill(100, 250, 50, 200);
+      noStroke();
+      ellipse(v2.x, v2.y, 20, 20);
+      
+      rectMode(CORNER);
+      rect(100, 100, 200, 200);
+      if(v1.x > 100 && v2.x > 100 && v1.y > 100 && v2.y > 100 && v1.x < 300 && v2.x < 300 && v1.y < 300 && v2.y < 300)
+      {
+         text("MENU", width * 0.5f, height * 0.5f);
+      }
+      
+      int t = tracker.getThreshold();
+      fill(0);
+      text("threshold: " + t + "    " +  "framerate: " + int(frameRate) + "    " + 
+        "UP increase threshold, DOWN decrease threshold", 10, 500);
+              
+      break;
+    }
+    
+    /*  
       while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
       {
          thetaBase += 0.1f; 
       }
-      */     
-      break;
-    }
+      */ 
      
     default:
       text("Error, please select valid option", 100, 50);
