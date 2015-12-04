@@ -1,4 +1,4 @@
-class KinectTracker
+class KinectTracker extends KinectDepth
 {
   int threshold = 625;
   PVector loc;
@@ -18,6 +18,9 @@ class KinectTracker
   void track()
   {
     depth = kinect.getRawDepth();
+    
+    if (depth == null) return;
+    
     float sumX = 0;
     float sumY = 0;
     float count = 0;
@@ -26,7 +29,7 @@ class KinectTracker
     {
       for (int y = 0; y < kinect.height; y++)
       { 
-        int offset =  x + y*kinect.width;
+        int offset =  x + y * kinect.width;
         int rawDepth = depth[offset];
 
         if (rawDepth < threshold)
@@ -58,6 +61,9 @@ class KinectTracker
   void display()
   {
     PImage img = kinect.getDepthImage();
+    
+    if (depth == null || img == null) return;
+    
     display.loadPixels();
     for (int x = 0; x < kinect.width; x++)
     {
@@ -80,7 +86,8 @@ class KinectTracker
     image(display, 0, 0);
   }
   
-  int getThreshold() {
+  int getThreshold()
+  {
     return threshold;
   }
 }

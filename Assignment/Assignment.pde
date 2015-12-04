@@ -36,6 +36,7 @@ void setup()
   bubbleGraph = "Rider";
   
   kinectTime = 0;
+  kinectDepth = new KinectDepth();
   
   table = loadTable("TDF.csv", "header");
   for (TableRow row : table.rows())
@@ -140,6 +141,8 @@ Bubble bubble;
 Spd_Stg_Len_Correl ssl_correl;
 Minim minim;
 
+KinectDepth kinectDepth;
+
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
 FloatList speedList = new FloatList();
@@ -196,44 +199,10 @@ void draw()
     
     case 6:
     {
-      background(255);
-      tracker.track();
-      if (mode)
-      {
-        image(kinect.getDepthImage(), 0, 0);
-      } else
-      {
-        tracker.display();
-      }
-    
-      PVector v1 = tracker.getPos();
-      fill(50, 100, 250, 200);
-      noStroke();
-      ellipse(v1.x, v1.y, 20, 20);
-      PVector v2 = tracker.getLerpedPos();
-      fill(100, 250, 50, 200);
-      noStroke();
-      ellipse(v2.x, v2.y, 20, 20);
-      
-      rectMode(CORNER);
-      rect(100, 100, 200, 200);
-      if(v1.x > 100 && v2.x > 100 && v1.y > 100 && v2.y > 100 && v1.x < 300 && v2.x < 300 && v1.y < 300 && v2.y < 300)
-      {
-         text("MENU", width * 0.5f, height * 0.5f);
-         kinectTime++;
-         if(kinectTime == 60)
-             menu = 1;
-      }
-      else
-      {
-         kinectTime = 0;
-      }
-      
-      int t = tracker.getThreshold();
-      fill(0);
-      text("threshold: " + t + "    " +  "framerate: " + int(frameRate) + "    " + 
-        "UP increase threshold, DOWN decrease threshold", 10, 500);
-              
+      pushMatrix();
+      translate((width - kinect.width) * 0.5f, (height - kinect.height) * 0.5f);
+      kinectDepth.update();
+      popMatrix();
       break;
     }
     
@@ -262,9 +231,6 @@ void keyPressed()
   
   switch(menu)
   {
-    case 1:
-      correlationID[0] = "Trend";
-      break;
     case 3:
       if(key == 'c')
           bubbleGraph = "Country";
