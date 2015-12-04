@@ -177,13 +177,13 @@ class Spd_Stg_Len_Correl
     }
   }
   
-  void drawGraph(int i, int ID, FloatList list/*ArrayList<Float> list*/, float low, float high)
+  void drawGraph(int i, int ID, FloatList list, float low, float high)
   {
     float x1 = xBorder + ((i - 1) * lineWidth);
     float x2 = xBorder + (i * lineWidth);
     float y1 = map(list.get(i - 1), low, high, vertGraphWindowRange, vertGraphWindowRange - graphHeight);
     float y2 = map(list.get(i), low, high, vertGraphWindowRange, vertGraphWindowRange - graphHeight);
-
+    
     switch(correlationID[ID])
     {
       case "Trend":

@@ -6,6 +6,10 @@ import org.openkinect.processing.*;
 KinectTracker tracker;
 Kinect kinect;
 
+boolean colorDepth = true;
+boolean mirror = false;
+boolean mode = true;
+
 void setup()
 {  
   //size(640, 520);
@@ -16,6 +20,8 @@ void setup()
   
   kinect = new Kinect(this);
   tracker = new KinectTracker();
+  kinect.initDepth();
+  kinect.enableColorDepth(colorDepth);
   
   ssl_correl = new Spd_Stg_Len_Correl();
   speed = new Speed();
@@ -28,6 +34,8 @@ void setup()
   sum = 0.0f;
   average = 0.0f;
   bubbleGraph = "Rider";
+  
+  kinectTime = 0;
   
   table = loadTable("TDF.csv", "header");
   for (TableRow row : table.rows())
@@ -157,6 +165,8 @@ boolean[] correlation = new boolean[3];
 String[] correlationID = new String[3];
 String bubbleGraph;
 
+int kinectTime;
+
 void draw()
 {
   background(0);
@@ -168,6 +178,7 @@ void draw()
       wheel.update();
       break;
     case 1:
+      correlationID[0] = "Trend";
       speed.render();
       break;
     case 2:
@@ -187,7 +198,13 @@ void draw()
     {
       background(255);
       tracker.track();
-      tracker.display();
+      if (mode)
+      {
+        image(kinect.getDepthImage(), 0, 0);
+      } else
+      {
+        tracker.display();
+      }
     
       PVector v1 = tracker.getPos();
       fill(50, 100, 250, 200);
@@ -203,6 +220,13 @@ void draw()
       if(v1.x > 100 && v2.x > 100 && v1.y > 100 && v2.y > 100 && v1.x < 300 && v2.x < 300 && v1.y < 300 && v2.y < 300)
       {
          text("MENU", width * 0.5f, height * 0.5f);
+         kinectTime++;
+         if(kinectTime == 60)
+             menu = 1;
+      }
+      else
+      {
+         kinectTime = 0;
       }
       
       int t = tracker.getThreshold();
@@ -292,6 +316,10 @@ void keyPressed()
           correlationID[2] = "Scatter";
           break;
       } 
-    break;
+      break;
+    case 6:
+      if (key == 'c')
+          mode =! mode;
+      break;
   }
 }
