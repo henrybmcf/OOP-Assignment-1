@@ -1,14 +1,5 @@
 class KinectDepth
 {
-  float kinectXCorner;
-  float kinectYCorner;
- 
-  KinectDepth()
-  {
-    kinectXCorner = (width - kinect.width) * 0.5f;
-    kinectYCorner = (height - kinect.height) * 0.5f;
-  }
-  
   void update()
   {
     background(255);
@@ -17,7 +8,7 @@ class KinectDepth
     
     if (mode)
     {
-      image(kinect.getDepthImage(), kinectXCorner, kinectYCorner);
+      image(kinect.getDepthImage(), 0, 0);
     }
     else
     {
