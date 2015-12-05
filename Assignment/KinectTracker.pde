@@ -78,7 +78,7 @@ class KinectTracker extends KinectDepth
         }
         else
         {
-          display.pixels[pix] = img.pixels[offset];
+          display.pixels[pix] = color(0);//img.pixels[offset];
         }
       }
     }

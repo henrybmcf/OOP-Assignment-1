@@ -200,9 +200,13 @@ void draw()
     case 6:
     {
       pushMatrix();
-      translate((width - kinect.width) * 0.5f, (height - kinect.height) * 0.5f);
+      //translate((width - kinect.width) * 0.5f, (height - kinect.height) * 0.5f);
+      translate(width - kinect.width, height - kinect.height - 50);
       kinectDepth.update();
       popMatrix();
+      
+      wheel.render();
+      wheel.update();
       break;
     }
     

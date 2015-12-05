@@ -7,7 +7,7 @@ class Wheel
 
   Wheel()
   {
-    this(width * 0.5f, height  * 0.5f, 300);
+    this(width * 0.25f, height  * 0.4f, 300);
   }
 
   Wheel(float x, float y, float diameter)

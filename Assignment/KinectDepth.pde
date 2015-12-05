@@ -2,16 +2,13 @@ class KinectDepth
 {
   void update()
   {
-    background(255);
+    //background(255);
     
     tracker.track();
     
     if (mode)
     {
       image(kinect.getDepthImage(), 0, 0);
-    }
-    else
-    {
       tracker.display();
     }
   
@@ -39,8 +36,8 @@ class KinectDepth
     }
     
     int t = tracker.getThreshold();
-    fill(0);
-    text("threshold: " + t + "    " +  "framerate: " + int(frameRate) + "    " + 
-      "UP increase threshold, DOWN decrease threshold", 10, 500);            
+    fill(255);
+    textAlign(LEFT);
+    text("threshold: " + t + "    " +  "framerate: " + int(frameRate), 10, 500);            
   }
 }
