@@ -11,28 +11,6 @@ void setup()
   smooth(8);
   textSize(20);
   
-  kinect = new Kinect(this);
-  tracker = new KinectTracker();
-  kinect.initDepth();
-  kinect.enableColorDepth(colorDepth);
-  ssl_correl = new Spd_Stg_Len_Correl();
-  speed = new Speed();
-  pie = new Pie();
-  bubble = new Bubble();
-  wheel = new Wheel();
-  minim = new Minim(this);
-  kinectDepth = new KinectDepth();
-  menu = 0;
-  option = 0.0f;
-  sum = 0.0f;
-  average = 0.0f;
-  bubbleGraph = "Rider";
-  colorDepth = true;
-  mirror = false;
-  mode = true;
-  kinectTime = 0;
-  legend = false;
-  
   table = loadTable("TDF.csv", "header");
   for (TableRow row : table.rows())
   {
@@ -86,44 +64,51 @@ void setup()
   
   for(int i = 0; i < correlation.length; i++)
       correlation[i] = false;
+
+  // Add all elements into IntList for sorting
+  for(int i : stages)
+    stageCountSort.append(i);
+  stageCountSort.sort();
   
-  // Stage counter
-  for(int i:stages)
+  // For each repition of number of stages, add 1 to that counter element
+  // For each different number of stages, append new element to counter
+  // This allows for dynamic number of stages
+  counter.append(1);
+  int j = 0;
+  for(int i = 1; i < stageCountSort.size(); i++)
   {
-    switch(i)
+    if(stageCountSort.get(i) == stageCountSort.get(i - 1))
     {
-      case 20:
-      {
-        counter[0]++;
-        break;
-      }
-      case 21:
-      {
-        counter[1]++;
-        break;
-      }
-      case 22:
-      {
-        counter[2]++;
-        break;
-      }
-      case 23:
-      {
-        counter[3]++;
-        break;
-      }
-      case 24:
-      {
-        counter[4]++;
-        break;
-      }
-      case 25:
-      {
-        counter[5]++;
-        break;
-      }
+      counter.add(j, 1);
+    }
+    else
+    {
+      counter.append(1);
+      j++;
     }
   }
+  
+  //kinect = new Kinect(this);
+  //tracker = new KinectTracker();
+  //kinect.initDepth();
+  //kinect.enableColorDepth(colorDepth);
+  ssl_correl = new Spd_Stg_Len_Correl();
+  speed = new Speed();
+  pie = new Pie();
+  bubble = new Bubble();
+  wheel = new Wheel();
+  minim = new Minim(this);
+ // kinectDepth = new KinectDepth();
+  menu = 0;
+  option = 0.0f;
+  sum = 0.0f;
+  average = 0.0f;
+  bubbleGraph = "Rider";
+  colorDepth = true;
+  mirror = false;
+  mode = true;
+  kinectTime = 0;
+  legend = false;
 }
 
 Table table;
@@ -152,8 +137,9 @@ ArrayList<Float> country_x = new ArrayList<Float>();
 ArrayList<countryWins> countryRecords = new ArrayList<countryWins>();
 ArrayList<Integer> cWins = new ArrayList<Integer>();
 ArrayList<String> country = new ArrayList<String>();
+IntList stageCountSort = new IntList();
+IntList counter = new IntList();
 
-int[] counter = new int[6];
 int menu;
 float option;
 float theta;
@@ -177,11 +163,11 @@ void draw()
   {
     case 0:
       pushMatrix();
-      translate(width - kinect.width - 2, height - kinect.height - 2);
+      //translate(width - kinect.width - 2, height - kinect.height - 2);
       stroke(255, 0, 0);
       fill(0);
-      rect(0, -1, kinect.width +1, kinect.height +1);
-      kinectDepth.update();
+      //rect(0, -1, kinect.width +1, kinect.height +1);
+      //kinectDepth.update();
       popMatrix();
       
       wheel.render();

@@ -5,14 +5,17 @@ class Bubble
   int lowWins;
   int highCountry;
   int lowCountry;
-
-  void render()
+  
+  Bubble()
   {
     highWins = Collections.max(wins);
     lowWins = Collections.min(wins);
     highCountry = Collections.max(cWins);
-    lowCountry = Collections.min(cWins);
-
+    lowCountry = Collections.min(cWins); 
+  }
+  
+  void render()
+  {
     for (int i = 0; i < colour.length; i++)
     {
       float c2 = map(wins.get(i), lowWins, highWins, 255, 0);

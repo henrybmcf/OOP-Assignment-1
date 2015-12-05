@@ -6,7 +6,7 @@ class Pie
   float x, y;
   float lineX, lineY;
   float theta;
-  color[] colours = new color[counter.length];
+  color[] colours = new color[counter.size()];
 
   Pie()
   {
@@ -18,7 +18,6 @@ class Pie
     this.radius = radius;
     this.centX = centX;
     this.centY = centY;
-
     for (int i = 0; i < colours.length; i ++)
       colours[i] = color(random(100, 255), random(100), random(100, 255));
   }
@@ -30,10 +29,8 @@ class Pie
     textAlign(CENTER);
     text("Pie graph of frequency of stages of the Tour de France from 1950 - 2015.\nNumber represents number of times that number of stages has occured", (width * 0.5f), 40);
 
-    for (int i = 0; i < counter.length; i++)
-    {
-      text(i + 20 + " = " + counter[i], 50, (i + 1)*40);
-    }
+    for (int i = 0; i < counter.size(); i++)
+      text(i + 20 + " = " + counter.get(i), 50, (i + 1)*40);
 
     float sum = 0.0f;
     for (int c : counter)
@@ -44,9 +41,9 @@ class Pie
     float last = 0.0f;
     float cumulative = 0.0f;
 
-    for (int i = 0; i < counter.length; i ++)
+    for (int i = 0; i < counter.size(); i ++)
     {
-      cumulative += counter[i];
+      cumulative += counter.get(i);
       float current = map(cumulative, 0, sum, 0, TWO_PI);
       float r = radius;
 
@@ -89,13 +86,13 @@ class Pie
           lineY = centY + ((radius * 0.95f) * sin);
         }
         fill(255);
-        text(counter[i], x, y);
+        text(counter.get(i), x, y);
       }
-      
+
       strokeWeight(1);
       fill(colours[i]);
       arc(centX, centY, r, r, last, current, PIE);
-      
+
       fill(255);
       if (last + (current * 0.5f) < HALF_PI)
       {
@@ -115,11 +112,11 @@ class Pie
         float y1 = centY - cos(last + (current * 0.5f)) * radius;
         text(i + 20, x1, y1);
       }
-      
+
       fill(255);
       //text(i + 20, x1, y1);  
       println((i + 20) + " = " + (last + (current*0.5f)));
-      
+
       last = current;
     }
     stroke(255);

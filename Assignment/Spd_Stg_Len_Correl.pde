@@ -14,7 +14,6 @@ class Spd_Stg_Len_Correl
   color lengthColour, speedColour, stagesColour;
   int speedTime, stageTime, lengthTime;
   int speedIndex, stageIndex, lengthIndex;
-  
   float average;
  
   Spd_Stg_Len_Correl()
@@ -26,6 +25,7 @@ class Spd_Stg_Len_Correl
     graphWidth = width - (xBorder * 2.0f);
     graphHeight = height - (yBorder * 2.0f);
     tickSize = xBorder * 0.1f;
+    lineWidth = graphWidth / (speedList.size() - 1);
     verticalIntervals = 10;
     dataGaps = graphHeight / verticalIntervals;
     verticalStageIntervals = 5;
@@ -40,20 +40,18 @@ class Spd_Stg_Len_Correl
     speedIndex = 1;
     stageIndex = 1;
     lengthIndex = 1;
-  }
-
-  void render()
-  { 
+    
     // Find lowest & highest for mapping
-    highestSpeed = speedList.max();//Collections.max(speedList);
-    lowestSpeed = speedList.min();//Collections.min(speedList);
+    highestSpeed = speedList.max();
+    lowestSpeed = speedList.min();
     highStage = Collections.max(stages);
     lowStage = Collections.min(stages);
     longLength = Collections.max(lengths);
     shortLength = Collections.min(lengths);
-    
-    lineWidth = graphWidth / (speedList.size() - 1);
-    
+  }
+
+  void render()
+  { 
     // Speed Graph
     if(correlation[0])
     {
