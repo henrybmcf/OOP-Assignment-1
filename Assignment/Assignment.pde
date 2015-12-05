@@ -198,19 +198,19 @@ void draw()
       break;
     
     case 6:
-    {
       pushMatrix();
-      //translate((width - kinect.width) * 0.5f, (height - kinect.height) * 0.5f);
-      translate(width - kinect.width, height - kinect.height - 50);
+      translate(width - kinect.width - 2, height - kinect.height - 2);
+      stroke(255, 0, 0);
+      fill(0);
+      rect(0, -1, kinect.width +1, kinect.height +1);
       kinectDepth.update();
       popMatrix();
       
       wheel.render();
       wheel.update();
       break;
-    }
     
-    /*  
+      /*  
       while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
       {
          thetaBase += 0.1f; 
@@ -227,6 +227,9 @@ void draw()
 
 void keyPressed()
 {
+  if(key == ' ')
+     exit();
+     
   if (key >= '0' && key <= '9')
      menu = key - '0';
   

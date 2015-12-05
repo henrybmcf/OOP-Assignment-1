@@ -74,7 +74,7 @@ class KinectTracker extends KinectDepth
         int pix = x + y * display.width;
         if (rawDepth < threshold)
         {
-          display.pixels[pix] = color(50, 50, 150);
+          display.pixels[pix] = color(255);//color(50, 50, 150);
         }
         else
         {
@@ -84,10 +84,5 @@ class KinectTracker extends KinectDepth
     }
     display.updatePixels();
     image(display, 0, 0);
-  }
-  
-  int getThreshold()
-  {
-    return threshold;
   }
 }

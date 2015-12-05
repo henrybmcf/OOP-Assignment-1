@@ -2,8 +2,6 @@ class KinectDepth
 {
   void update()
   {
-    //background(255);
-    
     tracker.track();
     
     if (mode)
@@ -22,22 +20,75 @@ class KinectDepth
     ellipse(v2.x, v2.y, 20, 20);
     
     rectMode(CORNER);
-    rect(100, 100, 200, 200);
-    if(v1.x > 100 && v2.x > 100 && v1.y > 100 && v2.y > 100 && v1.x < 300 && v2.x < 300 && v1.y < 300 && v2.y < 300)
-    {
-       text("MENU", width * 0.5f, height * 0.5f);
-       kinectTime++;
-       if(kinectTime == 60)
-           menu = 1;
-    }
-    else
-    {
-       kinectTime = 0;
-    }
+    float quart = kinect.height * 0.25f;
+    float arrowWidth = kinect.width * 0.375f;
+    rectMode(CORNERS);
+    rect(0, 0, kinect.width, quart);
+    rect(0, quart * 1.25f, arrowWidth, kinect.height);
+    rect(kinect.width, quart * 1.25f, kinect.width - arrowWidth, kinect.height);
     
-    int t = tracker.getThreshold();
-    fill(255);
-    textAlign(LEFT);
-    text("threshold: " + t + "    " +  "framerate: " + int(frameRate), 10, 500);            
+    if (v1.y < quart)
+    {
+      text("SELECT", -100, -60);
+    }
+    else if (v1.x < arrowWidth && v1.y > quart * 1.25f)
+    {
+      text("LEFT", -100, -100);
+      kinectTime++;
+      if(kinectTime >= 60)
+      {
+        thetaBase -= 0.05f;
+        if (thetaBase <= 0.0f)
+             thetaBase = TWO_PI;
+        option = ((PI + HALF_PI - thetaBase) / theta);
+        if (option < 1)
+             option += 8;
+        if (option > 8)
+             option = option - 8;
+      }
+    }
+   else if(v1.x > kinect.width - arrowWidth && v1.y > quart * 1.25f)
+   {
+      text("RIGHT", -100, -80);
+      kinectTime++;
+      if(kinectTime >= 60)
+      {
+        thetaBase += 0.05f;
+        if (thetaBase >= TWO_PI)
+             thetaBase = 0.0f;
+        option = ((PI + HALF_PI - thetaBase) / theta);
+        if (option < 1)
+             option += 8;
+        if (option > 8)
+             option = option - 8;
+      }
+   }
+   else
+   {
+     kinectTime = 0;
+   }   
+    
+    //if (keyCode == LEFT || keyCode == RIGHT)
+    //  {
+    //    option = ((PI + HALF_PI - thetaBase) / theta);
+    //    if (option < 1)
+    //        option += 8;
+    //    if (option > 8)
+    //        option = option - 8;
+    //  }
+
+    //  // Turn wheel depending on arrow key pressed
+    //  if (keyCode == LEFT)
+    //  {
+    //    thetaBase -= 0.05f;
+    //    if(thetaBase <= 0.0f)
+    //        thetaBase = TWO_PI;
+    //  }
+    //  if (keyCode == RIGHT)
+    //  {
+    //    thetaBase += 0.05f;
+    //    if (thetaBase >= TWO_PI)
+    //        thetaBase = 0.0f;
+    //  }
   }
 }
