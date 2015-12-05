@@ -11,14 +11,12 @@ class KinectDepth
     }
   
     PVector v1 = tracker.getPos();
-    fill(50, 100, 250, 200);
-    noStroke();
-    ellipse(v1.x, v1.y, 20, 20);
     PVector v2 = tracker.getLerpedPos();
     fill(100, 250, 50, 200);
     noStroke();
-    ellipse(v2.x, v2.y, 20, 20);
+    ellipse((v1.x + v2.x) * 0.5f, (v1.y + v2.y) * 0.5f, 20, 20);
     
+    fill(50, 100, 250, 200);
     rectMode(CORNER);
     float quart = kinect.height * 0.25f;
     float arrowWidth = kinect.width * 0.375f;
@@ -30,14 +28,20 @@ class KinectDepth
     if (v1.y < quart)
     {
       text("SELECT", -100, -60);
+      kinectTime++;
+      if(kinectTime >= 60)
+      {
+         menu = (int) option + 1;  
+         kinectTime = 0;
+      }
     }
     else if (v1.x < arrowWidth && v1.y > quart * 1.25f)
     {
       text("LEFT", -100, -100);
       kinectTime++;
-      if(kinectTime >= 60)
+      if(kinectTime >= 30)
       {
-        thetaBase -= 0.05f;
+        thetaBase -= 0.025f;
         if (thetaBase <= 0.0f)
              thetaBase = TWO_PI;
         option = ((PI + HALF_PI - thetaBase) / theta);
@@ -51,9 +55,9 @@ class KinectDepth
    {
       text("RIGHT", -100, -80);
       kinectTime++;
-      if(kinectTime >= 60)
+      if(kinectTime >= 30)
       {
-        thetaBase += 0.05f;
+        thetaBase += 0.025f;
         if (thetaBase >= TWO_PI)
              thetaBase = 0.0f;
         option = ((PI + HALF_PI - thetaBase) / theta);

@@ -3,6 +3,7 @@ import ddf.minim.*;
 
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
+
 KinectTracker tracker;
 Kinect kinect;
 
@@ -29,7 +30,7 @@ void setup()
   bubble = new Bubble();
   wheel = new Wheel();
   minim = new Minim(this);
-  menu = 6;
+  menu = 0;
   option = 0.0f;
   sum = 0.0f;
   average = 0.0f;
@@ -177,6 +178,14 @@ void draw()
   switch(menu)
   {
     case 0:
+      pushMatrix();
+      translate(width - kinect.width - 2, height - kinect.height - 2);
+      stroke(255, 0, 0);
+      fill(0);
+      rect(0, -1, kinect.width +1, kinect.height +1);
+      kinectDepth.update();
+      popMatrix();
+      
       wheel.render();
       wheel.update();
       break;
@@ -191,23 +200,7 @@ void draw()
       bubble.render();
       break;
     case 4:
-      break;
-    
-    case 5:
       ssl_correl.render();
-      break;
-    
-    case 6:
-      pushMatrix();
-      translate(width - kinect.width - 2, height - kinect.height - 2);
-      stroke(255, 0, 0);
-      fill(0);
-      rect(0, -1, kinect.width +1, kinect.height +1);
-      kinectDepth.update();
-      popMatrix();
-      
-      wheel.render();
-      wheel.update();
       break;
     
       /*  

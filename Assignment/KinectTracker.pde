@@ -62,7 +62,7 @@ class KinectTracker extends KinectDepth
   {
     PImage img = kinect.getDepthImage();
     
-    if (depth == null || img == null) return;
+    if (depth == null || img == null) println("NULL");//return;
     
     display.loadPixels();
     for (int x = 0; x < kinect.width; x++)
