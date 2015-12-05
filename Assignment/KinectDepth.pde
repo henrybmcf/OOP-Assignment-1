@@ -22,8 +22,8 @@ class KinectDepth
     float arrowWidth = kinect.width * 0.375f;
     rectMode(CORNERS);
     rect(0, 0, kinect.width, quart);
-    rect(0, quart * 1.25f, arrowWidth, kinect.height);
-    rect(kinect.width, quart * 1.25f, kinect.width - arrowWidth, kinect.height);
+    rect(0, quart * 1.25f, arrowWidth, kinect.height, 0, 10, 0, 0);
+    rect(kinect.width, quart * 1.25f, kinect.width - arrowWidth, kinect.height, 10, 0, 0, 0);
     
     if (v1.y < quart)
     {
@@ -41,7 +41,7 @@ class KinectDepth
       kinectTime++;
       if(kinectTime >= 30)
       {
-        thetaBase -= 0.025f;
+        thetaBase -= 0.035f;
         if (thetaBase <= 0.0f)
              thetaBase = TWO_PI;
         option = ((PI + HALF_PI - thetaBase) / theta);
@@ -57,7 +57,7 @@ class KinectDepth
       kinectTime++;
       if(kinectTime >= 30)
       {
-        thetaBase += 0.025f;
+        thetaBase += 0.035f;
         if (thetaBase >= TWO_PI)
              thetaBase = 0.0f;
         option = ((PI + HALF_PI - thetaBase) / theta);

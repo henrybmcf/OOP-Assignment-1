@@ -1,15 +1,7 @@
 import java.util.*;
 import ddf.minim.*;
-
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
-
-KinectTracker tracker;
-Kinect kinect;
-
-boolean colorDepth = true;
-boolean mirror = false;
-boolean mode = true;
 
 void setup()
 {  
@@ -23,21 +15,23 @@ void setup()
   tracker = new KinectTracker();
   kinect.initDepth();
   kinect.enableColorDepth(colorDepth);
-  
   ssl_correl = new Spd_Stg_Len_Correl();
   speed = new Speed();
   pie = new Pie();
   bubble = new Bubble();
   wheel = new Wheel();
   minim = new Minim(this);
+  kinectDepth = new KinectDepth();
   menu = 0;
   option = 0.0f;
   sum = 0.0f;
   average = 0.0f;
   bubbleGraph = "Rider";
-  
+  colorDepth = true;
+  mirror = false;
+  mode = true;
   kinectTime = 0;
-  kinectDepth = new KinectDepth();
+  legend = false;
   
   table = loadTable("TDF.csv", "header");
   for (TableRow row : table.rows())
@@ -141,8 +135,9 @@ Pie pie;
 Bubble bubble;
 Spd_Stg_Len_Correl ssl_correl;
 Minim minim;
-
 KinectDepth kinectDepth;
+KinectTracker tracker;
+Kinect kinect;
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
@@ -168,8 +163,11 @@ float sum;
 boolean[] correlation = new boolean[3];
 String[] correlationID = new String[3];
 String bubbleGraph;
-
+boolean colorDepth;
+boolean mirror;
+boolean mode;
 int kinectTime;
+boolean legend;
 
 void draw()
 {
@@ -216,17 +214,43 @@ void draw()
       wheel.update();
       break;
   }
+  
+  if (legend)
+      showKey();
+}
+
+void showKey()
+{
+  float boxWidth = width * 0.5f;
+  float boxHeight = height * 0.8f;
+  switch (menu)
+  {
+    case 0:
+       fill(230, 200, 100);
+       stroke(0);
+       pushMatrix();
+       translate(width * 0.25f, boxHeight * 0.125f);
+       rect(0, 0, boxWidth, boxWidth, 30);
+       fill(0);
+       textAlign(LEFT);
+       text("Right Arrow: Turn wheel right", 20, 20);
+       popMatrix();
+       break;
+  }
 }
 
 void keyPressed()
 {
-  if(key == ' ')
+  if (key == ' ')
      exit();
+     
+  if (key == 'k')
+     legend = true;
      
   if (key >= '0' && key <= '9')
      menu = key - '0';
   
-  if(key == BACKSPACE)
+  if (key == BACKSPACE)
      menu = 0;
   
   switch(menu)
@@ -237,7 +261,7 @@ void keyPressed()
       if(key == 'r')
           bubbleGraph = "Rider";
       break;
-    case 5:
+    case 4:
       switch(key)
       {
         case 's':
@@ -275,10 +299,10 @@ void keyPressed()
         case 'i':
           correlationID[2] = "scatterTrend";
           break;
-        case 'j':
+        case 'o':
           correlationID[2] = "Trend";
           break;
-        case 'k':
+        case 'p':
           correlationID[2] = "Scatter";
           break;
       } 
@@ -289,3 +313,10 @@ void keyPressed()
       break;
   }
 }
+
+void keyReleased()
+{
+  if (key == 'k')
+     legend = false;
+}
+     
