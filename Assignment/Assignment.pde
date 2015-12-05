@@ -10,7 +10,7 @@ void setup()
   //background(0);
   smooth(8);
   textSize(20);
-  
+
   table = loadTable("TDF.csv", "header");
   for (TableRow row : table.rows())
   {
@@ -22,23 +22,23 @@ void setup()
     year.speed = row.getFloat("Speed");
     years.add(year);
   }
-  for(int i = 0; i < years.size(); i++)
+  for (int i = 0; i < years.size(); i++)
   {
     yearList.add(years.get(i).tour_year);
     speedList.append(years.get(i).speed);
     stages.add(years.get(i).stages);
     lengths.add(years.get(i).tour_length);
   }
-  
+
   stages_table = loadTable("stage_wins.csv", "header");
-  for(TableRow row : stages_table.rows())
+  for (TableRow row : stages_table.rows())
   {
     Stages stage = new Stages();
     stage.rider = row.getString("Rider");
     stage.number = row.getInt("Wins");
     stage_records.add(stage);
   } 
-  for(int i = 0; i < stage_records.size(); i++)
+  for (int i = 0; i < stage_records.size(); i++)
   {
     rider.add(stage_records.get(i).rider);
     wins.add(stage_records.get(i).number);
@@ -47,37 +47,37 @@ void setup()
   }
 
   countryWins = loadTable("CountryWins.csv", "header");
-  for(TableRow row : countryWins.rows())
+  for (TableRow row : countryWins.rows())
   {
     countryWins countryWin = new countryWins();
     countryWin.country = row.getString("Country");
     countryWin.number = row.getInt("Wins");
     countryRecords.add(countryWin);
   }
-  for(int i = 0; i < countryRecords.size(); i++)
+  for (int i = 0; i < countryRecords.size(); i++)
   {
     cWins.add(countryRecords.get(i).number);
     country.add(countryRecords.get(i).country);
     float x1 = random(width - (i + 1) * 50, width - (i + 1) * 130);
     country_x.add(x1);
   }
-  
-  for(int i = 0; i < correlation.length; i++)
-      correlation[i] = false;
+
+  for (int i = 0; i < correlation.length; i++)
+    correlation[i] = false;
 
   // Add all elements into IntList for sorting
-  for(int i : stages)
+  for (int i : stages)
     stageCountSort.append(i);
   stageCountSort.sort();
-  
+
   // For each repition of number of stages, add 1 to that counter element
   // For each different number of stages, append new element to counter
   // This allows for dynamic number of stages
   counter.append(1);
   int j = 0;
-  for(int i = 1; i < stageCountSort.size(); i++)
+  for (int i = 1; i < stageCountSort.size(); i++)
   {
-    if(stageCountSort.get(i) == stageCountSort.get(i - 1))
+    if (stageCountSort.get(i) == stageCountSort.get(i - 1))
     {
       counter.add(j, 1);
     }
@@ -87,7 +87,9 @@ void setup()
       j++;
     }
   }
-  
+  // Remove all elements from sorted list to save memory
+  stageCountSort.clear();
+
   //kinect = new Kinect(this);
   //tracker = new KinectTracker();
   //kinect.initDepth();
@@ -98,7 +100,7 @@ void setup()
   bubble = new Bubble();
   wheel = new Wheel();
   minim = new Minim(this);
- // kinectDepth = new KinectDepth();
+  // kinectDepth = new KinectDepth();
   menu = 0;
   option = 0.0f;
   sum = 0.0f;
@@ -169,7 +171,7 @@ void draw()
       //rect(0, -1, kinect.width +1, kinect.height +1);
       //kinectDepth.update();
       popMatrix();
-      
+  
       wheel.render();
       wheel.update();
       break;
@@ -186,23 +188,23 @@ void draw()
     case 4:
       ssl_correl.render();
       break;
-    
+  
       /*  
-      while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
-      {
-         thetaBase += 0.1f; 
-      }
-      */ 
-     
+       while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
+       {
+       thetaBase += 0.1f; 
+       }
+       */
+  
     default:
       text("Error, please select valid option", 100, 50);
       wheel.render();
       wheel.update();
       break;
   }
-  
+
   if (legend)
-      showKey();
+    showKey();
 }
 
 void showKey()
@@ -212,40 +214,40 @@ void showKey()
   switch (menu)
   {
     case 0:
-       fill(230, 200, 100);
-       stroke(0);
-       pushMatrix();
-       translate(width * 0.25f, boxHeight * 0.125f);
-       rect(0, 0, boxWidth, boxWidth, 30);
-       fill(0);
-       textAlign(LEFT);
-       text("Right Arrow: Turn wheel right", 20, 20);
-       popMatrix();
-       break;
-  }
+      fill(230, 200, 100);
+      stroke(0);
+      pushMatrix();
+      translate(width * 0.25f, boxHeight * 0.125f);
+      rect(0, 0, boxWidth, boxWidth, 30);
+      fill(0);
+      textAlign(LEFT);
+      text("Right Arrow: Turn wheel right", 20, 20);
+      popMatrix();
+      break;
+    }
 }
 
 void keyPressed()
 {
   if (key == ' ')
-     exit();
-     
+    exit();
+
   if (key == 'k')
-     legend = true;
-     
+    legend = true;
+
   if (key >= '0' && key <= '9')
-     menu = key - '0';
-  
+    menu = key - '0';
+
   if (key == BACKSPACE)
-     menu = 0;
-  
+    menu = 0;
+
   switch(menu)
   {
     case 3:
-      if(key == 'c')
-          bubbleGraph = "Country";
-      if(key == 'r')
-          bubbleGraph = "Rider";
+      if (key == 'c')
+        bubbleGraph = "Country";
+      if (key == 'r')
+        bubbleGraph = "Rider";
       break;
     case 4:
       switch(key)
@@ -263,7 +265,7 @@ void keyPressed()
         case 'd':
           correlationID[0] = "scatterTrend";
           break;
-        
+    
         case 't':
           correlation[1] =! correlation[1];
           correlationID[1] = "Scatter";
@@ -277,7 +279,7 @@ void keyPressed()
         case 'y':
           correlationID[1] = "scatterTrend";
           break;
-        
+    
         case 'l':
           correlation[2] =! correlation[2];
           correlationID[2] = "scatterTrend";
@@ -295,7 +297,7 @@ void keyPressed()
       break;
     case 6:
       if (key == 'c')
-          mode =! mode;
+        mode =! mode;
       break;
   }
 }
@@ -303,6 +305,5 @@ void keyPressed()
 void keyReleased()
 {
   if (key == 'k')
-     legend = false;
+    legend = false;
 }
-     
