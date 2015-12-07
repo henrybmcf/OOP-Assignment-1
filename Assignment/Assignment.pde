@@ -7,7 +7,6 @@ void setup()
 {  
   //size(640, 520);
   fullScreen();
-  //background(0);
   smooth(8);
   textSize(20);
 
@@ -90,45 +89,31 @@ void setup()
   // Remove all elements from sorted list to save memory
   stageCountSort.clear();
 
-  //kinect = new Kinect(this);
-  //tracker = new KinectTracker();
-  //kinect.initDepth();
-  //kinect.enableColorDepth(colorDepth);
+  kinect = new Kinect(this);
+  depth = new KinectDepth();
+  tracker = new KinectTracker();
+  kinect.initDepth();
+  kinect.enableColorDepth(true);  
+  minim = new Minim(this);
+  wheel = new Wheel();
   ssl_correl = new Spd_Stg_Len_Correl();
   speed = new Speed();
   pie = new Pie();
   bubble = new Bubble();
-  wheel = new Wheel();
-  minim = new Minim(this);
-  // kinectDepth = new KinectDepth();
+
   menu = 0;
   option = 0.0f;
   sum = 0.0f;
   average = 0.0f;
   bubbleGraph = "Rider";
-  colorDepth = true;
   mirror = false;
-  mode = true;
+  kinectColour = true;
   kinectTime = 0;
-  kinectColour = false;
   legend = false;
   font = createFont("Aspex.ttf", 15); 
   textFont(font);
   bike = loadImage("Bike.png");
 }
-
-Table table;
-Table stages_table;
-Table countryWins;
-Wheel wheel;
-Speed speed;
-Pie pie;
-Bubble bubble;
-Spd_Stg_Len_Correl ssl_correl;
-Minim minim;
-KinectDepth kinectDepth;
-KinectTracker tracker;
-Kinect kinect;
 
 ArrayList<Year> years = new ArrayList<Year>();
 ArrayList<Integer> yearList = new ArrayList<Integer>();
@@ -145,6 +130,21 @@ ArrayList<Integer> cWins = new ArrayList<Integer>();
 ArrayList<String> country = new ArrayList<String>();
 IntList stageCountSort = new IntList();
 IntList counter = new IntList();
+boolean[] correlation = new boolean[3];
+String[] correlationID = new String[3];
+
+Table table;
+Table stages_table;
+Table countryWins;
+Kinect kinect;
+KinectDepth depth;
+KinectTracker tracker;
+Minim minim;
+Wheel wheel;
+Spd_Stg_Len_Correl ssl_correl;
+Speed speed;
+Pie pie;
+Bubble bubble;
 
 int menu;
 float option;
@@ -152,18 +152,14 @@ float theta;
 float thetaBase;
 float average;
 float sum;
-boolean[] correlation = new boolean[3];
-String[] correlationID = new String[3];
 String bubbleGraph;
-boolean colorDepth;
 boolean mirror;
-boolean mode;
 int kinectTime;
 boolean kinectColour;
 boolean legend;
-
 PFont font;
 PImage bike;
+
 void draw()
 {
   background(0);
@@ -171,13 +167,13 @@ void draw()
   switch(menu)
   {
    case 0:
-     //pushMatrix();
-     ////translate(width - kinect.width - 2, height - kinect.height - 2);
-     //stroke(255, 0, 0);
-     //fill(0);
-     ////rect(0, -1, kinect.width +1, kinect.height +1);
-     ////kinectDepth.update();
-     //popMatrix();
+     pushMatrix();
+     translate(width - kinect.width - 3, height - kinect.height - 3);
+     stroke(255, 0, 0);
+     fill(0);
+     rect(0, 0, kinect.width + 1, kinect.height + 1);
+     depth.update();
+     popMatrix();
 
      wheel.render();
      wheel.update();
@@ -195,6 +191,10 @@ void draw()
       break;
     case 4:
       ssl_correl.render();
+      break;
+    case 5:
+      break;
+    case 6:
       break;
   
     default:
@@ -318,10 +318,6 @@ void keyPressed()
           correlationID[2] = "Scatter";
           break;
       } 
-      break;
-    case 6:
-      if (key == 'c')
-        mode =! mode;
       break;
   }
 }

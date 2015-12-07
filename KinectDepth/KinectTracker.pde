@@ -97,7 +97,14 @@ class KinectTracker
         }
         else
         {
-          display.pixels[pix] = img.pixels[offset];
+          if (mode)
+          {
+            display.pixels[pix] = img.pixels[offset];
+          }
+          else
+          {
+            display.pixels[pix] = color(0);
+          }
         }
       }
     }

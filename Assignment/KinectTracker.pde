@@ -16,11 +16,8 @@ class KinectTracker extends KinectDepth
   }
 
   void track()
-  {
+  {  
     depth = kinect.getRawDepth();
-    
-    if (depth == null) return;
-    
     float sumX = 0;
     float sumY = 0;
     float count = 0;
@@ -29,9 +26,8 @@ class KinectTracker extends KinectDepth
     {
       for (int y = 0; y < kinect.height; y++)
       { 
-        int offset =  x + y * kinect.width;
+        int offset =  x + y*kinect.width;
         int rawDepth = depth[offset];
-
         if (rawDepth < threshold)
         {
           sumX += x;
@@ -40,30 +36,26 @@ class KinectTracker extends KinectDepth
         }
       }
     }
+    
     if (count != 0)
-    {
-      loc = new PVector(sumX/count, sumY/count);
-    }
+        loc = new PVector(sumX/count, sumY/count);
+
     lerpedLoc.x = PApplet.lerp(lerpedLoc.x, loc.x, 0.3f);
     lerpedLoc.y = PApplet.lerp(lerpedLoc.y, loc.y, 0.3f);
   }
 
-  PVector getLerpedPos()
-  {
+  PVector getLerpedPos() {
     return lerpedLoc;
   } 
 
-  PVector getPos()
-  {
+  PVector getPos() {
     return loc;
   }
 
   void display()
   {
     PImage img = kinect.getDepthImage();
-    
-    if (depth == null || img == null) println("NULL");//return;
-    
+
     display.loadPixels();
     for (int x = 0; x < kinect.width; x++)
     {
@@ -72,31 +64,20 @@ class KinectTracker extends KinectDepth
         int offset = x + y * kinect.width;
         int rawDepth = depth[offset];
         int pix = x + y * display.width;
-        if (kinectColour)
+        if (rawDepth < threshold)
         {
-          if (rawDepth < threshold)
-          {
-            display.pixels[pix] = color(50, 50, 150);
-          }
-          else
-          {
-            display.pixels[pix] = img.pixels[offset];
-          }
+          display.pixels[pix] = color(50, 50, 150);
         }
         else
         {
-          if (rawDepth < threshold)
-          {
-            display.pixels[pix] = color(255);
-          }
+          if (kinectColour)
+            display.pixels[pix] = img.pixels[offset];
           else
-          {
             display.pixels[pix] = color(0);
-          }
         }
       }
     }
     display.updatePixels();
-    image(display, 0, 0);
+    image(display, 1, 1);
   }
 }

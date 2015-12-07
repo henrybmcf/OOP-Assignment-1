@@ -21,13 +21,7 @@ void draw()
   background(255);
 
   tracker.track();
-  if (mode)
-  {
-    image(kinect.getDepthImage(), 0, 0);
-  } else
-  {
-    tracker.display();
-  }
+  tracker.display();
 
   PVector v1 = tracker.getPos();
   fill(50, 100, 250, 200);

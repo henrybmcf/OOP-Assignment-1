@@ -37,7 +37,7 @@ class Wheel
     
     fill(255);
     strokeWeight(3);
-    textAlign(LEFT, CENTER);
+    textAlign(CENTER, CENTER);
     textSize(20);
     if(option != 0)
       text("Option Select: " + ((int)option + 1), pos.x, pos.y + diameter * 0.7f);
