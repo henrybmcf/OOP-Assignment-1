@@ -31,9 +31,10 @@ class Wheel
     for (int i = 0; i < segments; i++)
     {
       fill(colours[i]);
-      stroke(colours[i]);
+      //stroke(colours[i]);
+      stroke(255);
+      strokeWeight(2);
       arc(pos.x, pos.y, diameter, diameter, (thetaBase + (theta * i)), ((thetaBase + (theta * i)) + theta), PIE);
-      //arc(pos.x, pos.y, diameter, diameter, (thetaBase + (theta * i)), ((thetaBase + (theta * i)) + theta), PIE);
       fill(0);
       stroke(0);
       ellipse(pos.x, pos.y, 20, 20);

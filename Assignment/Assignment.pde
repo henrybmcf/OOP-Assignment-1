@@ -112,6 +112,8 @@ void setup()
   kinectTime = 0;
   kinectColour = false;
   legend = false;
+  font = createFont("Aspex.ttf", 15); 
+  textFont(font);
 }
 
 Table table;
@@ -159,6 +161,8 @@ int kinectTime;
 boolean kinectColour;
 boolean legend;
 
+PFont font;
+
 void draw()
 {
   background(0);
@@ -166,13 +170,13 @@ void draw()
   switch(menu)
   {
    case 0:
-     pushMatrix();
-     //translate(width - kinect.width - 2, height - kinect.height - 2);
-     stroke(255, 0, 0);
-     fill(0);
-     //rect(0, -1, kinect.width +1, kinect.height +1);
-     //kinectDepth.update();
-     popMatrix();
+     //pushMatrix();
+     ////translate(width - kinect.width - 2, height - kinect.height - 2);
+     //stroke(255, 0, 0);
+     //fill(0);
+     ////rect(0, -1, kinect.width +1, kinect.height +1);
+     ////kinectDepth.update();
+     //popMatrix();
   
      wheel.render();
      wheel.update();
@@ -218,7 +222,16 @@ void showKey()
       rect(0, 0, boxWidth, boxHeight, 30);
       fill(0);
       textAlign(LEFT);
-      text("Right Arrow: Turn wheel right\nLeft Arrow: Turn wheel left\nEnter: Select highlighted option", 20, 40);
+      textLeading(30);
+      textSize(18);
+      strokeWeight(2);
+      text("KeyBoard Selection\n", 20, 40);
+      line(20, 50, 255, 50);
+      text("Kinect Selection\n", 20, 350);
+      line(20, 360, 215, 360);
+      textSize(15);
+      text("Right Arrow - Turn wheel right\nLeft Arrow - Turn wheel left\nEnter - Select highlighted option\nNumber Keys - Jump to corresponding graph\nBackspace - Return to menu from any graph", 20, 90);
+      text("Hover Right box - Turn wheel right\nHover Left Box - Turn wheel left", 20, 400); 
       popMatrix();
       break;
     }
