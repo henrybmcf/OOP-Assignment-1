@@ -1,33 +1,30 @@
 class Wheel
 {
   PVector pos;
-  int segments = 8;
+  int segments;
   float diameter;
-  //color[] colours = new color[segments];
 
   Wheel()
   {
-    this(width * 0.367f, height  * 0.321f, 220);
+    this(width * 0.367f, height  * 0.321f, 220, 6);
   }
 
-  Wheel(float x, float y, float diameter)
+  Wheel(float x, float y, float diameter, int segments)
   {
     pos = new PVector(x, y);
     this.diameter = diameter;
+    this.segments = segments;
     theta = TWO_PI / segments;
-    thetaBase = 0.0f;//PI + HALF_PI;
-    //colours[0] = color(170, 0, 0);
-    //colours[1] = color(0, 170, 0);
-    //colours[2] = color(0, 0, 170);
-    //colours[3] = color(200, 200, 0);
-    //colours[4] = color(200, 0, 200);
-    //colours[5] = color(0, 200, 200);
-    //colours[6] = color(100, 100, 255);
-    //colours[7] = color(200, 255, 200);
+    thetaBase = HALF_PI;
   }
 
   void render()
   {
+    fill(255);
+    textAlign(RIGHT);
+    textSize(30);
+    text("Graphical visualisations of\nTour de France data,\n1950 to 2015.", width - 20, 100);
+    
     stroke(100); 
     for (int i = 0; i < segments; i++)
     {
@@ -41,13 +38,16 @@ class Wheel
     fill(255);
     strokeWeight(3);
     textAlign(LEFT, CENTER);
+    textSize(20);
     if(option != 0)
-      text("Option Select: " + ((int)option + 1), pos.x + diameter * 0.7f, pos.y);
+      text("Option Select: " + ((int)option + 1), pos.x, pos.y + diameter * 0.7f);
     else
-      text("Option Select: " + ((int)option), pos.x + diameter * 0.7f, pos.y);
+      text("Option Select: " + ((int)option), pos.x, pos.y + diameter * 0.7f);
     
     textAlign(LEFT);
-    text("Option List\n1 = Speed trend graph\n2 = Stages pie chart\n3 = Record stage wins bubble graph\n4 = Correlation graph, speed, stages and lengths", 100, height - 200);
+    text("Option List", 60, height - 220);
+    textSize(17);
+    text("1 = Speed trend graph\n2 = Stages pie chart\n3 = Record stage wins bubble graph\n4 = Correlation graph, speed, stages and lengths", 60, height - 170);
   }
 
   void update()
@@ -56,11 +56,11 @@ class Wheel
     {
       if (keyCode == LEFT || keyCode == RIGHT)
       {
-        option = -thetaBase / theta;// (PI + HALF_PI - thetaBase) / theta;
+        option = (HALF_PI - thetaBase) / theta;
         if (option < 1)
-            option += 8;
-        if (option > 8)
-            option -= 8;
+            option += 6;
+        if (option > 6)
+            option -= 6;
       }
 
       // Turn wheel depending on arrow key pressed
