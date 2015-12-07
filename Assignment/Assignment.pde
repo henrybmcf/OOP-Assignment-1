@@ -210,31 +210,39 @@ void showKey()
 {
   float boxWidth = width * 0.6f;
   float boxHeight = height * 0.8f;
+  float halfWidth = boxWidth * 0.5f;
   switch (menu)
   {
     case 0:
+      background(0);
+      fill(255);
+      textSize(150);
+      textAlign(CENTER);
+      pushMatrix();
+      translate(0, height);
+      rotate(PI + HALF_PI);
+      text("KEY", height * 0.5f, 200);
+      popMatrix();
       fill(230, 200, 100);
       stroke(0);
-      background(0);
       pushMatrix();
       translate(width * 0.2f, boxHeight * 0.125f);
       rectMode(CORNER);
       rect(0, 0, boxWidth, boxHeight, 30);
-      fill(0);
-      textAlign(LEFT);
       textLeading(30);
+      fill(0);
       textSize(18);
       strokeWeight(2);
-      text("KeyBoard Selection\n", 20, 40);
-      line(20, 50, 255, 50);
-      text("Kinect Selection\n", 20, 350);
-      line(20, 360, 215, 360);
+      text("KeyBoard Selection", halfWidth, 60);
+      line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
+      text("Kinect Selection", halfWidth, 370);
+      line(halfWidth/2, 380, boxWidth - halfWidth/2, 380);
       textSize(15);
-      text("Right Arrow - Turn wheel right\nLeft Arrow - Turn wheel left\nEnter - Select highlighted option\nNumber Keys - Jump to corresponding graph\nBackspace - Return to menu from any graph", 20, 90);
-      text("Hover Right box - Turn wheel right\nHover Left Box - Turn wheel left", 20, 400); 
+      text("Right Arrow - Turn wheel right\nLeft Arrow - Turn wheel left\nEnter - Select highlighted option\nNumber Keys - Jump to corresponding graph\nBackspace - Return to menu from any graph", halfWidth, 110);
+      text("Hover Right box - Turn wheel right\nHover Left Box - Turn wheel left", halfWidth, 420); 
       popMatrix();
       break;
-    }
+  }
 }
 
 void keyPressed()
