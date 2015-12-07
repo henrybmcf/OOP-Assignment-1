@@ -32,7 +32,8 @@ class Wheel
     {
       fill(colours[i]);
       stroke(colours[i]);
-      arc(pos.x, pos.y, diameter, diameter, thetaBase + (theta * i), (thetaBase + (theta * i)) + theta, PIE);
+      arc(pos.x, pos.y, diameter, diameter, (thetaBase + (theta * i)), ((thetaBase + (theta * i)) + theta), PIE);
+      //arc(pos.x, pos.y, diameter, diameter, (thetaBase + (theta * i)), ((thetaBase + (theta * i)) + theta), PIE);
       fill(0);
       stroke(0);
       ellipse(pos.x, pos.y, 20, 20);
@@ -42,11 +43,17 @@ class Wheel
     strokeWeight(3);
     line(pos.x, pos.y - diameter * 0.7f, pos.x, pos.y);
     textAlign(CENTER, CENTER);
-    text("Option Select: " + ((int)option + 1), pos.x, pos.y - (diameter * 0.8f));
+    if(option != 0)
+      text("Option Select: " + ((int)option + 1), pos.x, pos.y - (diameter * 0.8f));
+    else
+      text("Option Select: " + ((int)option), pos.x, pos.y - (diameter * 0.8f));
+    
+    textAlign(LEFT);
+    text("Option List\n1 = Speed trend graph\n2 = Stages pie chart\n3 = Record stage wins bubble graph\n4 = Correlation graph, speed, stages and lengths", 100, height - 200);
   }
 
   void update()
-  {  
+  {   
     if (keyPressed)
     {
       if (keyCode == LEFT || keyCode == RIGHT)
@@ -55,26 +62,26 @@ class Wheel
         if (option < 1)
             option += 8;
         if (option > 8)
-            option = option - 8;
+            option -= 8;
       }
 
       // Turn wheel depending on arrow key pressed
       if (keyCode == LEFT)
       {
-        thetaBase -= 0.05f;
+        thetaBase -= 0.04f;
         if(thetaBase <= 0.0f)
-            thetaBase = TWO_PI;
+           thetaBase = TWO_PI;
       }
       if (keyCode == RIGHT)
       {
-        thetaBase += 0.05f;
+        thetaBase += 0.04f;
         if (thetaBase >= TWO_PI)
             thetaBase = 0.0f;
       }
 
       // Go to menu option when return key pressed
       if (key == RETURN || key == ENTER)
-            menu = (int) option + 1;
+        menu = (int) option + 1;
     }
   }
 }

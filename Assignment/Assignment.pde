@@ -110,6 +110,7 @@ void setup()
   mirror = false;
   mode = true;
   kinectTime = 0;
+  kinectColour = false;
   legend = false;
 }
 
@@ -155,26 +156,27 @@ boolean colorDepth;
 boolean mirror;
 boolean mode;
 int kinectTime;
+boolean kinectColour;
 boolean legend;
 
 void draw()
 {
   background(0);
-
+ 
   switch(menu)
   {
-    case 0:
-      pushMatrix();
-      //translate(width - kinect.width - 2, height - kinect.height - 2);
-      stroke(255, 0, 0);
-      fill(0);
-      //rect(0, -1, kinect.width +1, kinect.height +1);
-      //kinectDepth.update();
-      popMatrix();
+   case 0:
+     pushMatrix();
+     //translate(width - kinect.width - 2, height - kinect.height - 2);
+     stroke(255, 0, 0);
+     fill(0);
+     //rect(0, -1, kinect.width +1, kinect.height +1);
+     //kinectDepth.update();
+     popMatrix();
   
-      wheel.render();
-      wheel.update();
-      break;
+     wheel.render();
+     wheel.update();
+     break;
     case 1:
       correlationID[0] = "Trend";
       speed.render();
@@ -189,18 +191,11 @@ void draw()
       ssl_correl.render();
       break;
   
-      /*  
-       while(PI + HALF_PI - thetaBase > theta * 3 || PI + HALF_PI - thetaBase < theta * 2)
-       {
-       thetaBase += 0.1f; 
-       }
-       */
-  
     default:
-      text("Error, please select valid option", 100, 50);
-      wheel.render();
-      wheel.update();
-      break;
+     text("Error, please select valid option", 100, 50);
+     wheel.render();
+     wheel.update();
+     break;
   }
 
   if (legend)
@@ -209,19 +204,21 @@ void draw()
 
 void showKey()
 {
-  float boxWidth = width * 0.5f;
+  float boxWidth = width * 0.6f;
   float boxHeight = height * 0.8f;
   switch (menu)
   {
     case 0:
       fill(230, 200, 100);
       stroke(0);
+      background(0);
       pushMatrix();
-      translate(width * 0.25f, boxHeight * 0.125f);
-      rect(0, 0, boxWidth, boxWidth, 30);
+      translate(width * 0.2f, boxHeight * 0.125f);
+      rectMode(CORNER);
+      rect(0, 0, boxWidth, boxHeight, 30);
       fill(0);
       textAlign(LEFT);
-      text("Right Arrow: Turn wheel right", 20, 20);
+      text("Right Arrow: Turn wheel right\nLeft Arrow: Turn wheel left\nEnter: Select highlighted option", 20, 40);
       popMatrix();
       break;
     }
@@ -243,6 +240,10 @@ void keyPressed()
 
   switch(menu)
   {
+    case 0:
+      if (key == 'c')
+        kinectColour =! kinectColour;
+      break;
     case 3:
       if (key == 'c')
         bubbleGraph = "Country";

@@ -72,13 +72,27 @@ class KinectTracker extends KinectDepth
         int offset = x + y * kinect.width;
         int rawDepth = depth[offset];
         int pix = x + y * display.width;
-        if (rawDepth < threshold)
+        if (kinectColour)
         {
-          display.pixels[pix] = color(255);//color(50, 50, 150);
+          if (rawDepth < threshold)
+          {
+            display.pixels[pix] = color(50, 50, 150);
+          }
+          else
+          {
+            display.pixels[pix] = img.pixels[offset];
+          }
         }
         else
         {
-          display.pixels[pix] = color(0);//img.pixels[offset];
+          if (rawDepth < threshold)
+          {
+            display.pixels[pix] = color(255);
+          }
+          else
+          {
+            display.pixels[pix] = color(0);
+          }
         }
       }
     }
