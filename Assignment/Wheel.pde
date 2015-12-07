@@ -45,9 +45,9 @@ class Wheel
       text("Option Select: " + ((int)option), pos.x, pos.y + diameter * 0.7f);
     
     textAlign(LEFT);
-    text("Option List", 60, height - 220);
+    text("Option List", 40, height - 240);
     textSize(17);
-    text("1 = Speed trend graph\n2 = Stages pie chart\n3 = Record stage wins bubble graph\n4 = Correlation graph, speed, stages and lengths", 60, height - 170);
+    text("1 = Speed trend graph\n2 = Stages pie chart\n3 = Record stage wins bubble graph\n4 = Correlation graph, speed, stages and lengths", 40, height - 190);
   }
 
   void update()
@@ -66,13 +66,13 @@ class Wheel
       // Turn wheel depending on arrow key pressed
       if (keyCode == LEFT)
       {
-        thetaBase -= 0.04f;
+        thetaBase -= 0.05f;
         if(thetaBase <= 0.0f)
            thetaBase = TWO_PI;
       }
       if (keyCode == RIGHT)
       {
-        thetaBase += 0.04f;
+        thetaBase += 0.05f;
         if (thetaBase >= TWO_PI)
             thetaBase = 0.0f;
       }

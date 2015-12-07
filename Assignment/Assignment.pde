@@ -168,10 +168,7 @@ void draw()
   {
    case 0:
      pushMatrix();
-     translate(width - kinect.width - 3, height - kinect.height - 3);
-     stroke(255, 0, 0);
-     fill(0);
-     rect(0, 0, kinect.width + 1, kinect.height + 1);
+     translate(width - kinect.width - 2, height - kinect.height - 2);
      depth.update();
      popMatrix();
 
@@ -237,11 +234,13 @@ void showKey()
       strokeWeight(2);
       text("KeyBoard Selection", halfWidth, 60);
       line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
-      text("Kinect Selection", halfWidth, 370);
-      line(halfWidth/2, 380, boxWidth - halfWidth/2, 380);
+      text("Kinect Selection", halfWidth, 355);
+      line(halfWidth/2, 365, boxWidth - halfWidth/2, 365);
       textSize(15);
       text("Right Arrow - Turn wheel right\nLeft Arrow - Turn wheel left\nEnter - Select highlighted option\nNumber Keys - Jump to corresponding graph\nBackspace - Return to menu from any graph", halfWidth, 110);
-      text("Hover Right box - Turn wheel right\nHover Left Box - Turn wheel left", halfWidth, 420); 
+      text("Hover Right box - Turn wheel right\nHover Left Box - Turn wheel left\nHover Top Box - Select highliighted option\nC - Swap between rgb depth scale and black kinect window", halfWidth, 405);
+      textLeading(27);
+      text("Kinect will only register objects within depth threshold,\nthat is any objects that are coloured blue", halfWidth, 580); 
       popMatrix();
       break;
   }

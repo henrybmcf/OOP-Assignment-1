@@ -11,14 +11,14 @@ class KinectDepth
     noStroke();
     ellipse((v1.x + v2.x) * 0.5f, (v1.y + v2.y) * 0.5f, 20, 20);
 
-    fill(50, 100, 250, 200);
+    fill(50, 100, 250, 35);
     rectMode(CORNER);
     float quart = kinect.height * 0.25f;
     float arrowWidth = kinect.width * 0.375f;
     rectMode(CORNERS);
-    rect(1, 1, kinect.width + 1, quart);
-    rect(1, quart * 1.25f, arrowWidth, kinect.height + 1, 0, 10, 0, 0);
-    rect(kinect.width + 1, quart * 1.25f, kinect.width - arrowWidth, kinect.height + 1, 10, 0, 0, 0);
+    rect(0, 0, kinect.width, quart);
+    rect(1, quart * 1.25f, arrowWidth, kinect.height, 0, 10, 0, 0);
+    rect(kinect.width, quart * 1.25f, kinect.width - arrowWidth, kinect.height, 10, 0, 0, 0);
 
     if (v1.y < quart)
     {
@@ -35,7 +35,7 @@ class KinectDepth
      kinectTime++;
      if (kinectTime >= 30)
      {
-       thetaBase -= 0.035f;
+       thetaBase -= 0.04f;
        if (thetaBase <= 0.0f)
          thetaBase = TWO_PI;
        option = (HALF_PI - thetaBase) / theta;
@@ -50,7 +50,7 @@ class KinectDepth
      kinectTime++;
      if (kinectTime >= 30)
      {
-       thetaBase += 0.035f;
+       thetaBase += 0.04f;
        if (thetaBase >= TWO_PI)
          thetaBase = 0.0f;
        option = (HALF_PI - thetaBase) / theta;

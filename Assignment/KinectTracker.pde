@@ -26,7 +26,7 @@ class KinectTracker extends KinectDepth
     {
       for (int y = 0; y < kinect.height; y++)
       { 
-        int offset =  x + y*kinect.width;
+        int offset =  x + y * kinect.width;
         int rawDepth = depth[offset];
         if (rawDepth < threshold)
         {
@@ -44,11 +44,13 @@ class KinectTracker extends KinectDepth
     lerpedLoc.y = PApplet.lerp(lerpedLoc.y, loc.y, 0.3f);
   }
 
-  PVector getLerpedPos() {
+  PVector getLerpedPos()
+  {
     return lerpedLoc;
   } 
 
-  PVector getPos() {
+  PVector getPos()
+  {
     return loc;
   }
 
@@ -78,6 +80,6 @@ class KinectTracker extends KinectDepth
       }
     }
     display.updatePixels();
-    image(display, 1, 1);
+    image(display, 0, 0);
   }
 }
