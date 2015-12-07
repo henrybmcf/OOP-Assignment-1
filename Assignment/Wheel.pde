@@ -3,11 +3,11 @@ class Wheel
   PVector pos;
   int segments = 8;
   float diameter;
-  color[] colours = new color[segments];
+  //color[] colours = new color[segments];
 
   Wheel()
   {
-    this(width * 0.25f, height  * 0.4f, 300);
+    this(width * 0.367f, height  * 0.321f, 220);
   }
 
   Wheel(float x, float y, float diameter)
@@ -15,39 +15,36 @@ class Wheel
     pos = new PVector(x, y);
     this.diameter = diameter;
     theta = TWO_PI / segments;
-    thetaBase = PI + HALF_PI;
-    colours[0] = color(170, 0, 0);
-    colours[1] = color(0, 170, 0);
-    colours[2] = color(0, 0, 170);
-    colours[3] = color(200, 200, 0);
-    colours[4] = color(200, 0, 200);
-    colours[5] = color(0, 200, 200);
-    colours[6] = color(100, 100, 255);
-    colours[7] = color(200, 255, 200);
+    thetaBase = 0.0f;//PI + HALF_PI;
+    //colours[0] = color(170, 0, 0);
+    //colours[1] = color(0, 170, 0);
+    //colours[2] = color(0, 0, 170);
+    //colours[3] = color(200, 200, 0);
+    //colours[4] = color(200, 0, 200);
+    //colours[5] = color(0, 200, 200);
+    //colours[6] = color(100, 100, 255);
+    //colours[7] = color(200, 255, 200);
   }
 
   void render()
   {
+    stroke(100); 
     for (int i = 0; i < segments; i++)
     {
-      fill(colours[i]);
-      //stroke(colours[i]);
-      stroke(255);
-      strokeWeight(2);
-      arc(pos.x, pos.y, diameter, diameter, (thetaBase + (theta * i)), ((thetaBase + (theta * i)) + theta), PIE);
       fill(0);
-      stroke(0);
-      ellipse(pos.x, pos.y, 20, 20);
+      strokeWeight(5);
+      if((int)option == i)
+        fill(255);  
+      arc(pos.x, pos.y, diameter, diameter, thetaBase + (theta * i), thetaBase + (theta * i) + theta, PIE);
     }
-    stroke(100);
+    
     fill(255);
     strokeWeight(3);
-    line(pos.x, pos.y - diameter * 0.7f, pos.x, pos.y);
-    textAlign(CENTER, CENTER);
+    textAlign(LEFT, CENTER);
     if(option != 0)
-      text("Option Select: " + ((int)option + 1), pos.x, pos.y - (diameter * 0.8f));
+      text("Option Select: " + ((int)option + 1), pos.x + diameter * 0.7f, pos.y);
     else
-      text("Option Select: " + ((int)option), pos.x, pos.y - (diameter * 0.8f));
+      text("Option Select: " + ((int)option), pos.x + diameter * 0.7f, pos.y);
     
     textAlign(LEFT);
     text("Option List\n1 = Speed trend graph\n2 = Stages pie chart\n3 = Record stage wins bubble graph\n4 = Correlation graph, speed, stages and lengths", 100, height - 200);
@@ -59,7 +56,7 @@ class Wheel
     {
       if (keyCode == LEFT || keyCode == RIGHT)
       {
-        option = ((PI + HALF_PI - thetaBase) / theta);
+        option = -thetaBase / theta;// (PI + HALF_PI - thetaBase) / theta;
         if (option < 1)
             option += 8;
         if (option > 8)

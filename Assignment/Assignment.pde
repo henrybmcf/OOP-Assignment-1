@@ -114,6 +114,7 @@ void setup()
   legend = false;
   font = createFont("Aspex.ttf", 15); 
   textFont(font);
+  bike = loadImage("Bike.png");
 }
 
 Table table;
@@ -162,7 +163,7 @@ boolean kinectColour;
 boolean legend;
 
 PFont font;
-
+PImage bike;
 void draw()
 {
   background(0);
@@ -177,9 +178,10 @@ void draw()
      ////rect(0, -1, kinect.width +1, kinect.height +1);
      ////kinectDepth.update();
      //popMatrix();
-  
+
      wheel.render();
      wheel.update();
+     image(bike, 0, 0);
      break;
     case 1:
       correlationID[0] = "Trend";
