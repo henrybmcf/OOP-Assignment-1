@@ -89,11 +89,11 @@ void setup()
   // Remove all elements from sorted list to save memory
   stageCountSort.clear();
 
-  kinect = new Kinect(this);
-  depth = new KinectDepth();
-  tracker = new KinectTracker();
-  kinect.initDepth();
-  kinect.enableColorDepth(true);  
+  //kinect = new Kinect(this);
+  //depth = new KinectDepth();
+  //tracker = new KinectTracker();
+  //kinect.initDepth();
+  //kinect.enableColorDepth(true);  
   minim = new Minim(this);
   wheel = new Wheel();
   ssl_correl = new Spd_Stg_Len_Correl();
@@ -136,9 +136,9 @@ String[] correlationID = new String[3];
 Table table;
 Table stages_table;
 Table countryWins;
-Kinect kinect;
-KinectDepth depth;
-KinectTracker tracker;
+//Kinect kinect;
+//KinectDepth depth;
+//KinectTracker tracker;
 Minim minim;
 Wheel wheel;
 Spd_Stg_Len_Correl ssl_correl;
@@ -167,10 +167,10 @@ void draw()
   switch(menu)
   {
    case 0:
-     pushMatrix();
-     translate(width - kinect.width - 2, height - kinect.height - 2);
-     depth.update();
-     popMatrix();
+     //pushMatrix();
+     //translate(width - kinect.width - 2, height - kinect.height - 2);
+     //depth.update();
+     //popMatrix();
 
      wheel.render();
      wheel.update();
@@ -210,28 +210,28 @@ void showKey()
   float boxWidth = width * 0.6f;
   float boxHeight = height * 0.8f;
   float halfWidth = boxWidth * 0.5f;
+  background(0);
+  fill(255);
+  textSize(150);
+  textAlign(CENTER);
+  pushMatrix();
+  translate(0, height);
+  rotate(PI + HALF_PI);
+  text("KEY", height * 0.5f, 200);
+  popMatrix();
+  fill(230, 200, 100);
+  stroke(0);
+  pushMatrix();
+  translate(width * 0.2f, boxHeight * 0.125f);
+  rectMode(CORNER);
+  rect(0, 0, boxWidth, boxHeight, 30);
+  textLeading(30);
+  fill(0);
+  textSize(18);
+  strokeWeight(2);
   switch (menu)
   {
     case 0:
-      background(0);
-      fill(255);
-      textSize(150);
-      textAlign(CENTER);
-      pushMatrix();
-      translate(0, height);
-      rotate(PI + HALF_PI);
-      text("KEY", height * 0.5f, 200);
-      popMatrix();
-      fill(230, 200, 100);
-      stroke(0);
-      pushMatrix();
-      translate(width * 0.2f, boxHeight * 0.125f);
-      rectMode(CORNER);
-      rect(0, 0, boxWidth, boxHeight, 30);
-      textLeading(30);
-      fill(0);
-      textSize(18);
-      strokeWeight(2);
       text("KeyBoard Selection", halfWidth, 60);
       line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
       text("Kinect Selection", halfWidth, 355);
@@ -240,10 +240,23 @@ void showKey()
       text("Right Arrow - Turn wheel right\nLeft Arrow - Turn wheel left\nEnter - Select highlighted option\nNumber Keys - Jump to corresponding graph\nBackspace - Return to menu from any graph", halfWidth, 110);
       text("Hover Right box - Turn wheel right\nHover Left Box - Turn wheel left\nHover Top Box - Select highliighted option\nC - Swap between rgb depth scale and black kinect window", halfWidth, 405);
       textLeading(27);
-      text("Kinect will only register objects within depth threshold,\nthat is any objects that are coloured blue", halfWidth, 580); 
-      popMatrix();
+      text("Kinect will only register objects within depth threshold,\nthat is any objects that are coloured blue", halfWidth, 580);
+      break;
+    case 4:
+      text("Speed Graph", halfWidth, 60);
+      line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
+      text("Stages Graph", halfWidth, 260);
+      line(halfWidth/2, 270, boxWidth - halfWidth/2, 270);
+      text("Length Graph", halfWidth, 460);
+      line(halfWidth/2, 470, boxWidth - halfWidth/2, 470);
+      textSize(15);
+      textLeading(28);
+      text("S - Show/Hide\nW - Trend\nA - Scatter\nD - Lightweight Trend & Scatter combo", halfWidth, 110);
+      text("T - Show/Hide\nG - Trend\nR - Scatter\nY - Lightweight Trend & Scatter combo", halfWidth, 310);
+      text("L - Show/Hide\nI - Trend\nO - Scatter\nP - Lightweight Trend & Scatter combo", halfWidth, 510);
       break;
   }
+  popMatrix();
 }
 
 void keyPressed()

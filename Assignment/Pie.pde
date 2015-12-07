@@ -10,7 +10,7 @@ class Pie
 
   Pie()
   {
-    this(width * 0.3f, width * 0.5f, height * 0.5f);
+    this(width * 0.3f, width * 0.5f, height * 0.55f);
   }
 
   Pie(float radius, float centX, float centY)
@@ -27,10 +27,15 @@ class Pie
     // Display Graph Info
     fill(50, 130, 255);
     textAlign(CENTER);
-    text("Pie graph of frequency of stages of the Tour de France from 1950 - 2015.\nNumber represents number of times that number of stages has occured", (width * 0.5f), 40);
-
+    text("Pie graph of frequency of stages of the Tour de France from 1950 - 2015.\nStationery number represents number of stages.\nMotion number being number of times it has occured", (width * 0.5f), 40);
+   
     for (int i = 0; i < counter.size(); i++)
-      text(i + 20 + " = " + counter.get(i), 50, (i + 1)*40);
+    {
+      fill(130, 255, 50);
+      text(i + 20 + " = ", 50, (i + 1) * 40);
+      fill(255, 50, 130);
+      text(counter.get(i), 90, (i + 1) * 40);
+    }
 
     float sum = 0.0f;
     for (int c : counter)
@@ -51,14 +56,9 @@ class Pie
       {
         r = radius * 1.5f;
         if (mouseY < centY)
-        {
           theta = angle - PI;
-        }
         else
-        {
           theta = angle;
-        }
-
         sin = sin(theta);
         cos = cos(theta);
         if (sin < 0)
@@ -85,41 +85,41 @@ class Pie
           y = centY + (radius * sin);
           lineY = centY + ((radius * 0.95f) * sin);
         }
-        fill(255);
+        fill(130, 255, 50);
         text(counter.get(i), x, y);
       }
 
       strokeWeight(1);
+      stroke(255);
       fill(colours[i]);
       arc(centX, centY, r, r, last, current, PIE);
-
-      fill(255);
-      if (last + (current * 0.5f) < HALF_PI)
+      
+      float alpha = (current + last) * 0.5f;
+      float labelX = 0.0f;
+      float labelY = 0.0f;
+      float smallRad = radius * 0.85f;
+      if (alpha <= HALF_PI)
       {
-        float x1 = centX + sin(last + (current * 0.5f) + HALF_PI) * radius;
-        float y1 = centY - cos(last + (current * 0.5f) + HALF_PI) * radius;
-        text(i + 20, x1, y1);
+        labelX = centX + (smallRad * cos(alpha));
+        labelY = centY + (smallRad * sin(alpha));
       }
-      if (last + (current * 0.5f) > HALF_PI && last + (current * 0.5f) < PI)
+      else if (alpha <= PI * 1.5f && alpha > PI)
       {
-        float x1 = centX + sin(last + (current * 0.5f) + (QUARTER_PI * 1.5)) * radius;
-        float y1 = centY - cos(last + (current * 0.5f) + (QUARTER_PI * 1.5)) * radius;
-        text(i + 20, x1, y1);
+        alpha -= PI;
+        labelX = centX - (smallRad * cos(alpha));
+        labelY = centY - (smallRad * sin(alpha));
       }
       else
       {
-        float x1 = centX + sin(last + (current * 0.5f)) * radius;
-        float y1 = centY - cos(last + (current * 0.5f)) * radius;
-        text(i + 20, x1, y1);
+        labelX = centX - (smallRad * -cos(alpha));
+        labelY = centY + (smallRad * sin(alpha));
       }
-
-      fill(255);
-      //text(i + 20, x1, y1);  
-      println((i + 20) + " = " + (last + (current*0.5f)));
-
+      textAlign(CENTER);
+      fill(255, 50, 130);
+      text(i + 20, labelX, labelY);
       last = current;
     }
-    stroke(255);
+    stroke(130, 255, 50);
     strokeWeight(2);
     line(centX, centY, lineX, lineY);
   }
