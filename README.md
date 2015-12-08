@@ -1,57 +1,33 @@
 # OOP_Assignment_2015
 Object Orientated Programming Assignment. Nov-Dec 2015.
 
-*** Note to self: Add more years for speed ***
-
 Project visualising data from the Tour de France (TdF).
 TdF data taken from 1947 - 2015. Various data found across multiple sites used to create a single csv file.
 
 Data includes:
 - Length of tour
 - Number of stages
-- Winner of tour (yellow jersey)
-- Average speed (of winner).
+- Average speed (of winner)
+- Stage wins records per
+	- Rider
+	- Country
 
-More data to be added (pending discovery of sources), such as:
-- All jersey places (Green, White & Polka dot)
-- Number of categorised climbs
-- Total ascent
-- Podium finishers
-- Record holders - Most wins, most jerseys, most tours, etc.
+Graphs/Visualisation:
+- Speed - Trend graph
+- Stages - Pie chart
+  - Frequency of number of stages
+- Record Holders - Bubble graph
+- Three way correlation graph between Speed, Stages and Length
+	- Option to display each of the graphs as Trend, Scatter or Light Trend with Scatter
 
-Graphs/Visualisation to be used:
-- Length - Line trend graph.
-- Stages - Pie graph.
-  - Frequency of number of stages.   
-- Speed - Trend graph.
-- Record Holders - Bubble graph.
-- Ascent - Mountain graph.
+Menu:
+- Wheel menu visualised as bicycle wheel, with each two sections between spokes as a menu option
+	- Use Left and Right arrow keys to rotate wheel and highlight new option
+	- Use Enter key to select highlighted option
+- Kinect window to allow user to rotate wheel and select option with motion captured by Kinect
 
-Record holders:
-- Most appearances & finishes in a tour
-	- Main bubble for appearances
-	- Sub bubble for finishes
-- Smallest winning margin
-- Stage wins per rider
-- Stage wins per country
 
-Menu to be visualised as bicycle wheel, with each section between spokes as a menu option.
-
-Menu option to select each data individually. 1 - Length, 2 - Stages, etc.
-
-Other menu options to show two or more sets of data, i.e. 9 - Select option
-
-- Sub-menu to select data. 1 - Length, etc.
-- Both data options selected will show on the same graph for comparison
-
-Sub-menus within all to show mean, mode, etc.
-
-Possible induction of correlation graphs, Length & speed, etc.
 
 Websites used:
 - http://bikeraceinfo.com/tdf/tdfstats.html
 - http://www.letour.fr/HISTO/us/TDF/index.html
-
-Possibility for advanced features:
-- Visualise geotagged data on a map -> Show race routes for each year
-- Use a Kinect or Leap Motion to interact with the visualisation using gestures -> Use motion to select menu option from wheel.
