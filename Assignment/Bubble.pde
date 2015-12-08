@@ -6,6 +6,10 @@ class Bubble
   int highCountry;
   int lowCountry;
   int bubbleTime, bubbleIndex;
+  float bubbleGraphWidth;
+  float horizTick;
+  float bubbleGraphHeight;
+  float vertTick;
   
   Bubble()
   {
@@ -16,6 +20,10 @@ class Bubble
     
     bubbleTime = 4;
     bubbleIndex = 1;
+    bubbleGraphWidth = width * 0.9f;
+    horizTick = width * 0.02f;
+    bubbleGraphHeight = height * 0.9f;
+    vertTick = height * 0.03f;
     
     for (int i = 0; i < colour.length; i++)
     {
@@ -24,7 +32,7 @@ class Bubble
       colour[i] = color(255, c2, c3);
     }
   }
-  
+    
   void render()
   {
     // Display Graph Info
@@ -34,15 +42,27 @@ class Bubble
 
     if (bubbleGraph == "Country")
     {
-      fill(255);
+      fill(130, 255, 50);
+      stroke(130, 255, 50);
+      strokeWeight(3);  
+      // Axis
+      line(bubbleGraphWidth, 150, bubbleGraphWidth, height * 0.95f);
+      
       for (int i = 0; i < cWins.size(); i++)
       {
-        float y = map(cWins.get(i), lowCountry, highCountry, height - 50, 50);
-        float radius = map(cWins.get(i), lowCountry, highCountry, 30, 100);
-        strokeWeight(3);
+        float y = map(cWins.get(i), lowCountry, highCountry, height * 0.95f, 150);
+        float radius = map(cWins.get(i), lowCountry, highCountry, 50, 100);     
         stroke(255);
         ellipse(countryX.get(i), y, radius, radius);
-
+        
+        if(i < cWins.size()/3 || i == cWins.size() - 1)
+        {
+          stroke(130, 255, 50);
+          // Ticks
+          line(bubbleGraphWidth, y, bubbleGraphWidth + horizTick, y);
+          text(cWins.get(i), bubbleGraphWidth + horizTick * 2.0f, y);
+        }
+        
         pushMatrix();
         translate(countryX.get(i) - (radius * 0.5f), y - (radius * 0.5f));
         PImage flag;
@@ -62,7 +82,7 @@ class Bubble
 
     if (bubbleGraph == "Rider")
     {
-      drawAxis();
+      drawRiderAxis();
       
       float riderX = 0.0f;
       // Timing drawing graph animation
@@ -85,7 +105,7 @@ class Bubble
     }
   }
   
-  void drawAxis()
+  void drawRiderAxis()
   {    
     strokeWeight(3);
     for(int i = 1; i < wins.size(); i++)
@@ -96,10 +116,12 @@ class Bubble
       float riderXPrev = map(wins.get(j), lowWins, highWins, 100, width - 50);
       float riderXNext = map(wins.get(i), lowWins, highWins, 100, width - 50);
       // Ticks
-      line(riderXPrev, height * 0.9f, riderXPrev, height * 0.93f);
+      line(riderXPrev, bubbleGraphHeight, riderXPrev, bubbleGraphHeight + vertTick);
       // Axis
-      line(riderXPrev, height * 0.9f, riderXNext, height * 0.9f);
-      text(wins.get(j), riderXPrev, height * 0.97f);
+      line(riderXPrev, bubbleGraphHeight, riderXNext, bubbleGraphHeight);
+      text(wins.get(j), riderXPrev, bubbleGraphHeight + vertTick * 2.0f);
     }
   }
+  
+ 
 }

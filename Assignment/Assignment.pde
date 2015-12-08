@@ -29,7 +29,7 @@ void setup()
     lengths.add(years.get(i).tour_length);
   }
 
-  stages_table = loadTable("stage_wins.csv", "header");
+  stages_table = loadTable("StageWins.csv", "header");
   for (TableRow row : stages_table.rows())
   {
     Stages stage = new Stages();
@@ -41,7 +41,7 @@ void setup()
   {
     rider.add(stage_records.get(i).rider);
     wins.add(stage_records.get(i).number);
-    stageY.add(random(150, height * 0.85f));
+    stageY.add(random(150, height * 0.8f));
   }
 
   countryWins = loadTable("CountryWins.csv", "header");
@@ -56,7 +56,8 @@ void setup()
   {
     cWins.add(countryRecords.get(i).number);
     country.add(countryRecords.get(i).country);
-    countryX.add(random(width - (i + 1) * 50, width - (i + 1) * 130));
+    float cX = random(width * 0.8f);
+    countryX.add(cX);
   }
 
   for (int i = 0; i < correlation.length; i++)
@@ -259,8 +260,8 @@ void showKey()
 
 void keyPressed()
 {
-  if (key == ' ')
-    exit();
+  //if (key == ' ')
+  // exit();
 
   if (key == 'k')
     legend = true;
