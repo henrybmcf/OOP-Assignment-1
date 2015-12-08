@@ -109,7 +109,6 @@ void setup()
   sum = 0.0f;
   average = 0.0f;
   bubbleGraph = "Rider";
-  mirror = false;
   kinectColour = true;
   kinectTime = 0;
   legend = false;
@@ -167,8 +166,6 @@ float sum;
 // For determining which bubble graph to show: rider or country
 String bubbleGraph;
 // Kinect variables
-// For mirroring camera image,
-boolean mirror;
 // Timing how long user is hovering over turning and selection rectangles
 int kinectTime;
 // Showing kinect image in RGB values depending on depth, or black with only matter within depth threshold being shown
@@ -189,30 +186,36 @@ void draw()
   // Switch case for menu option
   switch (menu)
   {
-    // Load kinect image, wheel menu selection and bike image
+    // Load menu page
     case 0:
+      // Show Kinect image,
       pushMatrix();
       translate(width - kinect.width - 2, height - kinect.height - 2);
       depth.update();
       popMatrix();
-  
+      // Wheel menu selection
       wheel.render();
       wheel.update();
+      // Bike image
       image(bike, 0, 0);
       break;
+    
     // Load speed graph
     case 1:
       correlationID[0] = "Trend";
       speed.render();
       break;
+    
     // Load stage frequency pie chart
     case 2:
       pie.update();
       break;
+   
     // Load stage win records bubble graphs
     case 3:
       bubble.render();
       break;
+    
     // Load 3 way correlation graph
     case 4:
       ssl_correl.render();
@@ -227,6 +230,7 @@ void draw()
 // Show legend
 void showKey()
 {
+  // Size of legend box
   float boxWidth = width * 0.6f;
   float boxHeight = height * 0.8f;
   float halfWidth = boxWidth * 0.5f;
@@ -234,6 +238,7 @@ void showKey()
   fill(255);
   textSize(150);
   textAlign(CENTER);
+  // Rotate and show Key to side of box
   pushMatrix();
   translate(0, height);
   rotate(PI + HALF_PI);
@@ -263,6 +268,7 @@ void showKey()
       textLeading(27);
       text("Kinect will only register objects within depth threshold,\nthat is any objects that are coloured blue", halfWidth, 580);
       break;
+    
     case 3:
       if (bubbleGraph == "Rider")
       {
@@ -280,6 +286,7 @@ void showKey()
           text(country.get(i) + " = " + cWins.get(i), halfWidth, (i * 30) + 110);
       }
       break;
+    
     case 4:
       text("Speed Graph", halfWidth, 60);
       line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
@@ -299,12 +306,15 @@ void showKey()
 
 void keyPressed()
 {
+  // Switch to relevant graph when number key pressed
   if (key >= '0' && key <= '4')
     menu = key - '0';
 
+  // Return to menu when backspace pressed
   if (key == BACKSPACE)
     menu = 0;
-
+  
+  // Display legend if on certain graphs
   if (menu == 0 || menu == 3 || menu == 4)
     if (key == 'k')
       legend = true;
@@ -313,22 +323,26 @@ void keyPressed()
   switch(menu)
   {
     case 0:
+      // Change whether kinect image shows depth via RGB or not
       if (key == 'c')
         kinectColour =! kinectColour;
       break;
     case 3:
-      if (key == 'c')
-        bubbleGraph = "Country";
+      // Switch between Rider and Country bubble graphs
       if (key == 'r')
         bubbleGraph = "Rider";
+      if (key == 'c')
+        bubbleGraph = "Country";
       break;
     case 4:
       switch(key)
       {
+        // Show/Hide year informatio 
         case 'h':
           yearInfo =! yearInfo; 
           break;
     
+        // Show/Hide correlation graphs and change relevant graphs to different types
         case 's':
           correlation[0] =! correlation[0];
           correlationID[0] = "Trend";
@@ -377,6 +391,7 @@ void keyPressed()
 
 void keyReleased()
 {
+  // Hide legend
   if (key == 'k')
     legend = false;
 }

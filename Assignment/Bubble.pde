@@ -19,8 +19,10 @@ class Bubble
     highCountry = cWins.max();
     lowCountry = cWins.min();
 
+    // Variables for timing drawing of graph
     bubbleTime = 4;
     bubbleIndex = 1;
+    
     bubbleGraphWidth = width * 0.9f;
     horizTick = width * 0.02f;
     bubbleGraphHeight = height * 0.9f;
