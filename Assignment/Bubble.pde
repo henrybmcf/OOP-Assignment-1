@@ -40,46 +40,6 @@ class Bubble
     textAlign(CENTER);
     text("Bubble graph of total stage win records.\nR - Rider wins      C - Country wins", width * 0.5f, 40);
 
-    if (bubbleGraph == "Country")
-    {
-      fill(130, 255, 50);
-      stroke(130, 255, 50);
-      strokeWeight(3);  
-      // Axis
-      line(bubbleGraphWidth, 150, bubbleGraphWidth, height * 0.95f);
-      
-      for (int i = 0; i < cWins.size(); i++)
-      {
-        float y = map(cWins.get(i), lowCountry, highCountry, height * 0.95f, 150);
-        float radius = map(cWins.get(i), lowCountry, highCountry, 50, 100);     
-        stroke(255);
-        ellipse(countryX.get(i), y, radius, radius);
-        
-        if(i < cWins.size()/3 || i == cWins.size() - 1)
-        {
-          stroke(130, 255, 50);
-          // Ticks
-          line(bubbleGraphWidth, y, bubbleGraphWidth + horizTick, y);
-          text(cWins.get(i), bubbleGraphWidth + horizTick * 2.0f, y);
-        }
-        
-        pushMatrix();
-        translate(countryX.get(i) - (radius * 0.5f), y - (radius * 0.5f));
-        PImage flag;
-        // PImage flag = loadImage(country.get(i) + ".jpg");
-        if (i < 9)
-        {
-          flag = loadImage(country.get(i) + ".png");
-        }
-        else
-        {
-          flag = loadImage(country.get(1) + ".png");
-        }
-        image(flag, 0, 0, radius, radius);
-        popMatrix();
-      }
-    }
-
     if (bubbleGraph == "Rider")
     {
       drawRiderAxis();
@@ -103,6 +63,39 @@ class Bubble
       }
       bubbleTime++;
     }
+    
+    if (bubbleGraph == "Country")
+    {
+      fill(130, 255, 50);
+      stroke(130, 255, 50);
+      strokeWeight(3);  
+      // Axis
+      line(bubbleGraphWidth, 150, bubbleGraphWidth, height * 0.95f);
+      
+      for (int i = 0; i < cWins.size(); i++)
+      {
+        float y = map(cWins.get(i), lowCountry, highCountry, height * 0.95f, 150);
+        float radius = map(cWins.get(i), lowCountry, highCountry, 50, 100);     
+        stroke(255);
+        strokeWeight(4);
+        ellipse(countryX.get(i), y, radius, radius);
+        
+        if(i < cWins.size()/3 || i == cWins.size() - 1)
+        {
+          stroke(130, 255, 50);
+          // Ticks
+          line(bubbleGraphWidth, y, bubbleGraphWidth + horizTick, y);
+          textAlign(LEFT, CENTER);
+          text(cWins.get(i), bubbleGraphWidth + horizTick * 2.0f, y);
+        }
+        
+        pushMatrix();
+        translate(countryX.get(i) - (radius * 0.5f), y - (radius * 0.5f));
+        PImage flag = loadImage(country.get(i) + ".png");
+        image(flag, 0, 0, radius, radius);
+        popMatrix();
+      }
+    }
   }
   
   void drawRiderAxis()
@@ -122,6 +115,4 @@ class Bubble
       text(wins.get(j), riderXPrev, bubbleGraphHeight + vertTick * 2.0f);
     }
   }
-  
- 
 }

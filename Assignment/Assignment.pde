@@ -232,7 +232,7 @@ void showKey()
   {
     case 0:
       text("KeyBoard Selection", halfWidth, 60);
-      line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
+      
       text("Kinect Selection", halfWidth, 355);
       line(halfWidth/2, 365, boxWidth - halfWidth/2, 365);
       textSize(15);
@@ -240,6 +240,24 @@ void showKey()
       text("Hover Right box - Turn wheel right\nHover Left Box - Turn wheel left\nHover Top Box - Select highliighted option\nC - Swap between rgb depth scale and black kinect window", halfWidth, 405);
       textLeading(27);
       text("Kinect will only register objects within depth threshold,\nthat is any objects that are coloured blue", halfWidth, 580);
+      break;
+    case 3:
+      if (bubbleGraph == "Rider")
+      {
+        text("Rider Record Stats", halfWidth, 60);
+        line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
+        for (int i = 0; i < rider.size(); i+=2)
+            text(rider.get(i) + " = " + wins.get(i), halfWidth / 2, (i * 17) + 110);
+        for (int i = 1; i < rider.size(); i+=2)
+            text(rider.get(i) + " = " + wins.get(i), halfWidth * 1.5, (i - 1) * 17 + 110);
+      }
+      else if (bubbleGraph == "Country")
+      {
+        text("Country Record Stats", halfWidth, 60);
+        line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
+        for (int i = 0; i < country.size(); i++)
+            text(country.get(i) + " = " + cWins.get(i), halfWidth, (i * 30) + 110);
+      }
       break;
     case 4:
       text("Speed Graph", halfWidth, 60);
