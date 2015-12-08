@@ -19,6 +19,7 @@ TdF data taken from 1947 - 2015. Various data found across multiple sites used t
 	- Use Enter key to select highlighted option
 - Kinect window to allow user to rotate wheel and select option with motion captured by Kinect
 	- Kinect depth image can be displayed as RGB or as black for out of depth threshold
+	- Note for Kinect: The current Kinect that I have has a tendency to only load image on every third tme loading the sketch, if using a Kinect, please be aware that it may take several attempts, however I believe it a hardware issue with the current Kinect I am using. 
 	
 ![Menu - RGB Kinect](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Menu%20-%20RGB%20Kinect.png)
 ![Menu - Dark Kinect](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Menu%20-%20Dark%20Kinect.png)
