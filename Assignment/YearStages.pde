@@ -1,3 +1,4 @@
+// Classes for reading in data from tables
 class Year
 {
   int tour_year;

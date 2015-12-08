@@ -24,7 +24,7 @@ class Pie
 
   void update()
   {
-    // Display Graph Info
+    // Display Graph Information
     fill(50, 130, 255);
     textAlign(CENTER);
     text("Pie graph of frequency of stages of the Tour de France from 1950 - 2015.\nStationery number represents number of stages.\nMotion number being number of times it has occured", centX, 40);

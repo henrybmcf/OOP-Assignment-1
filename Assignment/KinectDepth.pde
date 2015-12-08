@@ -2,24 +2,32 @@ class KinectDepth
 {
   void update()
   {
+    // Call kinect tracking function
     tracker.track();
     tracker.display();
-
+    
+    // PVectors for tracking average depth, display cirlce on screen
     PVector v1 = tracker.getPos();
     PVector v2 = tracker.getLerpedPos();
     fill(100, 250, 50, 200);
     noStroke();
     ellipse((v1.x + v2.x) * 0.5f, (v1.y + v2.y) * 0.5f, 20, 20);
 
+    // Draw rectangles in kinect width to show user where to hover to turn wheel anad to select menu option
     fill(50, 100, 250, 35);
     rectMode(CORNER);
     float quart = kinect.height * 0.25f;
     float arrowWidth = kinect.width * 0.375f;
     rectMode(CORNERS);
+    // Select rectangle
     rect(0, 0, kinect.width, quart);
+    // Turn left rectangle
     rect(1, quart * 1.25f, arrowWidth, kinect.height, 0, 10, 0, 0);
+    // Turn right rectangle
     rect(kinect.width, quart * 1.25f, kinect.width - arrowWidth, kinect.height, 10, 0, 0, 0);
-
+    
+    // Detect where average depth tracking ellipse is in relation to selection and turn rectangles
+    // If within, reach time limit (1 second for selection, half a second for turning) and execute relevant command
     if (v1.y < quart)
     {
       kinectTime++;

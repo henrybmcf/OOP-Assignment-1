@@ -11,6 +11,7 @@ void setup()
 
   // Load main data table, list of years, speeds, stages and lengths 
   table = loadTable("TDF.csv", "header");
+  // For each row of the table, retrieve the value within the column named "Year", "Speed", etc.
   for (TableRow row : table.rows())
   {
     Year year = new Year();
@@ -28,6 +29,7 @@ void setup()
     lengths.append(years.get(i).tour_length);
   }
 
+  // Load rider stage win records
   stages_table = loadTable("StageWins.csv", "header");
   for (TableRow row : stages_table.rows())
   {
@@ -40,9 +42,11 @@ void setup()
   {
     rider.add(stage_records.get(i).rider);
     wins.append(stage_records.get(i).number);
+    // Set random value for y coordinates of each bubble for rider stage wins record bubble graph
     stageY.append(random(150, height * 0.8f));
   }
 
+  // Load country stage win records
   countryWins = loadTable("CountryWins.csv", "header");
   for (TableRow row : countryWins.rows())
   {
@@ -55,10 +59,11 @@ void setup()
   {
     country.add(countryRecords.get(i).country);
     cWins.append(countryRecords.get(i).number);
-    float cX = random(width * 0.8f);
-    countryX.append(cX);
+    // Set random value for x coordinates of each bubble for country stage wins record bubble graph
+    countryX.append(random(width * 0.8f));
   }
 
+  // Set all correlation graphs to be false, so user can select which ones to show
   for (int i = 0; i < correlation.length; i++)
     correlation[i] = false;
 
@@ -114,10 +119,13 @@ void setup()
   yearInfo = false;
 }
 
+// Int and FloatLists for general data: years, speeds, stages & lengths.
 ArrayList<Year> years = new ArrayList<Year>();
 IntList yearList = new IntList();
 FloatList speedList = new FloatList();
 IntList stages = new IntList();
+IntList lengths = new IntList();
+// String ArrayList for names of riders/countries, IntList for number of stage wins and FloatList for random x/y coordinates for bubble graphs
 ArrayList<Stages> stage_records = new ArrayList<Stages>();
 ArrayList<String> rider = new ArrayList<String>();
 IntList wins = new IntList();
@@ -126,10 +134,12 @@ ArrayList<countryWins> countryRecords = new ArrayList<countryWins>();
 ArrayList<String> country = new ArrayList<String>();
 IntList cWins = new IntList();
 FloatList countryX = new FloatList();
-IntList lengths = new IntList();
+// IntLists for counting number of stages
 IntList stageCountSort = new IntList();
 IntList counter = new IntList();
+// Boolean array for determining whether to show or hide each of the correlation graphs
 boolean[] correlation = new boolean[3];
+// String array for determining which type of graph to show for each of the correlation graphs
 String[] correlationID = new String[3];
 
 Table table;
@@ -145,56 +155,76 @@ Speed speed;
 Pie pie;
 Bubble bubble;
 
+// Menu and option for graph selection
 int menu;
 float option;
+// theta and thetaBase for drawing menu wheel
 float theta;
 float thetaBase;
+// Average and Sum used for finding average of speeds
 float average;
 float sum;
+// For determining which bubble graph to show: rider or country
 String bubbleGraph;
+// Kinect variables
+// For mirroring camera image,
 boolean mirror;
+// Timing how long user is hovering over turning and selection rectangles
 int kinectTime;
+// Showing kinect image in RGB values depending on depth, or black with only matter within depth threshold being shown
 boolean kinectColour;
+// Boolean to determine whether to show legend or not
 boolean legend;
+// Allow custom font to be read in
 PFont font;
+// Allow bike image on menu page to be read in
 PImage bike;
+// Determine whether to show year information on correlation graph
 boolean yearInfo;
 
 void draw()
 {
   background(0);
- 
-  switch(menu)
-  {
-   case 0:
-     pushMatrix();
-     translate(width - kinect.width - 2, height - kinect.height - 2);
-     depth.update();
-     popMatrix();
 
-     wheel.render();
-     wheel.update();
-     image(bike, 0, 0);
-     break;
+  // Switch case for menu option
+  switch (menu)
+  {
+    // Load kinect image, wheel menu selection and bike image
+    case 0:
+      pushMatrix();
+      translate(width - kinect.width - 2, height - kinect.height - 2);
+      depth.update();
+      popMatrix();
+  
+      wheel.render();
+      wheel.update();
+      image(bike, 0, 0);
+      break;
+    // Load speed graph
     case 1:
       correlationID[0] = "Trend";
       speed.render();
       break;
+    // Load stage frequency pie chart
     case 2:
       pie.update();
       break;
+    // Load stage win records bubble graphs
     case 3:
       bubble.render();
       break;
+    // Load 3 way correlation graph
     case 4:
       ssl_correl.render();
       break;
   }
 
+  // Show legend when boolean variable legend is true (when K key is being held down)
   if (legend)
     showKey();
 }
 
+// Show legend
 void showKey()
 {
   float boxWidth = width * 0.6f;
@@ -219,6 +249,7 @@ void showKey()
   fill(0);
   textSize(18);
   strokeWeight(2);
+  // Display relevant information for legend of each graph - What happens when keys are pressed, show more in depth information
   switch (menu)
   {
     case 0:
@@ -238,16 +269,15 @@ void showKey()
         text("Rider Record Stats", halfWidth, 60);
         line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
         for (int i = 0; i < rider.size(); i+=2)
-            text(rider.get(i) + " = " + wins.get(i), halfWidth / 2, (i * 17) + 110);
+          text(rider.get(i) + " = " + wins.get(i), halfWidth / 2, (i * 17) + 110);
         for (int i = 1; i < rider.size(); i+=2)
-            text(rider.get(i) + " = " + wins.get(i), halfWidth * 1.5, (i - 1) * 17 + 110);
-      }
-      else if (bubbleGraph == "Country")
+          text(rider.get(i) + " = " + wins.get(i), halfWidth * 1.5, (i - 1) * 17 + 110);
+      } else if (bubbleGraph == "Country")
       {
         text("Country Record Stats", halfWidth, 60);
         line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
         for (int i = 0; i < country.size(); i++)
-            text(country.get(i) + " = " + cWins.get(i), halfWidth, (i * 30) + 110);
+          text(country.get(i) + " = " + cWins.get(i), halfWidth, (i * 30) + 110);
       }
       break;
     case 4:
@@ -269,22 +299,23 @@ void showKey()
 
 void keyPressed()
 {
-  if (menu == 0 || menu == 3 || menu == 4)
-    if (key == 'k')
-      legend = true;
-
   if (key >= '0' && key <= '4')
     menu = key - '0';
 
   if (key == BACKSPACE)
     menu = 0;
-    
+
+  if (menu == 0 || menu == 3 || menu == 4)
+    if (key == 'k')
+      legend = true;
+
+  // For each graph, certain keys will have different effects/outcomes
   switch(menu)
   {
     case 0:
-       if (key == 'c')
-          kinectColour =! kinectColour;
-       break;
+      if (key == 'c')
+        kinectColour =! kinectColour;
+      break;
     case 3:
       if (key == 'c')
         bubbleGraph = "Country";
@@ -297,7 +328,7 @@ void keyPressed()
         case 'h':
           yearInfo =! yearInfo; 
           break;
-           
+    
         case 's':
           correlation[0] =! correlation[0];
           correlationID[0] = "Trend";
@@ -340,7 +371,7 @@ void keyPressed()
           correlationID[2] = "Scatter";
           break;
       } 
-      break;
+    break;
   }
 }
 

@@ -168,6 +168,7 @@ class Spd_Stg_Len_Correl
     for (int i = 0; i <= intervals; i++)
     {
       float y = vertGraphWindowRange - (i * windowGap);
+      // Display correct labels depending on which axis 
       if (graph == "Stages")
       {
         line(graphWindowRange + tickSize, y, graphWindowRange, y);
@@ -188,14 +189,19 @@ class Spd_Stg_Len_Correl
     }
   }
 
+  // Same function to draw all three graphs, pass ID to identify which graph is being drawn
   void drawGraph(int i, int ID, FloatList list, float low, float high)
   {
     rectMode(CENTER);
+    // Calculate x and y coordinates for each section of graph
+    // Calculate x by stepping across by  increments of lineWidth
     float x1 = xBorder + ((i - 1) * lineWidth);
     float x2 = xBorder + (i * lineWidth);
+    // Calculate y by mapping current value onto the height of the graph
     float y1 = map(list.get(i - 1), low, high, vertGraphWindowRange, vertGraphWindowRange - graphHeight);
     float y2 = map(list.get(i), low, high, vertGraphWindowRange, vertGraphWindowRange - graphHeight);
 
+    // Case for each type of availbale graph
     switch(correlationID[ID])
     {
       case "Trend":
@@ -213,16 +219,17 @@ class Spd_Stg_Len_Correl
         break;
     }
   }
-
+  
+  // Display information for a particular year depending on mouseX
   void displayYearInfo(int sketchID)
   {
-    // Determine which year the mouse is in
+    // Calculate which year the mouse is in
     int x = (int) ((mouseX - xBorder) / lineWidth);
     float xCoord = xBorder + (x * lineWidth);
     
     if (x >= 0 && x < years.size())
     {
-      // Determine y coordinate of ellipse in relation to speed line graph
+      // Determine y coordinate of ellipse in relation to speed graph
       float speedY = map(speedList.get(x), lowestSpeed, highestSpeed, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
       
       stroke(255, 0, 0);
@@ -235,12 +242,14 @@ class Spd_Stg_Len_Correl
 
       if (sketchID == 1)
       {
+        // Determine y coordinate of ellipse in relation to length graph
         float lengthY = map(lengths.get(x), shortLength, longLength, vertGraphWindowRange, (vertGraphWindowRange) - graphHeight);
-        // Draw ellipse showing point on length graph
         stroke(0, 0, 255);
         fill(0, 0, 255);
+        // Draw ellipse showing point on length graph
         ellipse(xCoord, lengthY, 10, 10);
       }
+      // For speed graph, calculate distance from mouseX year's speed to the average and display
       if (sketchID == 2)
       {
         float avgY = map(average, lowestSpeed, highestSpeed, vertGraphWindowRange, yBorder);
@@ -266,12 +275,14 @@ class Spd_Stg_Len_Correl
         }
         yearInfo = true;
       }   
-
+      
+      // Determine if user has specified to show information for each year
       if (yearInfo)
       {
         // Display speed and year on relevant side of line, depending on location across graph
         fill(255);
         float text_coordinates;
+        // Show info on left or right hand side of line depending on location across graph, so as to not interfere with axis
         if (xCoord < 360)
         {
           textAlign(LEFT, CENTER);
@@ -291,6 +302,7 @@ class Spd_Stg_Len_Correl
         else
         {
           textHeight = vertGraphWindowRange - 105;
+          // Get and display information
           text("Stages: " + stages.get(x), text_coordinates, textHeight + 50);
           text("Length: " + lengths.get(x) + "Km", text_coordinates, textHeight + 75);
         }

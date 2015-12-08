@@ -2,13 +2,14 @@ class Speed extends Spd_Stg_Len_Correl
 {
   Speed()
   {
+    // Variables for timing drawing of graph
     speedTime = 4;
     speedIndex = 1;
   }
 
   void render()
   {
-    // Display Graph Info
+    // Display Graph Information
     fill(200, 10, 235);
     textAlign(CENTER);
     text("Trend graph of speed of the winner of the Tour de France from 1950 - 2015.\nGreen line represents overall average", (width * 0.5f), 30);
@@ -17,7 +18,8 @@ class Speed extends Spd_Stg_Len_Correl
     highestSpeed = speedList.max();
     lowestSpeed = speedList.min();
     lineWidth = graphWidth / (speedList.size() - 1);
-
+    
+    // Draw axis ticks and call drawAxis function
     stroke(0, 255, 255);
     strokeWeight(3);
     line(xBorder, yBorder, xBorder, vertGraphWindowRange);
@@ -42,7 +44,8 @@ class Speed extends Spd_Stg_Len_Correl
 
     average();
   }
-
+  
+  // Calculate and display line showing average speed
   void average()
   {
     float sum = 0.0f;
