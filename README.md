@@ -26,7 +26,7 @@ Menu:
 	- Use Enter key to select highlighted option
 - Kinect window to allow user to rotate wheel and select option with motion captured by Kinect
 
-
+![Menu - RGB Kinect](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Menu%20-%20RGB%20Kinect.png)
 
 Websites used:
 - http://bikeraceinfo.com/tdf/tdfstats.html
