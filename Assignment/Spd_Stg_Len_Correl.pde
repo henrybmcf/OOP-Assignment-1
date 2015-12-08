@@ -254,7 +254,7 @@ class Spd_Stg_Len_Correl
       // Display speed and year on relevant side of line, depending on location across graph
       fill(255);
       float text_coordinates;
-      if(mouseX < 350)
+      if(xCoord < 360)
       {
         textAlign(LEFT, CENTER);
         text_coordinates = xCoord + 10;
@@ -267,16 +267,17 @@ class Spd_Stg_Len_Correl
       float textHeight;
       if(sketchID == 2)
       {
-        textHeight = vertGraphWindowRange - 50;
+        textHeight = vertGraphWindowRange - 80;
+        text(nf(abs(speedList.get(x) - average), 1, 2) + " Km/h to Avg", text_coordinates, textHeight + 50);
       }
       else
       {
-        textHeight = height - 200;
-        text("Stages: " + stages.get(x), text_coordinates, textHeight + 40);
-        text("Length: " + lengths.get(x) + "Km", text_coordinates, textHeight + 60);
+        textHeight = vertGraphWindowRange - 105;
+        text("Stages: " + stages.get(x), text_coordinates, textHeight + 50);
+        text("Length: " + lengths.get(x) + "Km", text_coordinates, textHeight + 75);
       }
       text("Year: " + years.get(x).tour_year, text_coordinates, textHeight);
-      text("Speed: " + speedList.get(x) + " Km/h", text_coordinates, textHeight + 20);  
+      text("Speed: " + speedList.get(x) + " Km/h", text_coordinates, textHeight + 25);
     }  
   }
 }

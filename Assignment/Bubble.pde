@@ -38,7 +38,7 @@ class Bubble
     // Display Graph Info
     fill(50, 130, 255);
     textAlign(CENTER);
-    text("Bubble graph of total stage win records.\nR - Rider wins      C - Country wins", width * 0.5f, 40);
+    text("Bubble graph of total stage win records.\nR - Rider wins      C - Country wins      K - Statistics", width * 0.5f, 40);
 
     if (bubbleGraph == "Rider")
     {
@@ -71,6 +71,13 @@ class Bubble
       strokeWeight(3);  
       // Axis
       line(bubbleGraphWidth, 150, bubbleGraphWidth, height * 0.95f);
+      
+      if (bubbleTime > 1)
+      {
+        if (bubbleIndex < cWins.size())
+          bubbleIndex++;
+        bubbleTime = 0;
+      }
       
       for (int i = 0; i < cWins.size(); i++)
       {

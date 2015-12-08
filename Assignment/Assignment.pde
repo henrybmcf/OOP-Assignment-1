@@ -232,7 +232,7 @@ void showKey()
   {
     case 0:
       text("KeyBoard Selection", halfWidth, 60);
-      
+      line(halfWidth/2, 70, boxWidth - halfWidth/2, 70);
       text("Kinect Selection", halfWidth, 355);
       line(halfWidth/2, 365, boxWidth - halfWidth/2, 365);
       textSize(15);
@@ -281,8 +281,9 @@ void keyPressed()
   //if (key == ' ')
   // exit();
 
-  if (key == 'k')
-    legend = true;
+  if (menu == 0 || menu == 3 || menu == 4)
+    if (key == 'k')
+      legend = true;
 
   if (key >= '0' && key <= '9')
     menu = key - '0';

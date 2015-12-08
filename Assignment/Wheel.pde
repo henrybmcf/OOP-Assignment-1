@@ -20,22 +20,25 @@ class Wheel
 
   void render()
   {
-    fill(255);
+    fill(50, 130, 255);
     textAlign(RIGHT);
     textSize(30);
     text("Graphical visualisations of\nTour de France data,\n1950 to 2015.", width - 20, 100);
-    
+    fill(130, 255, 50);
+    textSize(25);
+    text("Press K for legend", width - 20, 340);
+        
     stroke(100); 
     for (int i = 0; i < segments; i++)
     {
       fill(0);
       strokeWeight(5);
       if((int)option == i)
-        fill(255);  
+        fill(255, 50, 130);
       arc(pos.x, pos.y, diameter, diameter, thetaBase + (theta * i), thetaBase + (theta * i) + theta, PIE);
     }
     
-    fill(255);
+    fill(255, 50, 130);
     strokeWeight(3);
     textAlign(CENTER, CENTER);
     textSize(20);
@@ -44,6 +47,7 @@ class Wheel
     else
       text("Option Select: " + ((int)option), pos.x, pos.y + diameter * 0.7f);
     
+    fill(255, 255, 0);
     textAlign(LEFT);
     text("Option List", 40, height - 240);
     textSize(17);
