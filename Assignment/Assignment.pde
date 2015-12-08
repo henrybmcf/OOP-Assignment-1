@@ -1,23 +1,23 @@
+// Import libraries for inserting images into sketch & for kinect
 import ddf.minim.*;
-//import org.openkinect.freenect.*;
-//import org.openkinect.processing.*;
+import org.openkinect.freenect.*;
+import org.openkinect.processing.*;
 
 void setup()
-{  
-  //size(640, 520);
+{
   fullScreen();
   smooth(8);
   textSize(20);
 
+  // Load main data table, list of years, speeds, stages and lengths 
   table = loadTable("TDF.csv", "header");
   for (TableRow row : table.rows())
   {
     Year year = new Year();
     year.tour_year = row.getInt("Year"); 
-    year.tour_length = row.getInt("Length");
-    year.stages = row.getInt("Stages");
-    year.winner = row.getString("Winner");
     year.speed = row.getFloat("Speed");
+    year.stages = row.getInt("Stages");
+    year.tour_length = row.getInt("Length");
     years.add(year);
   }
   for (int i = 0; i < years.size(); i++)
@@ -87,11 +87,11 @@ void setup()
   // Remove all elements from sorted list to save memory
   stageCountSort.clear();
 
-  //kinect = new Kinect(this);
-  //depth = new KinectDepth();
-  //tracker = new KinectTracker();
-  //kinect.initDepth();
-  //kinect.enableColorDepth(true);  
+  kinect = new Kinect(this);
+  depth = new KinectDepth();
+  tracker = new KinectTracker();
+  kinect.initDepth();
+  kinect.enableColorDepth(true);  
   minim = new Minim(this);
   wheel = new Wheel();
   ssl_correl = new Spd_Stg_Len_Correl();
@@ -135,9 +135,9 @@ String[] correlationID = new String[3];
 Table table;
 Table stages_table;
 Table countryWins;
-//Kinect kinect;
-//KinectDepth depth;
-//KinectTracker tracker;
+Kinect kinect;
+KinectDepth depth;
+KinectTracker tracker;
 Minim minim;
 Wheel wheel;
 Spd_Stg_Len_Correl ssl_correl;
@@ -167,10 +167,10 @@ void draw()
   switch(menu)
   {
    case 0:
-     //pushMatrix();
-     //translate(width - kinect.width - 2, height - kinect.height - 2);
-     //depth.update();
-     //popMatrix();
+     pushMatrix();
+     translate(width - kinect.width - 2, height - kinect.height - 2);
+     depth.update();
+     popMatrix();
 
      wheel.render();
      wheel.update();
@@ -189,16 +189,6 @@ void draw()
     case 4:
       ssl_correl.render();
       break;
-    case 5:
-      break;
-    case 6:
-      break;
-  
-    default:
-     text("Error, please select valid option", 100, 50);
-     wheel.render();
-     wheel.update();
-     break;
   }
 
   if (legend)
@@ -279,25 +269,22 @@ void showKey()
 
 void keyPressed()
 {
-  //if (key == ' ')
-  // exit();
-
   if (menu == 0 || menu == 3 || menu == 4)
     if (key == 'k')
       legend = true;
 
-  if (key >= '0' && key <= '9')
+  if (key >= '0' && key <= '4')
     menu = key - '0';
 
   if (key == BACKSPACE)
     menu = 0;
-
+    
   switch(menu)
   {
     case 0:
-      if (key == 'c')
-        kinectColour =! kinectColour;
-      break;
+       if (key == 'c')
+          kinectColour =! kinectColour;
+       break;
     case 3:
       if (key == 'c')
         bubbleGraph = "Country";

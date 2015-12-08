@@ -59,12 +59,9 @@ class Pie
           theta = angle - PI;
         else
           theta = angle;
-        sin = sin(theta);
-        cos = cos(theta);
-        if (sin < 0)
-          sin = -sin;
-        if (cos < 0)
-          cos = -cos;
+        sin = abs(sin(theta));
+        cos = abs(cos(theta));
+        
         if (mouseX > centX)
         {
           x = centX + (radius * cos);
