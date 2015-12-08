@@ -22,7 +22,7 @@ Menu:
 ![Menu - RGB Kinect](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Menu%20-%20RGB%20Kinect.png)
 ![Menu - Dark Kinect](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Menu%20-%20Dark%20Kinect.png)
 
-- Legend available by pressing K to show user the necessary keys and motions
+- 	Legend available by pressing K to show user the necessary keys and motions
  
 ![Menu Key](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Menu%20Key.png)
 
@@ -37,8 +37,8 @@ Graphs/Visualisation:
 ![Speed Info & Average](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Speed%20Average.png)
 
 - Stages - Pie chart
-  	 Display the frequency of number of stages
-  	 Stationery number is the number of stages, motion number (green number at end of line) is the frequency of that number
+ - Display the frequency of number of stages
+ - Stationery number is the number of stages, motion number (green number at end of line) is the frequency of that number
   
 ![Stages Pie Chart](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Stages%20Pie%20Chart.png)
 
