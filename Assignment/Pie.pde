@@ -27,7 +27,7 @@ class Pie
     // Display Graph Info
     fill(50, 130, 255);
     textAlign(CENTER);
-    text("Pie graph of frequency of stages of the Tour de France from 1950 - 2015.\nStationery number represents number of stages.\nMotion number being number of times it has occured", (width * 0.5f), 40);
+    text("Pie graph of frequency of stages of the Tour de France from 1950 - 2015.\nStationery number represents number of stages.\nMotion number being number of times it has occured", centX, 40);
    
     for (int i = 0; i < counter.size(); i++)
     {
@@ -86,6 +86,7 @@ class Pie
           lineY = centY + ((radius * 0.95f) * sin);
         }
         fill(130, 255, 50);
+        textAlign(CENTER, CENTER);
         text(counter.get(i), x, y);
       }
 

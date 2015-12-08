@@ -1,7 +1,7 @@
 import java.util.*;
 import ddf.minim.*;
-import org.openkinect.freenect.*;
-import org.openkinect.processing.*;
+//import org.openkinect.freenect.*;
+//import org.openkinect.processing.*;
 
 void setup()
 {  
@@ -41,8 +41,7 @@ void setup()
   {
     rider.add(stage_records.get(i).rider);
     wins.add(stage_records.get(i).number);
-    float x1 = random(50, width - 50);
-    stage_x.add(x1);
+    stageY.add(random(150, height * 0.85f));
   }
 
   countryWins = loadTable("CountryWins.csv", "header");
@@ -57,8 +56,7 @@ void setup()
   {
     cWins.add(countryRecords.get(i).number);
     country.add(countryRecords.get(i).country);
-    float x1 = random(width - (i + 1) * 50, width - (i + 1) * 130);
-    country_x.add(x1);
+    countryX.add(random(width - (i + 1) * 50, width - (i + 1) * 130));
   }
 
   for (int i = 0; i < correlation.length; i++)
@@ -122,9 +120,9 @@ ArrayList<Integer> stages = new ArrayList<Integer>();
 ArrayList<Stages> stage_records = new ArrayList<Stages>();
 ArrayList<String> rider = new ArrayList<String>();
 ArrayList<Integer> wins = new ArrayList<Integer>();
-ArrayList<Float> stage_x = new ArrayList<Float>();
+ArrayList<Float> stageY = new ArrayList<Float>();
 ArrayList<Integer> lengths = new ArrayList<Integer>();
-ArrayList<Float> country_x = new ArrayList<Float>();
+ArrayList<Float> countryX = new ArrayList<Float>();
 ArrayList<countryWins> countryRecords = new ArrayList<countryWins>();
 ArrayList<Integer> cWins = new ArrayList<Integer>();
 ArrayList<String> country = new ArrayList<String>();
