@@ -13,10 +13,10 @@ class Bubble
   
   Bubble()
   {
-    highWins = Collections.max(wins);
-    lowWins = Collections.min(wins);
-    highCountry = Collections.max(cWins);
-    lowCountry = Collections.min(cWins); 
+    highWins = wins.max();
+    lowWins = wins.min();
+    highCountry = cWins.max();
+    lowCountry = cWins.min();
     
     bubbleTime = 4;
     bubbleIndex = 1;

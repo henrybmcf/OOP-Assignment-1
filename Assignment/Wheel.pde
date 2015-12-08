@@ -3,16 +3,18 @@ class Wheel
   PVector pos;
   int segments;
   float diameter;
+  float radius;
 
   Wheel()
   {
-    this(width * 0.367f, height  * 0.321f, 220, 6);
+    this(width * 0.367f, height  * 0.321f, 220, 4);
   }
 
   Wheel(float x, float y, float diameter, int segments)
   {
     pos = new PVector(x, y);
     this.diameter = diameter;
+    radius = diameter * 0.5f;
     this.segments = segments;
     theta = TWO_PI / segments;
     thetaBase = HALF_PI;
@@ -36,6 +38,14 @@ class Wheel
       if((int)option == i)
         fill(255, 50, 130);
       arc(pos.x, pos.y, diameter, diameter, thetaBase + (theta * i), thetaBase + (theta * i) + theta, PIE);
+      
+      pushMatrix();
+      translate(pos.x, pos.y);
+      rotate(thetaBase + theta * 0.5f);
+      stroke(255);
+      line(-radius, 0, radius, 0);
+      line(0, -radius, 0, radius);
+      popMatrix();
     }
     
     fill(255, 50, 130);
@@ -62,9 +72,9 @@ class Wheel
       {
         option = (HALF_PI - thetaBase) / theta;
         if (option < 1)
-            option += 6;
-        if (option > 6)
-            option -= 6;
+            option += 4;
+        if (option > 4)
+            option -= 4;
       }
 
       // Turn wheel depending on arrow key pressed

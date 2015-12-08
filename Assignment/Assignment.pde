@@ -1,4 +1,3 @@
-import java.util.*;
 import ddf.minim.*;
 //import org.openkinect.freenect.*;
 //import org.openkinect.processing.*;
@@ -23,10 +22,10 @@ void setup()
   }
   for (int i = 0; i < years.size(); i++)
   {
-    yearList.add(years.get(i).tour_year);
+    yearList.append(years.get(i).tour_year);
     speedList.append(years.get(i).speed);
-    stages.add(years.get(i).stages);
-    lengths.add(years.get(i).tour_length);
+    stages.append(years.get(i).stages);
+    lengths.append(years.get(i).tour_length);
   }
 
   stages_table = loadTable("StageWins.csv", "header");
@@ -40,8 +39,8 @@ void setup()
   for (int i = 0; i < stage_records.size(); i++)
   {
     rider.add(stage_records.get(i).rider);
-    wins.add(stage_records.get(i).number);
-    stageY.add(random(150, height * 0.8f));
+    wins.append(stage_records.get(i).number);
+    stageY.append(random(150, height * 0.8f));
   }
 
   countryWins = loadTable("CountryWins.csv", "header");
@@ -54,10 +53,10 @@ void setup()
   }
   for (int i = 0; i < countryRecords.size(); i++)
   {
-    cWins.add(countryRecords.get(i).number);
     country.add(countryRecords.get(i).country);
+    cWins.append(countryRecords.get(i).number);
     float cX = random(width * 0.8f);
-    countryX.add(cX);
+    countryX.append(cX);
   }
 
   for (int i = 0; i < correlation.length; i++)
@@ -112,21 +111,22 @@ void setup()
   font = createFont("Aspex.ttf", 15); 
   textFont(font);
   bike = loadImage("Bike.png");
+  yearInfo = false;
 }
 
 ArrayList<Year> years = new ArrayList<Year>();
-ArrayList<Integer> yearList = new ArrayList<Integer>();
+IntList yearList = new IntList();
 FloatList speedList = new FloatList();
-ArrayList<Integer> stages = new ArrayList<Integer>();
+IntList stages = new IntList();
 ArrayList<Stages> stage_records = new ArrayList<Stages>();
 ArrayList<String> rider = new ArrayList<String>();
-ArrayList<Integer> wins = new ArrayList<Integer>();
-ArrayList<Float> stageY = new ArrayList<Float>();
-ArrayList<Integer> lengths = new ArrayList<Integer>();
-ArrayList<Float> countryX = new ArrayList<Float>();
+IntList wins = new IntList();
+FloatList stageY = new FloatList();
 ArrayList<countryWins> countryRecords = new ArrayList<countryWins>();
-ArrayList<Integer> cWins = new ArrayList<Integer>();
 ArrayList<String> country = new ArrayList<String>();
+IntList cWins = new IntList();
+FloatList countryX = new FloatList();
+IntList lengths = new IntList();
 IntList stageCountSort = new IntList();
 IntList counter = new IntList();
 boolean[] correlation = new boolean[3];
@@ -158,6 +158,7 @@ boolean kinectColour;
 boolean legend;
 PFont font;
 PImage bike;
+boolean yearInfo;
 
 void draw()
 {
@@ -269,8 +270,8 @@ void showKey()
       textSize(15);
       textLeading(28);
       text("S - Show/Hide\nW - Trend\nA - Scatter\nD - Lightweight Trend & Scatter combo", halfWidth, 110);
-      text("T - Show/Hide\nG - Trend\nR - Scatter\nY - Lightweight Trend & Scatter combo", halfWidth, 310);
-      text("L - Show/Hide\nI - Trend\nO - Scatter\nP - Lightweight Trend & Scatter combo", halfWidth, 510);
+      text("T - Show/Hide\nR - Trend\nG - Scatter\nY - Lightweight Trend & Scatter combo", halfWidth, 310);
+      text("L - Show/Hide\nO - Trend\nP - Scatter\nI - Lightweight Trend & Scatter combo", halfWidth, 510);
       break;
   }
   popMatrix();
@@ -306,6 +307,10 @@ void keyPressed()
     case 4:
       switch(key)
       {
+        case 'h':
+          yearInfo =! yearInfo; 
+          break;
+           
         case 's':
           correlation[0] =! correlation[0];
           correlationID[0] = "Trend";

@@ -40,9 +40,9 @@
 //        thetaBase = TWO_PI;
 //      option = (HALF_PI - thetaBase) / theta;
 //      if (option < 1)
-//        option += 6;
-//      if (option > 6)
-//        option -= 6;
+//        option += 4;
+//      if (option > 4)
+//        option -= 4;
 //    }
 //   }
 //   else if (v1.x > kinect.width - arrowWidth && v1.y > quart * 1.25f)
@@ -54,10 +54,10 @@
 //      if (thetaBase >= TWO_PI)
 //        thetaBase = 0.0f;
 //      option = (HALF_PI - thetaBase) / theta;
-//      if (option < 6)
-//        option += 6;
-//      if (option > 6)
-//        option -= 6;
+//      if (option < 1)
+//        option += 4;
+//      if (option > 4)
+//        option -= 4;
 //    }
 //   }
 //   else
