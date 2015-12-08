@@ -29,16 +29,16 @@ Menu:
 Graphs/Visualisation:
 - Speed - Trend graph
 	- Speed graph is drawn using timing to present a more aesthetically pleasing animation
-	- 
+	
 ![Drawing Speed Graph](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Drawing%20Speed%20Graph.png)
 
-	- By moving the mouse over the graph, you can see the individual year's data: Year & Speed, as well as the difference from the average speed
+	 By moving the mouse over the graph, you can see the individual year's data: Year & Speed, as well as the difference from the average speed
 	
 ![Speed Info & Average](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Speed%20Average.png)
 
 - Stages - Pie chart
-  	- Display the frequency of number of stages
-  	- Stationery number is the number of stages, motion number (green number at end of line) is the frequency of that number
+  	 Display the frequency of number of stages
+  	 Stationery number is the number of stages, motion number (green number at end of line) is the frequency of that number
   
 ![Stages Pie Chart](https://github.com/henrybmcf/OOP_Assignment_2015/blob/master/Screenshots/Stages%20Pie%20Chart.png)
 
